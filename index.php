@@ -31,7 +31,7 @@
 						<i class="fa fa-user fa-5x"></i>
 					</div>
 					<div class="col text-center">
-						<p>Login</p>
+						<p>Logar</p>
 					</div>
 				</div>
 			</a>
