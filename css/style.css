@@ -1,0 +1,140 @@
+/*-------- Variaveis ---------*/
+:root{
+	--blue-sapphire: #216B82;
+	--cyan-cornflower: #1A82B7;
+	--lime-green: #33CC33;
+	--safety-orange: #FF6700;
+	--isabelline: #EBEBEB;
+}
+
+/*---------- Geral -----------*/
+
+body {
+	margin: 0;
+	padding: 0;
+}
+.row {
+	margin: 0;
+}
+
+a {
+	color: #eaeaea;
+	transition: 0.5s;
+}
+
+a:hover,
+a:active,
+a:focus {
+	color: #3666C8;
+	outline: none;
+	text-decoration: none;
+}
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+}
+
+.btn-primary {
+	border: none;
+	background-color: var(--cyan-cornflower);
+}
+
+.btn-primary:hover {
+	background-color: var(--blue-sapphire);
+}
+
+/*--------- Header-Menu ---------*/
+
+#header {
+	position: relative;
+	top: 0px;
+	padding: 20px 0;
+	width: 100vw;
+	height: auto;
+	transition: all 0.5s;
+	z-index: 997;
+	background: var(--blue-sapphire);
+	box-shadow: 0px 6px 9px 0px rgba(0, 0, 0, 0.06);
+}
+
+#header #logo {
+}
+
+#header #logo img {
+	padding: 0;
+	margin-left: 10%;
+	max-width: 200px;
+	min-width: 120px;
+}
+
+
+/*--------- Loading ---------*/
+#loadingSection {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--blue-sapphire);
+}
+
+
+
+/*--------- Login ---------*/
+#loginSection {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--blue-sapphire);
+}
+
+#loginSection #logo {
+	position: absolute;
+	left: 49%;
+	top: 20%;	
+	transform: translate(-50%, -50%);
+	width: 30%;
+	height: auto;
+}
+
+#login {
+	position: absolute;
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
+	margin-top: 20px;
+	width: 300px;
+}
+
+#login .container {	
+	justify-content: center;
+	padding: 40px;
+	background-color: var(--isabelline);
+	border-radius: 16px;
+	color: var(--cyan-cornflower);
+}
+
+#login span i{
+	color: var(--blue-sapphire);
+}
+
+
+/*--------- Tabela ---------*/
+#MatrizAnual {
+	width: 80vw;
+	margin: auto;
+}
+
+#MatrizAnual .table-responsive {
+	height: 60vh;
+}
+
+#tabelaHead {
+	text-align: center;
+}
+
+.thNome {
+	text-align: left;
+}
+
+.thDesc {
+	text-align: left;
+}
