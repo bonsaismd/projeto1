@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 31-Maio-2019 às 19:44
--- Versão do servidor: 5.7.21
--- PHP Version: 5.6.35
+-- Generation Time: 01-Jun-2019 às 15:58
+-- Versão do servidor: 5.7.24
+-- versão do PHP: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,8 @@ INSERT INTO `autenticacao` (`ID`, `SENHA`, `PERMISSAO`) VALUES
 (1234567, '$2y$10$bDshuso1MaqxC7whD9zNXOwofq7jNvj/.PwgZFhaV/psUXuASFiDq', 3),
 (123456, '$2y$10$gkcvZweoSqJDL/CCsYSsyOcgwX1.IGFF6cNGzAUdTKft/xIba1W4q', 2),
 (1011, '$2y$10$xpT5Tf0jmXBOSDzH9bGEq.SmbERP6Py66rAa0zBCFM8Qm3NKNLx4e', 3),
-(1997, '$2y$10$kVlr9vmpGqvAi4ovH/AKpOB2Jfk/ujIIrPlMNO1aOksCgo0J8kVEu', 1);
+(1997, '$2y$10$kVlr9vmpGqvAi4ovH/AKpOB2Jfk/ujIIrPlMNO1aOksCgo0J8kVEu', 1),
+(111111, '$2y$10$PVMf6k4LYwLjiYGSaITUCOrcRVApg8R/D5XwnAHWVzc02gkmfRR1S', 1);
 
 -- --------------------------------------------------------
 
@@ -56,8 +57,8 @@ INSERT INTO `autenticacao` (`ID`, `SENHA`, `PERMISSAO`) VALUES
 
 DROP TABLE IF EXISTS `disciplina`;
 CREATE TABLE IF NOT EXISTS `disciplina` (
-  `ID` int(11) NOT NULL,
-  `NOME` varchar(50) NOT NULL,
+  `ID` varchar(10) NOT NULL,
+  `NOME` varchar(100) NOT NULL,
   `SALDO` float UNSIGNED NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -67,9 +68,27 @@ CREATE TABLE IF NOT EXISTS `disciplina` (
 --
 
 INSERT INTO `disciplina` (`ID`, `NOME`, `SALDO`) VALUES
-(123, 'Cozinha Brasileira', 1250),
-(456, 'Clássicos Brasileiro', 1300.5),
-(5789, 'Sujis', 750.8);
+('123', 'Cozinha Brasileira', 1250),
+('456', 'Clássicos Brasileiro', 1300.5),
+('5789', 'Sujis', 750.8),
+('ICA1210', 'HTC I', 300),
+('ICA1216', 'Cozinha Brasileira I', 300),
+('ICA1222', 'Cozinha Clássica I', 300),
+('ICA1223', 'Cozinha Fria', 300),
+('ICA1246', 'Organização de Eventos Gastronômicos', 300),
+('ICA1258', 'Serviços de Bar e Restaurante', 300),
+('ICA1252', 'Panificação', 300),
+('ICA1225', 'Confeitaria e Doçaria', 300),
+('ICA1347', 'Anáise sensorial na gastronomia', 300),
+('ICA3265', 'Fermentação Artesanal', 300),
+('ICA1227', 'Cozinha Clássica II', 300),
+('ICA1360', 'Técnica Gastronômica III (Saberes e Sabores do Ceará)', 300),
+('ICA1211', 'Habilidades e Técnicas Culinárias II', 300),
+('ICA1219', 'Cozinha Brasileira II', 300),
+('ICA2820', 'Cozinha Oriental', 300),
+('ICA2821', 'Cozinha das Américas', 300),
+('ICA1228', 'Cozinha Europeia', 300),
+('ICA3268', 'Gastronomia Ecológica', 300);
 
 -- --------------------------------------------------------
 
@@ -688,7 +707,8 @@ CREATE TABLE IF NOT EXISTS `professor` (
 INSERT INTO `professor` (`autenticacao_ID`, `NOME`, `PERMISSAO`) VALUES
 (2637, 'Carlos Matheus Sousa', 1),
 (123456, 'Eveline', 1),
-(1997, 'DekProf', 0);
+(1997, 'DekProf', 0),
+(111111, 'nacp', 0);
 
 -- --------------------------------------------------------
 
