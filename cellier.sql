@@ -71,7 +71,7 @@ INSERT INTO `disciplina` (`ID`, `NOME`, `SALDO`) VALUES
 ('123', 'Cozinha Brasileira', 1250),
 ('456', 'Clássicos Brasileiro', 1300.5),
 ('5789', 'Sujis', 750.8),
-('ICA1210', 'HTC I', 300),
+('ICA1210', 'Habilidades e Técnicas Culinárias I', 300),
 ('ICA1216', 'Cozinha Brasileira I', 300),
 ('ICA1222', 'Cozinha Clássica I', 300),
 ('ICA1223', 'Cozinha Fria', 300),
@@ -591,18 +591,22 @@ INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `QTDE_D
 DROP TABLE IF EXISTS `lista_pedido`;
 CREATE TABLE IF NOT EXISTS `lista_pedido` (
   `QUANTIDADE` int(3) NOT NULL,
-  `ingrediente_ID` int(11) NOT NULL,
+  `insumo_ID` int(11) NOT NULL,
   `pedido_ID` int(11) NOT NULL,
-  PRIMARY KEY (`QUANTIDADE`,`ingrediente_ID`,`pedido_ID`),
-  KEY `ingrediente_ID` (`ingrediente_ID`),
-  KEY `pedido_ID` (`pedido_ID`)
+  PRIMARY KEY (`QUANTIDADE`,`insumo_ID`,`pedido_ID`),
+
+  FOREIGN KEY (`insumo_ID`)
+        REFERENCES insumo(`ID`),
+        
+  FOREIGN KEY (`pedido_ID`)
+        REFERENCES pedido(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `lista_pedido`
 --
 
-INSERT INTO `lista_pedido` (`QUANTIDADE`, `ingrediente_ID`, `pedido_ID`) VALUES
+INSERT INTO `lista_pedido` (`QUANTIDADE`, `insumo_ID`, `pedido_ID`) VALUES
 (1, 323, 5523),
 (1, 361, 5523),
 (2, 419, 5123),
@@ -613,30 +617,32 @@ INSERT INTO `lista_pedido` (`QUANTIDADE`, `ingrediente_ID`, `pedido_ID`) VALUES
 --
 -- Estrutura da tabela `oferta`
 --
-
 DROP TABLE IF EXISTS `oferta`;
 CREATE TABLE IF NOT EXISTS `oferta` (
-  `ID` int(11) NOT NULL,
-  `disciplina_ID` int(11) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `disciplina_ID` varchar(10) NOT NULL,
   `ANO` year(4) NOT NULL,
   `SEMESTRE` int(1) NOT NULL,
   `QTDE_ALUNOS` int(3) DEFAULT NULL,
+  `QTDE_PRATICAS` int(3) DEFAULT NULL,
   `SALDO` float UNSIGNED NOT NULL,
+
   PRIMARY KEY (`ID`),
-  KEY `disciplina_ID` (`disciplina_ID`)
+  
+  FOREIGN KEY (`disciplina_ID`)
+        REFERENCES disciplina(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `oferta`
 --
 
-INSERT INTO `oferta` (`ID`, `disciplina_ID`, `ANO`, `SEMESTRE`, `QTDE_ALUNOS`, `SALDO`) VALUES
-(4123, 123, 2019, 1, 30, 0),
-(4456, 456, 2019, 2, 33, 0),
-(4789, 5789, 2019, 2, 25, 0);
+INSERT INTO `oferta` (`ID`, `disciplina_ID`, `ANO`, `SEMESTRE`, `QTDE_ALUNOS`,`QTDE_PRATICAS`, `SALDO`) VALUES
+(4123, 123, 2019, 1,6 ,30, 0),
+(4456, 456, 2019, 2, 6,33, 0),
+(4789, 5789, 2019, 2,6 ,25, 0);
 
 -- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `oferta_professor`
 --
@@ -645,18 +651,22 @@ DROP TABLE IF EXISTS `oferta_professor`;
 CREATE TABLE IF NOT EXISTS `oferta_professor` (
   `oferta_ID` int(11) NOT NULL,
   `professor_autenticacao_ID` int(11) NOT NULL,
-  KEY `oferta_ID` (`oferta_ID`),
-  KEY `professor_autenticacao_ID` (`professor_autenticacao_ID`)
+  `COR` int(1),  
+  FOREIGN KEY (`professor_autenticacao_ID`)
+        REFERENCES professor(`autenticacao_ID`),
+        
+  FOREIGN KEY (`oferta_ID`)
+        REFERENCES oferta(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `oferta_professor`
 --
 
-INSERT INTO `oferta_professor` (`oferta_ID`, `professor_autenticacao_ID`) VALUES
-(4123, 1997),
-(4456, 1997),
-(4123, 123456);
+INSERT INTO `oferta_professor` (`oferta_ID`, `professor_autenticacao_ID`,`COR`) VALUES
+(4123, 1997, 1),
+(4456, 1997, 3),
+(4123, 123456, 2);
 
 -- --------------------------------------------------------
 
@@ -674,7 +684,8 @@ CREATE TABLE IF NOT EXISTS `pedido` (
   `DIA_ENTREGA` date NOT NULL,
   `ENVIADO` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `oferta_ID` (`oferta_ID`)
+  FOREIGN KEY (`oferta_ID`)
+        REFERENCES oferta(`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5524 DEFAULT CHARSET=latin1;
 
 --
@@ -697,7 +708,10 @@ CREATE TABLE IF NOT EXISTS `professor` (
   `autenticacao_ID` int(8) NOT NULL,
   `NOME` varchar(255) NOT NULL,
   `PERMISSAO` tinyint(1) NOT NULL,
-  PRIMARY KEY (`autenticacao_ID`)
+  PRIMARY KEY (`autenticacao_ID`),
+  
+  FOREIGN KEY (`autenticacao_ID`)
+        REFERENCES autenticacao(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -720,7 +734,10 @@ DROP TABLE IF EXISTS `tecnico`;
 CREATE TABLE IF NOT EXISTS `tecnico` (
   `autenticacao_ID` int(11) NOT NULL,
   `NOME` varchar(255) NOT NULL,
-  PRIMARY KEY (`autenticacao_ID`)
+  PRIMARY KEY (`autenticacao_ID`),
+  
+  FOREIGN KEY (`autenticacao_ID`)
+        REFERENCES autenticacao(`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -734,3 +751,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
