@@ -15,7 +15,7 @@ if ( !defined('BASEURL') )
 	define('BASEURL', '/Cellier/');
 
 if ( !defined('DBAPI') )
-	define('DBAPI', ABSPATH . 'inc/database.php');
+	define('DBAPI', ABSPATH . '/inc/database.php');
 
 /** Caminho dos templates de Cabeçalho e Rodapé **/
 define('HEADER_TEMPLATE', ABSPATH . 'inc/header.php');

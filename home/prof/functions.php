@@ -20,6 +20,13 @@ function carregarInsumos(){
 
 }
 
-
+function carregarDisciplinas(){
+	global $disciplinas;
+	$disciplinas=pesquisar_todos('disciplina');
+}
+function carregarProfessores(){
+	global $professores;
+	$professores= pesquisar_todos('professor');
+}
 
 ?>

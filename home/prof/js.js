@@ -4,10 +4,13 @@ var ajax_data=[];
 
 function mandar(){
 	console.log(ajax_data);
+	console.log('oi');
+	var cT=$("#custoT").val();
+	console.log(cT);
 $.ajax({
 				url:"mandar.php",
 				method:"POST",
-				data:{ajax_data:ajax_data},
+				data:{ajax_data:ajax_data,custoT:cT},
 				dataType:"text",
 				success:function(msg){
 					console.log(msg);

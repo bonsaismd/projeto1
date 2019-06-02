@@ -6,7 +6,7 @@ session_start();
 
 if ($_SESSION['Perm'] == 1) {
 
-	header('location:' . BASEURL . 'home/prof');
+	header('location:' . BASEURL . 'home/prof/index.php');
 
 } elseif ($_SESSION['Perm'] == 2) {
 

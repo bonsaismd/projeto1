@@ -10,7 +10,8 @@ include(HEADER_TEMPLATE);
 include(HEADER_MENU);
 
 carregarInsumos(); 
-
+carregarDisciplinas();
+carregarProfessores();
 ?>
 
 <?php 
@@ -21,21 +22,65 @@ if ($cargo != 'Professor(a)') {
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>home/prof/css.css">
-
-<div>
-  <h1>Hello, <em><?php echo $nome_usuario;?>!</em></h1>
-</div>
-<a href="../../login/logout.php">Sair</a>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
-  fazer Pedido
+  Fazer pedido
 </button>
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDisc">
-  Abrir modal de demonstração
+  Cadastrar cadeira
 </button>
 
 
 <script type="text/javascript" src="js.js"></script>
+<div class="modal fade" id="modalDisc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastrar nova disciplina prática</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body" >
+        <form action="action.php" method="post">
+            <select class="form-control" required="" name="d_nome" id="d_nome" data-allow-clear="1">
+              <option disabled selected>Escolha a disciplina</option>
+             <?php foreach ($disciplinas as $disciplina): ?>
+              <option class="form-control" id= "" value="<?php echo $disciplina['ID'];?>" ><?php echo $disciplina['NOME'];?></option>
+            <?php endforeach;?>   
+          </select>
+          <label>Algum professor dá essa disciplina também?
+          <select class="form-control" name="outro_prof" id="outro_prof" data-allow-clear="1">
+              <option disabled selected>Qual?</option>
+             <?php foreach ($professores as $professor): ?>
+              <option class="form-control" id= "" value="<?php echo $professor['autenticacao_ID'];?>" ><?php echo $professor['NOME'];?></option>
+            <?php endforeach;?>   
+          </select></label>
+          <br>
+          <label>Quantidade de alunos<input id="qtdeAlunos" name="qtdeAlunos" required="" class="form-control" type="number" style=  "width:70px ;"></label>
+          <br>
+          <label>Quantidade de aulas práticas<input id="qtdePraticas" name="qtdePraticas" required="" class="form-control" type="number" style=  "width:70px ;"></label>
+          <br>
+
+          <div class="etiquetas">
+          <input type="radio" name="genero" id="azul" value="azul" required="">
+          <input type="radio" name="genero" id="amarelo" value="amarelo">
+          <input type="radio" name="genero" id="magenta" value="magenta">
+          </div>
+  <input type="submit" value="Criar" id="bot">
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"  role="document">
