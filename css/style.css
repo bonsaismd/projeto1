@@ -74,7 +74,7 @@ input[type=number]::-webkit-outer-spin-button {
 #loadingSection {
 	width: 100vw;
 	height: 100vh;
-	background-color: var(--blue-sapphire);
+	background-color: var(--isabelline);
 }
 
 
@@ -83,7 +83,7 @@ input[type=number]::-webkit-outer-spin-button {
 #loginSection {
 	width: 100vw;
 	height: 100vh;
-	background-color: var(--blue-sapphire);
+	background-color: var(--isabelline);
 }
 
 #loginSection #logo {
@@ -101,15 +101,19 @@ input[type=number]::-webkit-outer-spin-button {
 	top: 60%;
 	transform: translate(-50%, -50%);
 	margin-top: 20px;
-	width: 300px;
+	width: 30vw;
 }
 
 #login .container {	
 	justify-content: center;
-	padding: 40px;
-	background-color: var(--isabelline);
-	border-radius: 16px;
-	color: var(--cyan-cornflower);
+	padding: 30px;
+	background-color: var(--blue-sapphire);
+	border-radius: 20px;
+	color: var(--isabelline);
+}
+
+#login button {
+	width: 50%;
 }
 
 #login span i{

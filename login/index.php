@@ -22,40 +22,33 @@ include(HEADER_TEMPLATE);
 <section id="loginSection">
 
   <div id="logo" >
-    <img src="<?php echo BASEURL; ?>img/logo-white.svg" class="animated bounceIn">
+    <img src="<?php echo BASEURL; ?>img/logo-original.svg" class="animated bounceIn">
   </div>
 
-  <div id="login" class="">
+  <div id="login">
     <div class="container animated fadeIn delay-1s">
       <form method="POST" action="connecting.php" id="formLogin" name="formLogin" class="needs-validation" novalidate>
 
         <div class="form-group">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
-            </div>
-            <input type="number" class="form-control" id="inputID" name="inputID" aria-describedby="emailHelp" placeholder="Digite seu ID" required>
-            <div class="invalid-feedback">Por favor preencha este campo.</div>
-          </div>
+          <label for="inputID">ID:</label>
+          <input type="number" class="form-control" id="inputID" name="inputID" aria-describedby="emailHelp" placeholder="Digite seu ID" required>
+          <div class="invalid-feedback">Por favor informe seu ID.</div>
         </div>
 
         <div class="form-group">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
-            </div>
-            <input type="password" class="form-control" id="inputSenha" name="inputSenha" placeholder="Digite sua Senha" required>
-            <div class="invalid-feedback">Por favor preencha este campo.</div>
-          </div>
+          <span><i class="fa"></i></span><label for="inputSenha">Senha:</label>
+          <input type="password" class="form-control" id="inputSenha" name="inputSenha" data-toggle="password" placeholder="Digite sua Senha" required>
+          <div class="invalid-feedback">Por favor informe sua senha.</div>
         </div>
 
         <div class="form-group text-center mb-0">
           <button type="submit" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> Entrar</button>
         </div>
 
-      </form>
-    </div>
+    </form>
   </div>
+</div>
+
 </section>
 
 <script>
@@ -76,6 +69,8 @@ include(HEADER_TEMPLATE);
     });
   }, false);
   })();
+
+  $('#password').password('toggle');
 </script>
 
 
