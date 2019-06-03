@@ -28,5 +28,30 @@ function carregarProfessores(){
 	global $professores;
 	$professores= pesquisar_todos('professor');
 }
+function carregarDiscProf(){
+	global $discProf;
+	$db=open_database();
+	$query="SELECT oferta_ID FROM oferta_professor WHERE professor_autenticacao_ID=".$_SESSION['inputID']." ;";
+	$discProf=(mysqli_query($db,$query));
+
+	close_database($db);
+}
+function dadosOferta($id){
+	$db= open_database();
+	$query="SELECT * FROM oferta WHERE ID='".$id['oferta_ID']."';";
+	$result=mysqli_query($db,$query);
+	close_database($db);
+	return $result;
+}
+function nomeOferta($id){
+	$dados=mysqli_fetch_array(dadosOferta($id));
+	$db= open_database();
+	$query="SELECT NOME FROM disciplina WHERE ID='".$dados['disciplina_ID']."';";
+	$result=mysqli_query($db,$query);
+
+$result = $db->query($query)->fetch_object()->NOME;
+	close_database($db);
+	return $result;
+}
 
 ?>

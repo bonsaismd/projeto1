@@ -3,23 +3,26 @@ include("../../login/check.php");
 require_once('../../config.php');
 require_once(DBAPI);
 
+$oProf=0;
+$semestre=1;
+$saldoDisc=300.0;
+$oProf+=($_POST['outro_prof']);
 date_default_timezone_set('America/Fortaleza');
 $db=open_database();
-$query="INSERT INTO oferta VALUES(0,".$_POST['d_nome'].",". date("Y").",0,". (int)($_POST['qtdeAlunos']).",". (int)($_POST['qtdePraticas']).	",300);";
-var_dump(mysqli_query($db,$query));
-var_dump((int)($_POST['qtdeAlunos']));
-var_dump($_POST['qtdePraticas']);
+$query="INSERT INTO oferta VALUES(0,'".$_POST['d_nome']."',". date("Y").",".$semestre.",". (int)($_POST['qtdeAlunos']).",". (int)($_POST['qtdePraticas']).	",".$saldoDisc.");";
 mysqli_query($db,$query);
+
 $sq = "SELECT LAST_INSERT_ID()";
 $resultado = mysqli_query($db,$sq) or die(mysql_error());
 $encontrado = mysqli_fetch_array($resultado);
-	$query="INSERT INTO oferta_professor VALUES (".$encontrado[0].",".$_SESSION['inputID']." );";
+
+$query="INSERT INTO oferta_professor VALUES (".$encontrado[0].",".$_SESSION['inputID']." ,".(int)($_POST['etiquetas']).");";
 	mysqli_query($db,$query);
 
-if (!is_null($_POST['outro_prof'])){
-	$query="INSERT INTO oferta_professor VALUES (".$encontrado[0].",".($_POST['outro_prof']).");";
+if ($oProf!=0){
+	$query="INSERT INTO oferta_professor VALUES (".$encontrado[0].",".($_POST['outro_prof']).",".(int)($_POST['etiquetas']).");";
 	mysqli_query($db,$query);
 }
 close_database($db);
-
+header('location:'. BASEURL . 'home/prof/index.php');
 ?>

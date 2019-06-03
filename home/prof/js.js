@@ -1,6 +1,6 @@
 var tbl = '';
 var ajax_data=[];
-
+var dsc='';
 
 function mandar(){
 	console.log(ajax_data);
@@ -157,7 +157,8 @@ function ochNome(v){
 //////////////code with mark
 $(document).ready(function($)
 {
-	
+	//--->preencher o corpo com disciplinas > start
+
 	//--->create data table > start
 
 	tbl +='<table class="table table-hover">'

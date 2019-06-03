@@ -50,3 +50,32 @@
         visibility: visible;
         
     }
+
+
+
+
+
+ #corpo{
+display:flex;
+flex-direction: row;
+justify-content: flex-start;
+ 	position: relative;
+ 	align-items: flex-start;
+ }
+
+ .disc{
+ 	display: flex;
+ 	flex-direction: column;
+ 	justify-content: flex-start;
+ 	width:20%;
+ 	padding:10px;
+ 	margin-right:10px;
+ 	margin-left:10px;
+ 	position: relative;
+ 	background-color: rgb(33,107,130);
+ 	color: white;
+ 	border-radius:10px;
+ }
+ .botaoPedido{
+ 	margin:5px;
+ }

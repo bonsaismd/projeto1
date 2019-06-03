@@ -1,5 +1,4 @@
 <?php 
-
 include("../../login/check.php");
 require_once('functions.php');
 
@@ -12,6 +11,7 @@ include(HEADER_MENU);
 carregarInsumos(); 
 carregarDisciplinas();
 carregarProfessores();
+carregarDiscProf();
 ?>
 
 <?php 
@@ -20,15 +20,31 @@ if ($cargo != 'Professor(a)') {
   echo $cargo;
 }
 ?>
-
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>home/prof/css.css">
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
-  Fazer pedido
-</button>
+<div id="corpo" class="container">
+   <?php if(isset($discProf)){foreach ($discProf as $dP): ?>
+   <div class="disc" >
+   <p><?php echo nomeOferta($dP) ; ?></p>
+   <?php for ($ind=0; $ind<mysqli_fetch_array(dadosOferta($dP))['QTDE_PRATICAS'];$ind ++){?>
+    <div>
 
+
+<button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalExemplo">
+  Aula <?php echo $ind +1;?>
+</button>
+      
+    </div>
+  <?php }?>
+   </div>
+  <?php endforeach;}?>
+<div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDisc">
   Cadastrar cadeira
 </button>
+</div>
+</div>
+
+
 
 
 <script type="text/javascript" src="js.js"></script>
@@ -65,9 +81,9 @@ if ($cargo != 'Professor(a)') {
           <br>
 
           <div class="etiquetas">
-          <input type="radio" name="genero" id="azul" value="azul" required="">
-          <input type="radio" name="genero" id="amarelo" value="amarelo">
-          <input type="radio" name="genero" id="magenta" value="magenta">
+          <input type="radio" name="etiquetas" id="azul" value="1" required="">
+          <input type="radio" name="etiquetas" id="amarelo" value="2">
+          <input type="radio" name="etiquetas" id="magenta" value="3">
           </div>
   <input type="submit" value="Criar" id="bot">
 
