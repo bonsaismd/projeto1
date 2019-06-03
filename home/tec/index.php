@@ -52,31 +52,36 @@ if ($cargo != 'Técnico(a)') {
 
 				<?php foreach ($pedidos as $pedido) : ?>
 
-					<a class="shadow btn btn-primary p-3 m-2 text-center" data-toggle="modal" data-target="#verPedido"
+					<?php if ($pedido['ENVIADO']) : ?>
 
-					data-disciplina='{
-					"id":"<?php echo $pedido['ID']; ?>",
-					"titulo":"<?php echo $pedido['TITULO']; ?>",
-					"data":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'Y-m-d'); ?>",
-					"dataShow":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y'); ?>",
-					"oferta":"<?php echo $pedido['oferta_ID']; ?>",
-					"obs":"<?php echo $pedido['OBSERVACAO']; ?>",
-					"custo":"<?php echo $pedido['CUSTO']; ?>",
-					"prof":"<?php echo pesquisarProfessorNome($pedido['oferta_ID']); ?>",
-					"discip":"<?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?>"
-				}' >
 
-				<div class="row d-flex align-items-center">
-					<div class="col text-center">
-						<i class="fas fa-utensils fa-5x"></i>
+						<a class="shadow btn btn-primary p-3 m-2 text-center" data-toggle="modal" data-target="#verPedido"
+
+						data-disciplina='{
+						"id":"<?php echo $pedido['ID']; ?>",
+						"titulo":"<?php echo $pedido['TITULO']; ?>",
+						"data":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'Y-m-d'); ?>",
+						"dataShow":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y'); ?>",
+						"oferta":"<?php echo $pedido['oferta_ID']; ?>",
+						"obs":"<?php echo $pedido['OBSERVACAO']; ?>",
+						"custo":"<?php echo $pedido['CUSTO']; ?>",
+						"prof":"<?php echo pesquisarProfessorNome($pedido['oferta_ID']); ?>",
+						"discip":"<?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?>"
+					}' >
+
+					<div class="row d-flex align-items-center">
+						<div class="col text-center">
+							<i class="fas fa-utensils fa-5x"></i>
+						</div>
+						<div class="col text-center">
+							<p><strong><?php echo $pedido['TITULO'] ?></strong></p>
+							<p><?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?></p>
+							<p><?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y') ?></p>
+						</div>
 					</div>
-					<div class="col text-center">
-						<p><strong><?php echo $pedido['TITULO'] ?></strong></p>
-						<p><?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?></p>
-						<p><?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y') ?></p>
-					</div>
-				</div>
-			</a>
+				</a>
+				
+			<?php endif; ?>
 			
 		<?php endforeach; ?>
 

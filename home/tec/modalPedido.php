@@ -11,7 +11,7 @@
 
 			<div class="modal-body" id="renderPDF">
 
-				<table class="table table-bordered table-hover">
+				<table class="table table-hover table-sm">
 					<tbody>
 
 						
@@ -42,19 +42,32 @@
 					<table class="table table-bordered table-hover" id="tabela" > 
 
 						<thead class="thead-dark" id="tabelaHead">
-							<tr class="align-items-center"> 
-								<th class="">ID</th>
-								<th class="thNome">Ingrediente</th>
-								<th class="">Unidade</th>
-								<th class="">Preço</th>
-								<th class="">Quantidade</th>
-								<th class="">Total</th>
+							<tr> 
+								<th style="width: 5%;">ID</th>
+								<th style="width: 10%;">Ingrediente</th>
+								<th style="width: 10%;">Unidade</th>
+								<th style="width: 5%;">Preço</th>
+								<th style="width: 5%;">Quantidade</th>
+								<th style="width: 5%;">Total</th>
 							</tr>
 						</thead>
 						<tbody id="tabelaInsumosPedido">
-
 						</tbody>
 
+					</table>
+
+					<table class="table table-bordered table-hover">
+
+						<thead class="thead-dark" id="tabelaHead">
+							<tr>
+								<th>Observação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span id="labelObserv"></span></td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>

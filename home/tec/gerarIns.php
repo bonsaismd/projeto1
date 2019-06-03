@@ -7,9 +7,10 @@ if (isset($_POST['idPedido'])) {
 
 	$arrayInsumos = array();
 
+
 	if (sizeof($insumosPedido) > 0) {
 		foreach ($insumosPedido as $insumo) {
-			array_push($arrayInsumos, pesquisar('insumo', $insumo['ingrediente_ID']));
+			array_push($arrayInsumos, pesquisar('insumo', $insumo['insumo_ID']));
 		}
 	}
 

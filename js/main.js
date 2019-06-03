@@ -51,11 +51,13 @@ $('#verPedido').on('show.bs.modal', function (event) {
 
 
 	var modal = $(this);
+	modal.find('.modal-title').text('Pedido #'+id+' | '+titulo);
 	modal.find('#labelAula').text(titulo);
 	modal.find('#labelProfessor').text(prof);
 	modal.find('#labelDisciplina').text(discip);
 	modal.find('#labelDataAula').text(data);
 	modal.find('#labelCustoTotal').text(custo);
+	modal.find('#labelObserv').text(obs);
 
 	$.ajax({
 		type: "POST",
@@ -66,7 +68,6 @@ $('#verPedido').on('show.bs.modal', function (event) {
 		dataType: "json",
 		success: function(data){
 
-
 			if (data.insumo.length > 0) {
 				var updateTabela;
 
@@ -74,7 +75,7 @@ $('#verPedido').on('show.bs.modal', function (event) {
 				
 
 				updateTabela += '<tr style="text-align: center;">';
-				updateTabela += '<td style="width: 5%;">'+data.insumo[i].ingrediente_ID+'</td>';
+				updateTabela += '<td style="width: 5%;">'+data.insumo[i].insumo_ID+'</td>';
 				updateTabela += '<td style="width: 10%;" class="thNome">'+data.insumoInfo[i].NOME+'</td>';
 				updateTabela += '<td style="width: 10%;">'+data.insumoInfo[i].UNID_MEDIDA+'</td>';
 				updateTabela += '<td style="width: 5%;">R$'+data.insumoInfo[i].PRECO+'</td>';
@@ -83,7 +84,6 @@ $('#verPedido').on('show.bs.modal', function (event) {
 				updateTabela += '</tr>';
 
 				}
-
 			
 			} else {
 				var updateTabela = '<tr style="text-align: center;">';
