@@ -1,5 +1,5 @@
 <div class="modal fade" id="editInsumo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
 			<div class="modal-header">
@@ -50,7 +50,8 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="submit" form="formEditInsumo" class="btn btn-primary">Salvar</button>
+				<button type="submit" form="formEditInsumo" class="btn btn-success">Salvar</button>
+				<a href="#" class="btn brn-sm btn-danger align-items-left" data-toggle="modal" data-dismiss="modal" data-target="#confirmExclusao" data-insumo="<?php echo $insumo['ID']; ?>">Excluir</a>		
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 

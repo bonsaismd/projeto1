@@ -1,5 +1,5 @@
  <div class="modal fade" id="confirmExclusao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 
 			<div class="modal-header">
@@ -13,9 +13,9 @@
 				<p>Deseja realmente excluir esse insumo?</p>
 			</div>
 
-			<div class="modal-footer">
-				<a id="confirm" class="btn btn-primary">Sim</a>
-				<a id="cancel" class="btn btn-secondary" data-dismiss="modal">Não</a>
+			<div class="modal-footer text-white">
+				<a id="confirm" class="btn btn-success">Sim</a>
+				<a id="cancel" class="btn btn-danger" data-dismiss="modal">Não</a>
 			</div>
 
 		</div>
