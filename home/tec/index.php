@@ -103,6 +103,8 @@ if ($cargo != 'Técnico(a)') {
 <script type="text/javascript">
 	$(document).ready(function(){
 
+		$("#btn-1").addClass('menu-active');
+
 		$('#filterPedido').on('click', function() {
 			var dataInicial = new Date($('#dataInicial').val());
 			var dataFinal = new Date($('#dataFinal').val());
@@ -119,6 +121,7 @@ if ($cargo != 'Técnico(a)') {
 
 			});
 		});
+		
 	});
 </script>
 

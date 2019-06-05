@@ -29,7 +29,7 @@ include(HEADER_MENU);
 
 <div id="MatrizAnual">
 
-	<div class="row mb-4 mt-5">
+	<div class="row mb-4 mt-4">
 		<div class="col-sm-4 p-0">
 			<div class="input-group" id="container-pesquisar">
 				<div class="input-group-prepend">
@@ -119,12 +119,15 @@ include(HEADER_MENU);
 		<script>
 			$(document).ready(function(){
 
+				$("#btn-3").addClass('menu-active');
+
 				$("#procurar").on("keyup", function() { /* Sempre que uma tecla for levantada no campo de pesquisa */
 					var value = $(this).val().toLowerCase();
 					$('#tabelaInsumos > tr').filter(function() { /* Filtra na tabela com o valor do campo */
 						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
 					});
 				});
+
 			});
 		</script>
 

@@ -27,9 +27,9 @@ $cargo = $_SESSION['cargo'];
 			</div>
 		</div>		
 
-		<div class="col-2 p-0" id="btn-1">
+		<div class="col-2 p-0">
 			<?php if ($cargo == 'Técnico(a)') : ?>
-			<a href="index.php" class="btn-menu">
+			<a href="index.php" class="btn-menu" id="btn-1">
 				<div class="row d-inline-flex flex-nowrap align-items-center">
 					<div class="col p-0">
 						<i class="fas fa-clipboard-check fa-3x"></i>
@@ -42,7 +42,7 @@ $cargo = $_SESSION['cargo'];
 			<?php endif; ?>
 		</div>
 
-		<div class="col-2 p-0 border-left" id="btn-2">
+		<div class="col-2 p-0 border-left border-right" id="btn-2">
 			<?php if ($cargo == 'Professor(a)') : ?>
 			<a class="btn btn-primary" href="matriz.php">Teste</a>
 			<?php endif; ?>
@@ -65,9 +65,9 @@ $cargo = $_SESSION['cargo'];
 			<?php endif; ?>
 		</div>
 
-		<div class="col-2 p-0 border-left" id="btn-3">
+		<div class="col-2 p-0">
 			<?php if ($cargo == 'Técnico(a)') : ?>
-			<a href="matriz.php" class="btn-menu">
+			<a href="matriz.php" class="btn-menu" id="btn-3">
 				<div class="row d-inline-flex flex-nowrap align-items-center">
 					<div class="col p-0">
 						<i class="fas fa-box-open fa-3x"></i>
