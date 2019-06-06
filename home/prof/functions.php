@@ -43,6 +43,14 @@ function dadosOferta($id){
 	close_database($db);
 	return $result;
 }
+function pedidoOferta($id,$ind){
+	$db=open_database();
+	$query="SELECT * FROM pedido WHERE (oferta_ID='".$id."' AND INDEX_AULA=".$ind.");";
+	$result=mysqli_query($db,$query);
+
+	close_database($db);
+	return $result;
+}
 function nomeOferta($id){
 	$dados=mysqli_fetch_array(dadosOferta($id));
 	$db= open_database();

@@ -12,6 +12,7 @@ carregarInsumos();
 carregarDisciplinas();
 carregarProfessores();
 carregarDiscProf();
+
 ?>
 
 <?php 
@@ -27,22 +28,25 @@ if ($cargo != 'Professor(a)') {
    <p><?php echo nomeOferta($dP) ; ?></p>
    <?php for ($ind=0; $ind<mysqli_fetch_array(dadosOferta($dP))['QTDE_PRATICAS'];$ind ++){?>
     <div>
-
-
+<?php if(mysqli_num_rows ((pedidoOferta(mysqli_fetch_array(dadosOferta($dP))['ID'],$ind)))>0){?>
+<p>Aqui já tem pedido</p>
+<?php ;} else{?>
 <button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalExemplo">
   Aula <?php echo $ind +1;?>
 </button>
       
     </div>
-  <?php }?>
+  <?php }}?>
    </div>
   <?php endforeach;}?>
+</div>
 <div>
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDisc">
   Cadastrar cadeira
 </button>
 </div>
-</div>
+
 
 
 
@@ -114,6 +118,9 @@ if ($cargo != 'Professor(a)') {
 
         <form  class="form-inline" id= "forms">
           <div class="form-group">
+            <select class="form-control" name="of_id" id="of_id">
+              
+            </select>
             <select class="form-control" name="e_id" id="e_id" onchange="och(this)"data-allow-clear="1">
               <option disabled selected>ID</option>
              <?php foreach ($insumos as $insumo): ?>
