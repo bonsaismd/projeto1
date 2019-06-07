@@ -1,7 +1,11 @@
 #precoUnit{
 	display:none;}
-
-
+#of_id{
+    display: none;
+}
+#indAula{
+    display: none;
+}
 .table-responsive {
 	height: 60vh;
 	overflow: scroll;

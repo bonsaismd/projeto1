@@ -31,7 +31,17 @@ if ($cargo != 'Professor(a)') {
 <?php if(mysqli_num_rows ((pedidoOferta(mysqli_fetch_array(dadosOferta($dP))['ID'],$ind)))>0){?>
 <p>Aqui já tem pedido</p>
 <?php ;} else{?>
-<button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalExemplo">
+<button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalExemplo"
+data-aula='{
+  "id":"<?php echo mysqli_fetch_array(dadosOferta($dP))['ID'];?>",
+  "ind_Aula": "<?php echo $ind ;?>"
+}'
+
+
+
+
+
+>
   Aula <?php echo $ind +1;?>
 </button>
       
@@ -52,6 +62,7 @@ if ($cargo != 'Professor(a)') {
 
 
 <script type="text/javascript" src="js.js"></script>
+
 <div class="modal fade" id="modalDisc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"  role="document">
     <div class="modal-content">
@@ -106,7 +117,7 @@ if ($cargo != 'Professor(a)') {
   <div class="modal-dialog modal-lg"  role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
+        <h5 class="modal-title" id="exampleModalLabel" contenteditable="true" >Título do pedido</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -118,9 +129,8 @@ if ($cargo != 'Professor(a)') {
 
         <form  class="form-inline" id= "forms">
           <div class="form-group">
-            <select class="form-control" name="of_id" id="of_id">
-              
-            </select>
+            <input class="form-control" name="of_id" id="of_id" type=number disabled="true">
+            <input class="form-control" name="indAula" id="indAula" type=number disabled="true">
             <select class="form-control" name="e_id" id="e_id" onchange="och(this)"data-allow-clear="1">
               <option disabled selected>ID</option>
              <?php foreach ($insumos as $insumo): ?>
@@ -168,7 +178,7 @@ if ($cargo != 'Professor(a)') {
           </div>
           <input class="form-control" id="custoT" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
         </h1>
-        <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar mudanças</button>
+        <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>

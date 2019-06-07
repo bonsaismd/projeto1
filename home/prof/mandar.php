@@ -3,11 +3,13 @@ require_once('../../config.php');
 require_once(DBAPI);
 
 $custoT=$_POST['custoT'];
-
+$idOferta=$_POST['idOferta'];
+$idAula=$_POST['idAula'];
 $date='1999-12-29';
 $k=0;
 $db = open_database();
-$sql = "INSERT INTO pedido VALUES (0, 0," . $_POST['custoT']. ", 'teste','miohs', '".$date."', ".$k.");";
+var_dump($idOferta);
+$sql = "INSERT INTO pedido VALUES (0, ". $idOferta."," . $_POST['custoT']. ", 'teste','miohs', '".$date."', ".$k.",".$idAula .");";
 mysqli_query($db,$sql) ;
 
 $sq = "SELECT LAST_INSERT_ID()";

@@ -6,11 +6,13 @@ function mandar(){
 	console.log(ajax_data);
 	console.log('oi');
 	var cT=$("#custoT").val();
+	var idAula=$("$indAula").val();
+	var idOferta=$("#id_of").val();
 	console.log(cT);
 $.ajax({
 				url:"mandar.php",
 				method:"POST",
-				data:{ajax_data:ajax_data,custoT:cT},
+				data:{ajax_data:ajax_data,custoT:cT,idOferta:idOferta,idAula:idAula},
 				dataType:"text",
 				success:function(msg){
 					console.log(msg);
@@ -18,6 +20,19 @@ $.ajax({
 		});
 
 }
+
+$(window).on('shown.bs.modal', function(event) { 
+    	var button = $(event.relatedTarget);
+
+	var id = button.data('aula').id;
+	var indA = button.data('aula').ind_Aula;
+$('#of_id').val(id);
+$('#indAula').val(indA);
+console.log(id);
+console.log(indAula);
+});
+
+
 var total=0;
 function grid() {
 insumo = document.getElementById("e_nome").value;
