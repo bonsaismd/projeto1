@@ -1,72 +1,214 @@
--- phpMyAdmin SQL Dump
--- version 4.7.9
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1:3306
--- Generation Time: 05-Jun-2019 às 06:31
--- Versão do servidor: 5.7.21
--- PHP Version: 5.6.35
+drop database if exists celliern;
+create database celliern;
+use celliern;
+CREATE TABLE disciplina (
+  ID varchar(10) NOT NULL,
+  NOME VARCHAR(100) NOT NULL,
+  SALDO FLOAT NOT NULL DEFAULT 2000,
+  PRIMARY KEY(ID)
+);
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE TABLE insumo (
+  ID INTEGER UNSIGNED NOT NULL,
+  NOME VARCHAR(70) NOT NULL,
+  DESCRICAO VARCHAR(500) NOT NULL,
+  UNID_MEDIDA VARCHAR(100) NOT NULL,
+  PRECO decimal(6,2) NOT NULL,
+  SALDO FLOAT NOT NULL DEFAULT 0,
+  PRIMARY KEY(ID)
+);
 
+CREATE TABLE lista (
+  ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  TITULO VARCHAR(100) NOT NULL,
+  OBSERVACAO VARCHAR(300) NOT NULL,
+  PRIMARY KEY(ID)
+);
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE autenticacao (
+  ID INTEGER UNSIGNED NOT NULL,
+  SENHA VARCHAR(60) NOT NULL,
+  PERMISSAO TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY(ID)
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Database: `cellier`
---
+CREATE TABLE professor (
+  autenticacao_ID INTEGER UNSIGNED NOT NULL,
+  NOME VARCHAR(60) NOT NULL,
+  PERMISSAO BOOL NOT NULL,
+  PRIMARY KEY(autenticacao_ID),
+  INDEX (autenticacao_ID),
+  FOREIGN KEY(autenticacao_ID)
+    REFERENCES autenticacao(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+CREATE TABLE oferta (
+  ID INTEGER UNSIGNED NOT NULL,
+  disciplina_ID VARCHAR(10) NOT NULL,
+  COR TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  ANO YEAR NOT NULL,
+  SEMESTRE TINYINT UNSIGNED NOT NULL,
+  QTDE_ALUNOS TINYINT UNSIGNED NOT NULL,
+  QTDE_AULAS TINYINT UNSIGNED NOT NULL,
+  SALDO FLOAT NOT NULL,
+  ENVIADO BOOL NOT NULL DEFAULT 0,
+  PRIMARY KEY(ID),
+  INDEX (disciplina_ID),
+  FOREIGN KEY(disciplina_ID)
+    REFERENCES disciplina(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Estrutura da tabela `autenticacao`
---
+CREATE TABLE tecnico (
+  autenticacao_ID INTEGER UNSIGNED NOT NULL,
+  NOME VARCHAR(255) NOT NULL,
+  PRIMARY KEY(autenticacao_ID),
+  INDEX (autenticacao_ID),
+  FOREIGN KEY(autenticacao_ID)
+    REFERENCES autenticacao(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `autenticacao`;
-CREATE TABLE IF NOT EXISTS `autenticacao` (
-  `ID` int(8) NOT NULL,
-  `SENHA` varchar(60) NOT NULL,
-  `PERMISSAO` smallint(6) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE aula (
+  ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  oferta_ID INTEGER UNSIGNED NOT NULL,
+  TITULO VARCHAR(100) NOT NULL,
+  OBSERVACAO VARCHAR(300) NULL,
+  CUSTO FLOAT NOT NULL,
+  DIA_ENTREGA DATE NOT NULL,
+  PRIMARY KEY(ID),
+  INDEX (oferta_ID),
+  FOREIGN KEY(oferta_ID)
+    REFERENCES oferta(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `autenticacao`
---
+CREATE TABLE receita (
+  ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  professor_autenticacao_ID INTEGER UNSIGNED NOT NULL,
+  TITULO VARCHAR(100) NOT NULL,
+  OBSERVACAO VARCHAR(300) NULL,
+  CUSTO FLOAT NOT NULL,
+  PRIMARY KEY(ID),
+  INDEX (professor_autenticacao_ID),
+  FOREIGN KEY(professor_autenticacao_ID)
+    REFERENCES professor(autenticacao_ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-INSERT INTO `autenticacao` (`ID`, `SENHA`, `PERMISSAO`) VALUES
-(2637, '$2y$10$LBF2c6r1MfNIdbMCmqM.9u1XyR6R7uFVs/GyR7UDbn0bTSYnrMV7.', 2),
-(123456789, '$2y$10$MDESsgkI2jSYmX1mlRtJ4Obbx1dzC4/6eRf608loQUwTpJ0uucX4i', 3),
-(1234567, '$2y$10$bDshuso1MaqxC7whD9zNXOwofq7jNvj/.PwgZFhaV/psUXuASFiDq', 3),
-(123456, '$2y$10$gkcvZweoSqJDL/CCsYSsyOcgwX1.IGFF6cNGzAUdTKft/xIba1W4q', 2),
-(1011, '$2y$10$xpT5Tf0jmXBOSDzH9bGEq.SmbERP6Py66rAa0zBCFM8Qm3NKNLx4e', 3),
-(1997, '$2y$10$kVlr9vmpGqvAi4ovH/AKpOB2Jfk/ujIIrPlMNO1aOksCgo0J8kVEu', 1),
-(111111, '$2y$10$PVMf6k4LYwLjiYGSaITUCOrcRVApg8R/D5XwnAHWVzc02gkmfRR1S', 1),
-(1, '$2y$10$An88GF7pfJrGTgDuo8w2/uTNT0WBAdEGZHgqMl7IRNNwD3iGyriCC', 1);
+CREATE TABLE receita_insumo (
+  receita_ID INTEGER UNSIGNED NOT NULL,
+  insumo_ID INTEGER UNSIGNED NOT NULL,
+  QUANTIDADE TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  OBSERVACAO VARCHAR(300) NULL,
+  PRIMARY KEY(receita_ID, insumo_ID),
+  INDEX (receita_ID),
+  INDEX (insumo_ID),
+  FOREIGN KEY(receita_ID)
+    REFERENCES receita(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(insumo_ID)
+    REFERENCES insumo(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+CREATE TABLE lista_aula (
+  lista_ID INTEGER UNSIGNED NOT NULL,
+  aula_ID INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(lista_ID, aula_ID),
+  INDEX (lista_ID),
+  INDEX (aula_ID),
+  FOREIGN KEY(lista_ID)
+    REFERENCES lista(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(aula_ID)
+    REFERENCES aula(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Estrutura da tabela `disciplina`
---
+CREATE TABLE aula_receita (
+  aula_ID INTEGER UNSIGNED NOT NULL,
+  receita_ID INTEGER UNSIGNED NOT NULL,
+  QUANTIDADE FLOAT NOT NULL DEFAULT 1,
+  ALTERACAO BOOL NOT NULL,
+  PRIMARY KEY(aula_ID, receita_ID),
+  INDEX (aula_ID),
+  INDEX (receita_ID),
+  FOREIGN KEY(aula_ID)
+    REFERENCES aula(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(receita_ID)
+    REFERENCES receita(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `disciplina`;
-CREATE TABLE IF NOT EXISTS `disciplina` (
-  `ID` varchar(10) NOT NULL,
-  `NOME` varchar(100) NOT NULL,
-  `SALDO` float UNSIGNED NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE oferta_professor (
+  oferta_ID INTEGER UNSIGNED NOT NULL,
+  professor_autenticacao_ID INTEGER UNSIGNED NOT NULL,
+  INDEX (professor_autenticacao_ID),
+  INDEX (oferta_ID),
+  FOREIGN KEY(professor_autenticacao_ID)
+    REFERENCES professor(autenticacao_ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(oferta_ID)
+    REFERENCES oferta(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `disciplina`
---
+CREATE TABLE lista_insumo (
+  insumo_ID INTEGER UNSIGNED NOT NULL,
+  lista_ID INTEGER UNSIGNED NOT NULL,
+  QUANTIDADE TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY(insumo_ID, lista_ID),
+  FOREIGN KEY(insumo_ID)
+    REFERENCES insumo(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(lista_ID)
+    REFERENCES lista(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE receita_alterada (
+  ID INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  aula_receita_receita_ID INTEGER UNSIGNED NOT NULL,
+  aula_receita_aula_ID INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(ID),
+  FOREIGN KEY(aula_receita_aula_ID, aula_receita_receita_ID)
+    REFERENCES aula_receita(aula_ID, receita_ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE receita_alterada_insumo (
+  receita_alterada_ID INTEGER UNSIGNED NOT NULL,
+  insumo_ID INTEGER UNSIGNED NOT NULL,
+  QUANTIDADE TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY(receita_alterada_ID, insumo_ID),
+  FOREIGN KEY(receita_alterada_ID)
+    REFERENCES receita_alterada(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(insumo_ID)
+    REFERENCES insumo(ID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+)ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `disciplina` (`ID`, `NOME`, `SALDO`) VALUES
 ('123', 'Cozinha Italiana', 1250),
@@ -91,28 +233,10 @@ INSERT INTO `disciplina` (`ID`, `NOME`, `SALDO`) VALUES
 ('ICA1228', 'Cozinha Europeia', 300),
 ('ICA3268', 'Gastronomia Ecológica', 300);
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `insumo`
---
 
-DROP TABLE IF EXISTS `insumo`;
-CREATE TABLE IF NOT EXISTS `insumo` (
-  `NOME` varchar(50) NOT NULL,
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `DESCRICAO` varchar(436) CHARACTER SET utf8 DEFAULT NULL,
-  `UNID_MEDIDA` varchar(30) NOT NULL,
-  `PRECO` decimal(6,2) DEFAULT NULL,
-  `QTDE_DISPONIVEL` int(6) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=45647 DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `insumo`
---
-
-INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `QTDE_DISPONIVEL`) VALUES
+INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `SALDO`) VALUES
 ('Abacate avocado', 323, 'FRUTA IN NATURA, TIPO ABACATE, ESPÉCIE AVOCADO', 'KG', '5.90', 0),
 ('Abacate manteiga', 322, 'FRUTA IN NATURA, TIPO ABACATE, ESPÉCIE MANTEIGA', 'KG', '4.79', 0),
 ('Abacaxi', 324, 'FRUTA IN NATURA, TIPO ABACAXI, APLICAÇÃO ALIMENTAR, CARACTERÍSTICAS ADICIONAIS MADURO', 'UNID', '4.40', 0),
@@ -498,7 +622,7 @@ INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `QTDE_D
 ('Queijo minas frescal', 300, 'QUEIJO MINAS FRESCAL', 'KG', '34.00', 0),
 ('Queijo mussarela', 301, 'QUEIJO, TIPO MUSSARELA, PESO 1000 G', 'KG', '20.80', 0),
 ('Queijo mussarela', 302, ' QUEIJO, INGREDIENTES LEITE DE BÚFALA E SAL, CONSERVAÇÃO 0 A 10 ¨C, TIPO MUSSARELA DE BÚFALA, CARACTERÍSTICAS ADICIONAIS CONSISTÊNCIA FIRME E LEVEMENTE ÁCIDO ', 'KG', '65.00', 0);
-INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `QTDE_DISPONIVEL`) VALUES
+INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `SALDO`) VALUES
 ('Queijo parmesão', 303, 'QUEIJO, INGREDIENTES LEITE, CONSERVAÇÃO 0 A 10 ¨C, TIPO PARMESÃO RALADO, PESO 50 G', 'PACOTE C/ 50G', '2.00', 0),
 ('Queijo prato', 304, 'QUEIJO, INGREDIENTES LEITE, TIPO PRATO, CARACTERÍSTICAS ADICIONAIS PASTEURIZADO FATIADO', 'KG', '19.00', 0),
 ('Queijo ricota', 305, 'RICOTA, INGREDIENTES ÁCIDO LÁCTICO, TIPO EMBALAGEM FORMA POLIETILENO, APRESENTAÇÃO FORMA, CONSERVAÇÃO 5 A 10 ¨C', 'KG', '25.19', 0),
@@ -580,144 +704,20 @@ INSERT INTO `insumo` (`NOME`, `ID`, `DESCRICAO`, `UNID_MEDIDA`, `PRECO`, `QTDE_D
 ('Vinho tinto seco', 446, 'VINHO, COR TINTO, CLASSE MESA, TEOR AÇÚCAR SECO', 'GARRAFA C/ 750ML', '10.30', 0),
 ('Vodka', 454, 'BEBIDA ALCOÓLICA DESTILADA TIPO VODKA TRIPLAMENTE DESTILADA QUALIDADE SUPERIOR. GARRAFA COM 1 LITRO.', 'GARRAFA C/ 1000ML', '19.99', 0),
 ('Vôngole', 43, 'MOLUSCO IN NATURA, ESPÉCIE VONGOLE', 'KG', '90.00', 0),
-('Wassabi', 247, 'TEMPERO CULINÁRIO, TIPO RAIZ FORTE, ESPECIAL PARA CULINÁRIA ORIENTAL (WASSABI). EMBALAGEM 43 GRAMAS', 'EMBALAGEM C/ 43G', '14.00', 0),
-('Dindin de Côco Gourmet', 3341, 'FRUTA IN NATURA DINDIN GOURMET', 'UNID', '3.50', 5);
+('Wassabi', 247, 'TEMPERO CULINÁRIO, TIPO RAIZ FORTE, ESPECIAL PARA CULINÁRIA ORIENTAL (WASSABI). EMBALAGEM 43 GRAMAS', 'EMBALAGEM C/ 43G', '14.00', 0);
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `lista_pedido`
---
 
-DROP TABLE IF EXISTS `lista_pedido`;
-CREATE TABLE IF NOT EXISTS `lista_pedido` (
-  `QUANTIDADE` int(3) NOT NULL,
-  `insumo_ID` int(11) NOT NULL,
-  `pedido_ID` int(11) NOT NULL,
-  PRIMARY KEY (`QUANTIDADE`,`insumo_ID`,`pedido_ID`),
-  KEY `insumo_ID` (`insumo_ID`),
-  KEY `pedido_ID` (`pedido_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `lista_pedido`
---
-
-INSERT INTO `lista_pedido` (`QUANTIDADE`, `insumo_ID`, `pedido_ID`) VALUES
-(1, 74, 5456),
-(1, 78, 5524),
-(1, 125, 5524),
-(1, 196, 5456),
-(1, 205, 5524),
-(1, 305, 5524),
-(1, 323, 5523),
-(1, 361, 5523),
-(2, 419, 5123),
-(4, 200, 5123),
-(5, 171, 5456),
-(5, 369, 5524);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `oferta`
---
-
-DROP TABLE IF EXISTS `oferta`;
-CREATE TABLE IF NOT EXISTS `oferta` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT,
-  `disciplina_ID` varchar(10) NOT NULL,
-  `ANO` year(4) NOT NULL,
-  `SEMESTRE` int(1) NOT NULL,
-  `QTDE_ALUNOS` int(3) DEFAULT NULL,
-  `QTDE_PRATICAS` int(3) DEFAULT NULL,
-  `SALDO` float UNSIGNED NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `disciplina_ID` (`disciplina_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4791 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `oferta`
---
-
-INSERT INTO `oferta` (`ID`, `disciplina_ID`, `ANO`, `SEMESTRE`, `QTDE_ALUNOS`, `QTDE_PRATICAS`, `SALDO`) VALUES
-(4123, '123', 2019, 1, 30, 6, 0),
-(4456, '456', 2019, 2, 33, 8, 0),
-(4789, '5789', 2019, 2, 25, 4, 0),
-(4790, 'ICA1223', 2019, 1, 15, 4, 300);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `oferta_professor`
---
-
-DROP TABLE IF EXISTS `oferta_professor`;
-CREATE TABLE IF NOT EXISTS `oferta_professor` (
-  `oferta_ID` int(11) NOT NULL,
-  `professor_autenticacao_ID` int(11) NOT NULL,
-  `COR` int(1) DEFAULT NULL,
-  KEY `professor_autenticacao_ID` (`professor_autenticacao_ID`),
-  KEY `oferta_ID` (`oferta_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `oferta_professor`
---
-
-INSERT INTO `oferta_professor` (`oferta_ID`, `professor_autenticacao_ID`, `COR`) VALUES
-(4123, 1997, 1),
-(4456, 1997, 3),
-(4123, 123456, 2),
-(4790, 1997, 1),
-(4790, 111111, 1);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `pedido`
---
-
-DROP TABLE IF EXISTS `pedido`;
-CREATE TABLE IF NOT EXISTS `pedido` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `oferta_ID` int(11) NOT NULL,
-  `CUSTO` float(8,2) NOT NULL,
-  `OBSERVACAO` varchar(255) DEFAULT NULL,
-  `TITULO` varchar(50) NOT NULL,
-  `DIA_ENTREGA` date NOT NULL,
-  `ENVIADO` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `oferta_ID` (`oferta_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=5525 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `pedido`
---
-
-INSERT INTO `pedido` (`ID`, `oferta_ID`, `CUSTO`, `OBSERVACAO`, `TITULO`, `DIA_ENTREGA`, `ENVIADO`) VALUES
-(5523, 4789, 0.00, 'comprar carne ruim', 'miohos', '1999-12-29', 0),
-(5456, 4456, 81.80, 'Entregar com URGÊNCIA', 'Feijoada', '2019-05-25', 1),
-(5123, 4123, 15.80, 'Cuidado com os tomates...', 'Spaghetti', '2019-05-20', 1),
-(5524, 4790, 295.79, 'teste', 'miohs', '1999-12-29', 0);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `professor`
---
-
-DROP TABLE IF EXISTS `professor`;
-CREATE TABLE IF NOT EXISTS `professor` (
-  `autenticacao_ID` int(8) NOT NULL,
-  `NOME` varchar(255) NOT NULL,
-  `PERMISSAO` tinyint(1) NOT NULL,
-  PRIMARY KEY (`autenticacao_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `professor`
---
+INSERT INTO `autenticacao` (`ID`, `SENHA`, `PERMISSAO`) VALUES
+(2637, '$2y$10$LBF2c6r1MfNIdbMCmqM.9u1XyR6R7uFVs/GyR7UDbn0bTSYnrMV7.', 2),
+(123456789, '$2y$10$MDESsgkI2jSYmX1mlRtJ4Obbx1dzC4/6eRf608loQUwTpJ0uucX4i', 3),
+(1234567, '$2y$10$bDshuso1MaqxC7whD9zNXOwofq7jNvj/.PwgZFhaV/psUXuASFiDq', 3),
+(123456, '$2y$10$gkcvZweoSqJDL/CCsYSsyOcgwX1.IGFF6cNGzAUdTKft/xIba1W4q', 2),
+(1011, '$2y$10$xpT5Tf0jmXBOSDzH9bGEq.SmbERP6Py66rAa0zBCFM8Qm3NKNLx4e', 3),
+(1997, '$2y$10$kVlr9vmpGqvAi4ovH/AKpOB2Jfk/ujIIrPlMNO1aOksCgo0J8kVEu', 1),
+(111111, '$2y$10$PVMf6k4LYwLjiYGSaITUCOrcRVApg8R/D5XwnAHWVzc02gkmfRR1S', 1),
+(1, '$2y$10$An88GF7pfJrGTgDuo8w2/uTNT0WBAdEGZHgqMl7IRNNwD3iGyriCC', 1);
 
 INSERT INTO `professor` (`autenticacao_ID`, `NOME`, `PERMISSAO`) VALUES
 (2637, 'Carlos Matheus Sousa', 1),
@@ -726,27 +726,5 @@ INSERT INTO `professor` (`autenticacao_ID`, `NOME`, `PERMISSAO`) VALUES
 (111111, 'nacp', 0),
 (1, '1', 0);
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `tecnico`
---
-
-DROP TABLE IF EXISTS `tecnico`;
-CREATE TABLE IF NOT EXISTS `tecnico` (
-  `autenticacao_ID` int(11) NOT NULL,
-  `NOME` varchar(255) NOT NULL,
-  PRIMARY KEY (`autenticacao_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `tecnico`
---
-
 INSERT INTO `tecnico` (`autenticacao_ID`, `NOME`) VALUES
 (1011, 'DekTec');
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
