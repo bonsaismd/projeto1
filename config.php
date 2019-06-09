@@ -1,6 +1,6 @@
 <?php
 
-define('DB_NAME', 'cellier');
+define('DB_NAME', 'celliern');
 
 define('DB_USER', 'root');
 

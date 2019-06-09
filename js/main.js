@@ -1,17 +1,3 @@
-/* Menu Active 
-var btnContainer = document.getElementById("header-container");
-var btns = btnContainer.getElementsByClassName("btn-menu");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-
-    var current = document.getElementsByClassName("menu-active");
-    if(current.length > 0){
-    	current[0].className = current[0].className.replace(" menu-active", "");
-    }
-    this.className += " menu-active";
-  });
-}*/
-
 
 /* Excluir Insumo */
 $('#confirmExclusao').on('show.bs.modal', function (event) {
@@ -43,7 +29,8 @@ $('#editInsumo').on('show.bs.modal', function (event) {
 	modal.find(".insumo-DESCRICAO").val(desc);
 	modal.find(".insumo-UNID_MEDIDA").val(unid);
 	modal.find(".insumo-PRECO").val(preco);
-	modal.find(".insumo-QTDE_DISPONIVEL").val(qtde);
+	modal.find(".insumo-SALDO").val(qtde);
+	modal.find("#btn-delete").data('insumo', id);
 
 	document.getElementById('formEditInsumo').action = 'editAPI.php?id='+id;
 })

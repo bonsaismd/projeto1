@@ -41,8 +41,8 @@
 							<input type="number" step="0.01" min="0" max="9999" class="form-control" name="insumo['PRECO']" placeholder="Preço">
 						</div>
 						<div class="col-sm-4">
-							<label for="insumo['QTDE_DISPONIVEL']">Saldo</label>
-							<input type="number" class="form-control" min="0" max="9999" name="insumo['QTDE_DISPONIVEL']" placeholder="Saldo">
+							<label for="insumo['SALDO']">Saldo</label>
+							<input type="number" class="form-control" min="0" max="9999" name="insumo['SALDO']" placeholder="Saldo">
 						</div>
 					</div>
 

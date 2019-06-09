@@ -78,7 +78,7 @@ include(HEADER_MENU);
 							<td class="col-3 text-left overflow-hidden"><?php echo $insumo['DESCRICAO'] ?></td>
 							<td class="col-2"><?php echo $insumo['UNID_MEDIDA'] ?></td>
 							<td class="col-1">R$<?php echo $insumo['PRECO'] ?></td>
-							<td class="col-1"><?php echo $insumo['QTDE_DISPONIVEL'] ?></td>
+							<td class="col-1"><?php echo $insumo['SALDO'] ?></td>
 							<td class="col-1 actions">
 								<a href="#" class="btn brn-sm btn-success" data-toggle="modal" data-target="#editInsumo"
 								data-insumo='{"id": "<?php echo $insumo['ID']; ?>",
@@ -86,7 +86,7 @@ include(HEADER_MENU);
 								"desc":"<?php echo $insumo['DESCRICAO']; ?>",
 								"unid":"<?php echo $insumo['UNID_MEDIDA']; ?>",
 								"preco":"<?php echo $insumo['PRECO']; ?>",
-								"qtde":"<?php echo $insumo['QTDE_DISPONIVEL']; ?>"}'>
+								"qtde":"<?php echo $insumo['SALDO']; ?>"}'>
 								<i class="fa fa-edit"></i> Editar</a>
 							</td>
 

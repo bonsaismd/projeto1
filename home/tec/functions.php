@@ -1,13 +1,9 @@
 <?php
-
-/* Abrindo as configurações do banco de dados */
 require_once('../../config.php');
-
-/* Funções do banco de dados (Fica no arquivo inc/database.php)*/
 require_once(DBAPI);
 
-$insumos = null; /* Variavel global que armazena todos os insumos */
-$insumo = null; /* Variavel global que armazena um único insumo */
+$insumos = null;
+$insumo = null;
 
 $insumosPedido = array();
 $pedidos = null;
@@ -16,11 +12,9 @@ $oferta = null;
 $disciplina = null;
 
 
-/* Armazena todos os Insumos na variável global */
 function carregarInsumos(){
 	global $insumos;
 
-	/* Função para pesquisar todos os dados da tabela 'insumo' do BD (Veio do arquivo database.php)*/
 	$insumos = pesquisar_todos('insumo'); 
 }
 
@@ -30,8 +24,8 @@ function pesquisarInsumosPedido($id = null){
 
 	$db = open_database();
 
-	$sql = "SELECT * FROM lista_pedido WHERE pedido_ID = " . $id; /* Codigo SQL para a pesquisa*/
-	$resultado = mysqli_query($db, $sql); /* Executa o codigo no banco de dados e armazena o resultado */
+	$sql = "SELECT * FROM lista_pedido WHERE pedido_ID = " . $id;
+	$resultado = mysqli_query($db, $sql);
 	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
 	close_database($db);
@@ -39,9 +33,9 @@ function pesquisarInsumosPedido($id = null){
 	return $encontrado;
 }
 
-function carregarPedidos() {
+function carregarAulas() {
 	global $pedidos;
-	$pedidos = pesquisar_todos('pedido');
+	$pedidos = pesquisar_todos('aula');
 
 }
 
@@ -61,8 +55,8 @@ function pesquisarProfessorID($id = null) {
 	$db = open_database();
 	$professor = array();
 
-	$sql = "SELECT * FROM oferta_professor WHERE oferta_ID = " . $id; /* Codigo SQL para a pesquisa*/
-	$resultado = mysqli_query($db, $sql); /* Executa o codigo no banco de dados e armazena o resultado */
+	$sql = "SELECT * FROM oferta_professor WHERE oferta_ID = " . $id;
+	$resultado = mysqli_query($db, $sql);
 
 	if ($resultado->num_rows > 0) { 
 		foreach ($resultado as $prof) {
@@ -83,8 +77,8 @@ function pesquisarProfessorNome($id = null) {
 	$db = open_database();
 	$professor = null;
 
-	$sql = "SELECT * FROM oferta_professor WHERE oferta_ID = " . $id; /* Codigo SQL para a pesquisa*/
-	$resultado = mysqli_query($db, $sql); /* Executa o codigo no banco de dados e armazena o resultado */
+	$sql = "SELECT * FROM oferta_professor WHERE oferta_ID = " . $id;
+	$resultado = mysqli_query($db, $sql);
 
 	if ($resultado->num_rows > 0) { 
 		foreach ($resultado as $prof) {

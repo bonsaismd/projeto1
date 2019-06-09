@@ -1,7 +1,7 @@
 <?php
 include("../../login/check.php");
 require_once('functions.php');
-carregarPedidos();
+carregarAulas();
 
 include(HEADER_TEMPLATE);
 include(HEADER_MENU);

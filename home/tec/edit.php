@@ -41,8 +41,8 @@
 							<input type="number" step="0.01" min="0" max="9999" class="form-control insumo-PRECO" name="insumo['PRECO']">
 						</div>
 						<div class="col-sm-4">
-							<label for="insumo['QTDE_DISPONIVEL']">Saldo</label>
-							<input type="number" min="0" max="9999" class="form-control insumo-QTDE_DISPONIVEL" name="insumo['QTDE_DISPONIVEL']">
+							<label for="insumo['SALDO']">Saldo</label>
+							<input type="number" min="0" max="9999" class="form-control insumo-SALDO" name="insumo['SALDO']">
 						</div>
 					</div>
 
@@ -51,7 +51,7 @@
 
 			<div class="modal-footer">
 				<button type="submit" form="formEditInsumo" class="btn btn-success">Salvar</button>
-				<a href="#" class="btn brn-sm btn-danger align-items-left" data-toggle="modal" data-dismiss="modal" data-target="#confirmExclusao" data-insumo="<?php echo $insumo['ID']; ?>">Excluir</a>		
+				<a href="#" id="btn-delete" class="btn brn-sm btn-danger align-items-left" data-toggle="modal" data-dismiss="modal" data-target="#confirmExclusao" data-insumo="">Excluir</a>		
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 			</div>
 
