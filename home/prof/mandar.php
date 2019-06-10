@@ -1,15 +1,13 @@
 <?php
+include("../../login/check.php");
 require_once('../../config.php');
 require_once(DBAPI);
-
+$id_usuario = $_SESSION['inputID'];
 $custoT=$_POST['custoT'];
-$idOferta=$_POST['idOferta'];
-$idAula=$_POST['idAula'];
-$date='1999-12-29';
-$k=0;
+$titulo=$_POST['titulo'];
 $db = open_database();
-var_dump($idOferta);
-$sql = "INSERT INTO pedido VALUES (0, ". $idOferta."," . $_POST['custoT']. ", 'teste','miohs', '".$date."', ".$k.",".$idAula .");";
+/////////////////////id, id prof, titulo, observacao, custo
+$sql = "INSERT INTO receita VALUES (0, ". $id_usuario.",'".$titulo."', 'obsobsobs'," . $_POST['custoT']. ");";
 mysqli_query($db,$sql) ;
 
 $sq = "SELECT LAST_INSERT_ID()";
@@ -18,8 +16,10 @@ $encontrado = mysqli_fetch_array($resultado);
 
 
 foreach ($_POST['ajax_data'] as $insumo):
-$sq = "INSERT INTO lista_pedido VALUES (" . $insumo['qtde'] . "," . $insumo['id'] .",".$encontrado[0]." );";
+$sq = "INSERT INTO receita_insumo VALUES (".$encontrado[0].", " . $insumo['id'] ."," . $insumo['qtde'] . ",'');";
 $res = mysqli_query($db, $sq);
+var_dump($res);
+var_dump($sq);
 endforeach;
 
 
@@ -27,5 +27,3 @@ endforeach;
 close_database($db);
 
 ?>
-
-

@@ -6,13 +6,12 @@ function mandar(){
 	console.log(ajax_data);
 	console.log('oi');
 	var cT=$("#custoT").val();
-	var idAula=$("$indAula").val();
-	var idOferta=$("#id_of").val();
-	console.log(cT);
+	var titulo=$("#tituloRec").val();
+	console.log(titulo);
 $.ajax({
 				url:"mandar.php",
 				method:"POST",
-				data:{ajax_data:ajax_data,custoT:cT,idOferta:idOferta,idAula:idAula},
+				data:{ajax_data:ajax_data,custoT:cT,titulo:titulo},
 				dataType:"text",
 				success:function(msg){
 					console.log(msg);
@@ -21,15 +20,41 @@ $.ajax({
 
 }
 
-$(window).on('shown.bs.modal', function(event) { 
+$(document).on('show.bs.modal','#modalAula', function (event) {
     	var button = $(event.relatedTarget);
-
+console.log(button);
 	var id = button.data('aula').id;
 	var indA = button.data('aula').ind_Aula;
 $('#of_id').val(id);
 $('#indAula').val(indA);
 console.log(id);
-console.log(indAula);
+console.log(indA);
+});
+
+$(document).on('show.bs.modal','#modalReceitaExist', function (event) {
+var button = $(event.relatedTarget);
+console.log(button);
+var titulo = button.data('receita').titulo;
+var insumosR = button.data('receita').insumosR;
+var idR= button.data('receita').idR;
+console.log(insumosR);
+var arrayLength = insumosR.length;
+$('#tituloRecE').val(titulo);
+$('#kk').val(idR);
+var tb="";
+for(var i=0;i<arrayLength;i++){
+tb +='<td ><div class="row" col_name="id">'+ insumosR['ID']+'</div></td>';
+	tb +='<td ><div class="row" col_name="name">'+ insumosR['ID']+'</div></td>';
+	tb +='<td ><div class="row" col_name="unid">'+ insumosR['ID']+'</div></td>';
+	tb +='<td ><div class="row" col_name="precoU">'+ insumosR['ID']+'</div></td>';
+	tb +='<td ><div class="row" col_name="qtde">'+ insumosR['ID']+'</div></td>';
+	tb +='<td ><div class="row" col_name="preco">'+ insumosR['ID']+'</div></td>';
+
+
+}
+
+$(document).find('.bodyReceita').html(tb);
+console.log(titulo);
 });
 
 

@@ -19,6 +19,22 @@ function carregarInsumos(){
 
 
 }
+function carregarReceitas(){
+	global $receitasProf;
+	$db=open_database();
+	$query="SELECT * FROM receita WHERE professor_autenticacao_ID=".$_SESSION['inputID']." ;";
+	$receitasProf=mysqli_query($db,$query);
+	close_database($db);
+}
+function insumosReceita($id){
+	$db=open_database();
+	$query="SELECT * FROM receita_insumo WHERE receita_ID=".$id.";";
+	$res=mysqli_query($db,$query);
+	close_database($db);
+	var_dump($res);
+	return $res;
+
+}
 
 function carregarDisciplinas(){
 	global $disciplinas;
@@ -45,7 +61,7 @@ function dadosOferta($id){
 }
 function pedidoOferta($id,$ind){
 	$db=open_database();
-	$query="SELECT * FROM pedido WHERE (oferta_ID='".$id."' AND INDEX_AULA=".$ind.");";
+	$query="SELECT * FROM aula WHERE (oferta_ID='".$id."' AND INDEX_AULA=".$ind.");";
 	$result=mysqli_query($db,$query);
 
 	close_database($db);
