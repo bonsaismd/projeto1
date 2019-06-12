@@ -6,8 +6,7 @@ $insumos = null;
 $insumo = null;
 
 $insumosPedido = array();
-$pedidos = null;
-$pedido = null;
+$ofertas = null;
 $oferta = null;
 $disciplina = null;
 
@@ -18,13 +17,18 @@ function carregarInsumos(){
 	$insumos = pesquisar_todos('insumo'); 
 }
 
-function pesquisarInsumosPedido($id = null){
-	
+function carregarOfertas() {
+	global $ofertas;
+	$ofertas = pesquisar_todos('oferta');
+
+}
+
+function pesquisarAulas($id = null) {
 	$encontrado = null;
 
 	$db = open_database();
 
-	$sql = "SELECT * FROM lista_pedido WHERE pedido_ID = " . $id;
+	$sql = "SELECT * FROM aula WHERE oferta_ID = '" . $id . "';";
 	$resultado = mysqli_query($db, $sql);
 	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
@@ -33,19 +37,25 @@ function pesquisarInsumosPedido($id = null){
 	return $encontrado;
 }
 
-function carregarAulas() {
-	global $pedidos;
-	$pedidos = pesquisar_todos('aula');
+function pesquisarInsumosPedido($id = null){
+	
+	$encontrado = null;
 
+	$db = open_database();
+
+	$sql = "SELECT * FROM lista_pedido WHERE pedido_ID = " . $id . ";";
+	$resultado = mysqli_query($db, $sql);
+	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+	close_database($db);
+
+	return $encontrado;
 }
 
 function pesquisarDisciplina($id = null) {
 
-	$oferta = null;
-	$oferta = pesquisar('oferta', $id);
-
 	$disciplina = null;
-	$disciplina = pesquisar('disciplina', $oferta['disciplina_ID']);
+	$disciplina = pesquisar('disciplina', $id);
 
 	return $disciplina;
 }

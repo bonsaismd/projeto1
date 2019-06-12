@@ -37,21 +37,19 @@ function close_database($conn) {
 
 
 
-/* Pesquisar no banco de dados */
-/* Essa função serve pra pesquisar os dados de um ID especifico ou todos os dados de uma tabela*/
 function pesquisar($tabela = null, $id = null) {
 
-	$db = open_database(); /* Abrindo o banco de dados */
-	$encontrado = null; /* Variavel para armazenar o resultado da pesquisa */
+	$db = open_database();
+	$encontrado = null;
 
-	try { /* Prevenção de erros */
-		if ($id) { /* Se foi passado um ID no paramentro, pesquisar os dados de um ID especifico*/
+	try {
+		if ($id) { 
 
-			$sql = "SELECT * FROM " . $tabela . " WHERE ID = " . $id; /* Codigo SQL para a pesquisa*/
-			$resultado = mysqli_query($db, $sql); /* Executa o codigo no banco de dados e armazena o resultado */
+			$sql = "SELECT * FROM " . $tabela . " WHERE ID = '" . $id ."';";
+			$resultado = mysqli_query($db, $sql);
 
-			if ($resultado->num_rows > 0) { /* Se for encontrado alguma coisa */
-				$encontrado = mysqli_fetch_array($resultado); /* Cria um vetor que associa a coluna com o dado (Exemplo. pesquisar(tecnico, 1011) -> encontrado['nome'] = DekTec)*/
+			if ($resultado->num_rows > 0) {
+				$encontrado = mysqli_fetch_array($resultado);
 			}
 
 		} else { /* Se não foi passado um ID no paramentro, pesquisar os dados da tabela*/

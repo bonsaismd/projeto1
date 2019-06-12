@@ -13,6 +13,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-size: 1.2vw;
+	height: 100vh;
 }
 .row {
 	margin: 0;
@@ -140,8 +141,7 @@ input[type=number]::-webkit-outer-spin-button {
 	color: var(--blue-sapphire);
 }
 
-
-/*--------- Tabela ---------*/
+/*--------- Matriz ---------*/
 
 #header-matriz {
 	width: 94vw;
@@ -164,4 +164,147 @@ input[type=number]::-webkit-outer-spin-button {
 
 input #procurar  {
 	width: 20px;
+}
+
+
+/*--------- Coluna de Pedidos ---------*/
+
+
+.board-content {
+	position: relative;
+	height: 66vh;
+	flex-grow: 1;
+}
+
+#boardPedidos {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	white-space: nowrap;
+	margin-bottom: 8px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-bottom: 8px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.pedido-coluna{
+	margin-left: 8px;
+	width: 280px;
+	height: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.pedido-coluna:last-child {
+	margin-right: 24px;
+}
+
+.pedido-conteudo{
+	background-color: #DFE1E6;
+	border-radius: 4px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	max-height: 100%;
+	position: relative;
+	white-space: normal;
+}
+
+.pedido-header {
+	flex: 0 0 auto;
+	padding: 10px 8px 8px;
+	position: relative;
+	min-height: 20px;
+}
+
+.nome-disciplina {
+	font-size: 20px;
+	line-height: 20px;
+	font-weight: 600;
+	margin: 0 0 4px;
+}
+
+.nome-professor {
+	font-size: 16px;
+	line-height: 16px;
+	margin: 0 0 8px;
+}
+
+.pedido-body {
+	flex: 1 1 auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin: 0 4px;
+	padding: 0 4px;
+	z-index: 1;
+	min-height: 0;
+}
+
+.pedido-body > a:last-child {
+	margin-bottom: 0;
+}
+
+.btn-aula {
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 1px 0 rgba(9, 90, 66, .25);
+	color: #172b4d;;
+	cursor: pointer;
+	display: block;
+	margin-bottom: 8px;
+	max-width: 300px;
+	min-height: 20px;
+	position: relative;
+	text-decoration: none;
+	z-index: 0;
+	padding: 8px;
+}
+
+.btn-aula:hover,
+.btn-aula:focus,
+.btn-aula:active {
+	background-color: #F4F5F7;
+}
+
+.nome-aula {
+	clear: both;
+	display: block;
+	margin: 0 0 4px;
+	overflow: hidden;
+	text-decoration: none;
+	word-wrap: break-word;
+	color: #172B4D;
+	font-size: 18px;
+	line-height: 20px;
+}
+
+.detalhe-aula {
+	display: block;
+	margin: 0 0 4px;
+	overflow: hidden;
+	text-decoration: none;
+	word-wrap: break-word;
+	color: #172B4D;
+	box-sizing: border-box;
+	width: 50%;
+	float: left;
+	font-size: 16px;
+	line-height: 16px;
+}
+
+.pedido-footer {
+	border-radius: 0 0 4px 4px;
+	display: block;
+	flex: 0 0 auto;
+	padding: 8px;
+	position: relative;
+	text-decoration: none;
 }

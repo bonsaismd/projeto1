@@ -1,7 +1,7 @@
 <?php
 include("../../login/check.php");
 require_once('functions.php');
-carregarAulas();
+carregarOfertas();
 
 include(HEADER_TEMPLATE);
 include(HEADER_MENU);
@@ -21,14 +21,8 @@ if ($cargo != 'Técnico(a)') {
 	</div>
 <?php endif; ?>
 
-
-
-
-
-
 <!-- LISTAGEM DE PEDIDOS -->
 <div class="board">
-
 
 	<!-- PESQUISAR POR PERIODO -->
 	<form style="width: 40vw;">
@@ -44,55 +38,49 @@ if ($cargo != 'Técnico(a)') {
 		</div>
 	</form>
 
-
+	<!-- PEDIDOS -->
 	<div class="board-content">
-		<div class="d-flex flex-wrap p-3 text-center text-white" id="boardPedidos">
+		<div class="p-3" id="boardPedidos">
+			<?php if ($ofertas) : ?>
+				<?php foreach ($ofertas as $oferta) : ?>
+					<?php if ($oferta['ENVIADO']) : ?>
+						<?php $disciplina = pesquisar('disciplina', $oferta['disciplina_ID']); ?>
 
-			<?php if ($pedidos) : ?>
-
-				<?php foreach ($pedidos as $pedido) : ?>
-
-					<?php if ($pedido['ENVIADO']) : ?>
-
-
-						<a class="shadow btn btn-primary p-3 m-2 text-center" data-toggle="modal" data-target="#verPedido"
-
-						data-disciplina='{
-						"id":"<?php echo $pedido['ID']; ?>",
-						"titulo":"<?php echo $pedido['TITULO']; ?>",
-						"data":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'Y-m-d'); ?>",
-						"dataShow":"<?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y'); ?>",
-						"oferta":"<?php echo $pedido['oferta_ID']; ?>",
-						"obs":"<?php echo $pedido['OBSERVACAO']; ?>",
-						"custo":"<?php echo $pedido['CUSTO']; ?>",
-						"prof":"<?php echo pesquisarProfessorNome($pedido['oferta_ID']); ?>",
-						"discip":"<?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?>"
-					}' >
-
-					<div class="row d-flex align-items-center">
-						<div class="col text-center">
-							<i class="fas fa-utensils fa-5x"></i>
-						</div>
-						<div class="col text-center">
-							<p><strong><?php echo $pedido['TITULO'] ?></strong></p>
-							<p><?php $disciplina = pesquisarDisciplina($pedido['oferta_ID']); echo $disciplina['NOME']; ?></p>
-							<p><?php echo date_format(date_create($pedido['DIA_ENTREGA']), 'd/m/Y') ?></p>
-						</div>
+			<div class="pedido-coluna text-left">
+				<div class="pedido-conteudo">
+					<div class="pedido-header">
+						<h2 class="nome-disciplina"><?php echo $disciplina['NOME']; ?></h2>
+						<h3 class="nome-professor"><?php echo pesquisarProfessorNome($oferta['ID']); ?></h3>
 					</div>
-				</a>
-				
+					<div class="pedido-body">
+
+						<?php $aulas = pesquisarAulas($oferta['ID']); ?>
+						<?php foreach ($aulas as $aula) : ?>
+
+						<a href="#" class="btn-aula" data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
+							<h4 class="nome-aula"><?php echo $aula['TITULO']; ?></h4>
+							<h5 class="data-aula detalhe-aula"><?php echo date_format(date_create($aula['DIA_ENTREGA']), 'd/m/Y'); ?></h5>
+							<h5 class="custo-aula detalhe-aula text-right">R$<?php echo $aula['CUSTO'] ?></h5>
+							<div style="clear:both;"></div>
+						</a>
+
+						<?php endforeach; ?>
+						
+					</div>
+					<div class="pedido-footer">
+					</div>
+				</div>
+			</div>
+
+					<?php endif; ?>
+				<?php endforeach; ?>
+			<?php else : ?>
+
+				<h4>Nenhum pedido registrado.</h4>
+
 			<?php endif; ?>
-			
-		<?php endforeach; ?>
-
-		<?php else : ?>
-
-			<td colspan="6">Nenhum pedido registrado.</td>
-			
-		<?php endif; ?>
-
+		</div>
 	</div>
-</div>
 </div>
 
 
@@ -103,25 +91,39 @@ if ($cargo != 'Técnico(a)') {
 <script type="text/javascript">
 	$(document).ready(function(){
 
+		$(".btn-aula").on('click', function() {
+
+			console.log($(this).data('disciplina'));
+
+		});
+
 		$("#btn-1").addClass('menu-active');
 
 		$('#filterPedido').on('click', function() {
 			var dataInicial = new Date($('#dataInicial').val());
 			var dataFinal = new Date($('#dataFinal').val());
 
-			$('#boardPedidos > a').filter(function() {
-				var d = new Date($(this).data('disciplina').data);
 
-				console.log($(this).data('disciplina').id);
+			$('.btn-aula').filter(function() {
+
+				var d = new Date($(this).data('aula'));
+
 				if (!((d >= dataInicial) && (d <= dataFinal))) {
 					$(this).hide();
 				} else {
 					$(this).show();
+					$(this).closest('.pedido-coluna').show();
+				}
+
+				if($(this).closest('.pedido-body').children(':visible').length === 0) {
+
+					$(this).closest('.pedido-coluna').hide();
+
 				}
 
 			});
 		});
-		
+
 	});
 </script>
 
