@@ -26,12 +26,14 @@ function carregarReceitas(){
 	$receitasProf=mysqli_query($db,$query);
 	close_database($db);
 }
+
+
 function insumosReceita($id){
 	$db=open_database();
-	$query="SELECT * FROM receita_insumo WHERE receita_ID=".$id.";";
-	$res=mysqli_query($db,$query);
+	$query="SELECT insumo.ID, insumo.NOME, insumo.UNID_MEDIDA, insumo.PRECO, receita_insumo.QUANTIDADE, receita_insumo.OBSERVACAO FROM receita_insumo JOIN insumo ON receita_insumo.insumo_ID=insumo.ID WHERE receita_ID=".$id.";";
+	$res=mysqli_fetch_all(mysqli_query($db,$query));
+	
 	close_database($db);
-	var_dump($res);
 	return $res;
 
 }

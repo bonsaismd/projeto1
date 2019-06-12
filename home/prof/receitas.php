@@ -31,8 +31,10 @@ if ($cargo != 'Professor(a)') {
 <button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalReceitaExist" data-receita='{
   "titulo":"<?php echo ($receita)['TITULO'];?>",
   "idR":"<?php echo $receita['ID'];?>",
-  "insumosR":"<?php echo json_encode(insumosReceita($receita['ID']))
-  ;?>"
+  "insumosR":<?php 
+ echo json_encode(((insumosReceita($receita['ID'])))); 
+  
+  ;?>
   
 }'
 ><?php echo $receita['TITULO'];?>
@@ -53,8 +55,6 @@ if ($cargo != 'Professor(a)') {
       </div>
       <div class="modal-body" >
 
-        <div class="input-group ">
-          <input class="form-control" id="kk" type="text" disabled="true" value="" style="width: 100px;"></div>
 <!---
         <form  class="form-inline" id= "forms">
           <div class="form-group">
@@ -121,15 +121,18 @@ if ($cargo != 'Professor(a)') {
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
           </div>
-          <input class="form-control" id="custoT" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+          <input class="form-control" id="custoTR" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
         </h1>
-        <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
+        <button type="button" onclick="" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
 </div>
 </div>
+
+
+
 <div class="modal fade" id="modalReceita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"  role="document">
     <div class="modal-content">
@@ -200,6 +203,8 @@ if ($cargo != 'Professor(a)') {
   </div>
 </div>
 </div>
+
+
 <div class="panel panel-default">
   <div class="panel-heading"><b> Demo </b> </div>
   <div class="panel-body">

@@ -33,26 +33,27 @@ console.log(indA);
 
 $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 var button = $(event.relatedTarget);
-console.log(button);
 var titulo = button.data('receita').titulo;
 var insumosR = button.data('receita').insumosR;
 var idR= button.data('receita').idR;
+console.log(typeof idR);
 console.log(insumosR);
+var total=0;
 var arrayLength = insumosR.length;
 $('#tituloRecE').val(titulo);
-$('#kk').val(idR);
 var tb="";
 for(var i=0;i<arrayLength;i++){
-tb +='<td ><div class="row" col_name="id">'+ insumosR['ID']+'</div></td>';
-	tb +='<td ><div class="row" col_name="name">'+ insumosR['ID']+'</div></td>';
-	tb +='<td ><div class="row" col_name="unid">'+ insumosR['ID']+'</div></td>';
-	tb +='<td ><div class="row" col_name="precoU">'+ insumosR['ID']+'</div></td>';
-	tb +='<td ><div class="row" col_name="qtde">'+ insumosR['ID']+'</div></td>';
-	tb +='<td ><div class="row" col_name="preco">'+ insumosR['ID']+'</div></td>';
-
-
+	tb+='<tr row_id="'+i+'">';
+tb +='<td ><div class="row" col_name="id">'+ insumosR[i][0]+'</div></td>';
+	tb +='<td ><div class="row" col_name="name">'+ insumosR[i][1]+'</div></td>';
+	tb +='<td ><div class="row" col_name="unid">'+ insumosR[i][2]+'</div></td>';
+	tb +='<td ><div class="row" col_name="precoU">'+ insumosR[i][3]+'</div></td>';
+	tb +='<td ><div class="row" col_name="qtde">'+ insumosR[i][4]+'</div></td>';
+	tb +='<td ><div class="row" col_name="preco">'+ insumosR[i][4]*insumosR[i][3]+'</div></td>';
+tb+='</tr>';
+total+=insumosR[i][4]*insumosR[i][3];
 }
-
+$('#custoTR').val(total);
 $(document).find('.bodyReceita').html(tb);
 console.log(titulo);
 });
