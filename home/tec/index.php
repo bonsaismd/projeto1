@@ -24,19 +24,27 @@ if ($cargo != 'Técnico(a)') {
 <!-- LISTAGEM DE PEDIDOS -->
 <div class="board">
 
-	<!-- PESQUISAR POR PERIODO -->
-	<form style="width: 40vw;">
-		<div class="input-group m-2 p-3">
-			<div class="input-group-prepend">
-				<span class="input-group-text">Período:</span>
-			</div>
-			<input type="text" class="form-control" id="dataInicial" placeholder="Data Inicial" onfocus="(this.type='date')">
-			<input type="text" class="form-control" id="dataFinal" placeholder="Data Final" onfocus="(this.type='date')">
-			<div class="input-group-append">
-				<button class="btn btn-success" type="button" id="filterPedido"><i class="fa fa-search"></i></button> 
-			</div>		
+	
+	<div class="board-header m-2 p-3 row align-items-center">
+		<div class="board-titulo col-6 p-0">
+			<h1 class="font-weight-bold">Pedidos Recebidos</h1>
 		</div>
-	</form>
+		<!-- PESQUISAR POR PERIODO -->
+		<div class="col-6 p-0">
+			<form class="float-right" style="width: 40vw;">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text font-weight-bold">Período:</span>
+					</div>
+					<input type="text" class="form-control" id="dataInicial" placeholder="Data Inicial" onfocus="(this.type='date')">
+					<input type="text" class="form-control" id="dataFinal" placeholder="Data Final" onfocus="(this.type='date')">
+					<div class="input-group-append">
+						<button class="btn btn-primary" type="button" id="filterPedido"><i class="fa fa-search"></i></button> 
+					</div>		
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<!-- PEDIDOS -->
 	<div class="board-content">
@@ -46,9 +54,9 @@ if ($cargo != 'Técnico(a)') {
 					<?php if ($oferta['ENVIADO']) : ?>
 						<?php $disciplina = pesquisar('disciplina', $oferta['disciplina_ID']); ?>
 
-			<div class="pedido-coluna text-left">
+			<div class="pedido-coluna">
 				<div class="pedido-conteudo">
-					<div class="pedido-header">
+					<div class="pedido-header text-center">
 						<h2 class="nome-disciplina"><?php echo $disciplina['NOME']; ?></h2>
 						<h3 class="nome-professor"><?php echo pesquisarProfessorNome($oferta['ID']); ?></h3>
 					</div>
@@ -81,6 +89,7 @@ if ($cargo != 'Técnico(a)') {
 			<?php endif; ?>
 		</div>
 	</div>
+	
 </div>
 
 

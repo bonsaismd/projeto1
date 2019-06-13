@@ -28,6 +28,11 @@ $cargo = $_SESSION['cargo'];
 		</div>		
 
 		<div class="col-2 p-0">
+
+			<?php if ($cargo == 'Professor(a)') : ?>
+			<a class="btn btn-primary" href="receitas.php">Receitas</a>
+			<?php endif; ?>
+
 			<?php if ($cargo == 'Técnico(a)') : ?>
 			<a href="index.php" class="btn-menu" id="btn-1">
 				<div class="row d-inline-flex flex-nowrap align-items-center">
@@ -44,10 +49,7 @@ $cargo = $_SESSION['cargo'];
 
 		<div class="col-2 p-0 border-left border-right" id="btn-2">
 			<?php if ($cargo == 'Professor(a)') : ?>
-			<a class="btn btn-primary" href="receitas.php">Receitas</a>
-		</div>
-		<div class="col-2 p-0 border-right">
-			<a class="btn btn-primary" href="index.php">Index</a></div>
+			<a class="btn btn-primary" href="index.php">Index</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Coordenador(a)') : ?>

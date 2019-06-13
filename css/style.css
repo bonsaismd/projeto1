@@ -12,6 +12,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-family: 'Roboto', sans-serif;
 	font-size: 1.2vw;
 	height: 100vh;
 }
@@ -85,7 +86,7 @@ input[type=number]::-webkit-outer-spin-button {
 	color: white;
 	font-size: 1.2vw;
 	outline: none;
-	text-decoration: underline;
+	text-decoration: none;
 
 }
 
@@ -122,7 +123,7 @@ input[type=number]::-webkit-outer-spin-button {
 	top: 60%;
 	transform: translate(-50%, -50%);
 	margin-top: 20px;
-	width: 30vw;
+	width: 340px;
 }
 
 #login .container {	
@@ -209,7 +210,7 @@ input #procurar  {
 
 .pedido-conteudo{
 	background-color: #DFE1E6;
-	border-radius: 4px;
+	border-radius: 8px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -219,10 +220,15 @@ input #procurar  {
 }
 
 .pedido-header {
-	flex: 0 0 auto;
-	padding: 10px 8px 8px;
+	display: block;
 	position: relative;
+	padding: 10px 8px 8px;
+	border-radius: 8px;
+	flex: 0 0 auto;
+	margin-bottom: 8px;
+	max-width: 300px;
 	min-height: 20px;
+	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
 }
 
 .nome-disciplina {
@@ -234,6 +240,7 @@ input #procurar  {
 
 .nome-professor {
 	font-size: 16px;
+	font-weight: lighter;
 	line-height: 16px;
 	margin: 0 0 8px;
 }
@@ -249,13 +256,13 @@ input #procurar  {
 }
 
 .pedido-body > a:last-child {
-	margin-bottom: 0;
+	margin-bottom: 8px;
 }
 
 .btn-aula {
 	background-color: #fff;
 	border-radius: 4px;
-	box-shadow: 0 1px 0 rgba(9, 90, 66, .25);
+	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
 	color: #172b4d;;
 	cursor: pointer;
 	display: block;
@@ -283,6 +290,7 @@ input #procurar  {
 	word-wrap: break-word;
 	color: #172B4D;
 	font-size: 18px;
+	font-weight: bold;
 	line-height: 20px;
 }
 
@@ -297,6 +305,7 @@ input #procurar  {
 	width: 50%;
 	float: left;
 	font-size: 16px;
+	font-weight: lighter;
 	line-height: 16px;
 }
 
