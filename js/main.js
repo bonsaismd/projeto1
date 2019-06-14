@@ -98,10 +98,19 @@ $('#verPedido').on('show.bs.modal', function (event) {
 
 })
 
+
+$('.btn-aula').on('click', function(){
+
+	var button = $(this);
+	var id = button.data('id');
+	console.log(id);
+})
+
+
+
+
+
 /* PDF */
-
- 
-
 function createPDF() {
     $('#renderPDF').createPdf({
         'fileName' : 'Pedido-'+ $('#verPedido').find('#labelAula').text()

@@ -65,7 +65,7 @@ if ($cargo != 'Técnico(a)') {
 						<?php $aulas = pesquisarAulas($oferta['ID']); ?>
 						<?php foreach ($aulas as $aula) : ?>
 
-						<a href="#" class="btn-aula" data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
+						<a class="btn-aula" data-toggle="modal" data-target="#modalAula" data-id="<?php echo $aula['ID']?>" data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
 							<h4 class="nome-aula"><?php echo $aula['TITULO']; ?></h4>
 							<h5 class="data-aula detalhe-aula"><?php echo date_format(date_create($aula['DIA_ENTREGA']), 'd/m/Y'); ?></h5>
 							<h5 class="custo-aula detalhe-aula text-right">R$<?php echo $aula['CUSTO'] ?></h5>
@@ -94,15 +94,13 @@ if ($cargo != 'Técnico(a)') {
 
 
 <!-- Visualizar Pedido -->
-<?php include('modalPedido.php'); ?>
+<?php include('modalAula.php'); ?>
 
 
 <script type="text/javascript">
 	$(document).ready(function(){
 
 		$(".btn-aula").on('click', function() {
-
-			console.log($(this).data('disciplina'));
 
 		});
 
