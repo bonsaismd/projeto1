@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `cellier`
 --
+drop database cellier;
 CREATE DATABASE IF NOT EXISTS `cellier` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `cellier`;
-
 -- --------------------------------------------------------
 
 --
@@ -48,9 +48,8 @@ CREATE TABLE IF NOT EXISTS `aula` (
 
 INSERT INTO `aula` (`ID`, `oferta_ID`, `TITULO`, `CUSTO`, `DIA_ENTREGA`, `INDEX_AULA`) VALUES
 (2, 1, 'Culinária Regional', 278, '2019-06-20', 0),
-(6, 1, 'aula drinks', 689.18, '2019-06-16', 0),
+(6, 6, 'aula drinks', 689.18, '2019-06-16', 0),
 (1, 1, 'Doces', 300, '2019-06-18', 0),
-(3, 1, 'Temperados', 234.5, '2019-06-25', 0),
 (4, 1, 'Saladas', 280.8, '2019-06-27', 0),
 (5, 2, 'Sopas', 205.67, '2019-06-19', 0);
 
@@ -709,8 +708,9 @@ CREATE TABLE IF NOT EXISTS `oferta` (
 --
 
 INSERT INTO `oferta` (`ID`, `disciplina_ID`, `COR`, `ANO`, `SEMESTRE`, `QTDE_ALUNOS`, `QTDE_AULAS`, `SALDO`, `ENVIADO`) VALUES
-(1, 'ICA1258', 1, 2019, 1, 4, 4, 300, 0),
-(2, 'ICA1223', 1, 2019, 1, 33, 2, 300, 0);
+(6, 'ICA1258', 1, 2019, 1, 4, 4, 300, 0),
+(1, 'ICA1216', 0, 2019, 1, 30, 4, 0, 1),
+(2, 'ICA1222', 0, 2019, 1, 22, 6, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -731,10 +731,8 @@ CREATE TABLE IF NOT EXISTS `oferta_professor` (
 --
 
 INSERT INTO `oferta_professor` (`oferta_ID`, `professor_autenticacao_ID`) VALUES
-(1, 111111),
-(1, 123456),
-(2, 3425),
-(2, 1997),
+(6, 111111),
+(6, 123456),
 (1, 1997),
 (2, 123456),
 (2, 111111);
