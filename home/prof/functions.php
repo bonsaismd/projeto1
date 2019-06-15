@@ -19,6 +19,28 @@ function carregarInsumos(){
 
 
 }
+function pesquisarProfessorNome($id = null) {
+
+	$db = open_database();
+	$professor = null;
+
+	$sql = "SELECT * FROM oferta_professor WHERE oferta_ID = " . $id;
+	$resultado = mysqli_query($db, $sql);
+
+	if ($resultado->num_rows > 0) { 
+		foreach ($resultado as $prof) {
+			$sql = "SELECT * FROM professor WHERE autenticacao_ID = " . $prof['professor_autenticacao_ID'];
+			$resultado2 = mysqli_query($db, $sql);
+			$encontrado = mysqli_fetch_array($resultado2);
+			$professor .= $encontrado['NOME'] . " e ";
+		}
+		$professor = substr($professor, 0, -3);
+	}
+
+	close_database($db);
+
+	return $professor;
+}
 function carregarReceitas(){
 	global $receitasProf;
 	$db=open_database();
@@ -30,7 +52,7 @@ function carregarReceitas(){
 
 function insumosReceita($id){
 	$db=open_database();
-	$query="SELECT insumo.ID, insumo.NOME, insumo.UNID_MEDIDA, insumo.PRECO, receita_insumo.QUANTIDADE, receita_insumo.OBSERVACAO FROM receita_insumo JOIN insumo ON receita_insumo.insumo_ID=insumo.ID WHERE receita_ID=".$id.";";
+	$query="SELECT insumo.ID, insumo.NOME, insumo.UNID_MEDIDA, insumo.PRECO, receita_insumo.QUANTIDADE FROM receita_insumo JOIN insumo ON receita_insumo.insumo_ID=insumo.ID WHERE receita_ID=".$id.";";
 	$res=mysqli_fetch_all(mysqli_query($db,$query));
 	
 	close_database($db);

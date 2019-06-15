@@ -28,11 +28,11 @@ if ($cargo != 'Professor(a)') {
 
 <?php foreach ($receitasProf as $receita): ?>
 
-<button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalReceitaExist" data-receita='{
+  <button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalReceitaExist" data-receita='{
   "titulo":"<?php echo ($receita)['TITULO'];?>",
   "idR":"<?php echo $receita['ID'];?>",
   "insumosR":<?php 
- echo json_encode(((insumosReceita($receita['ID'])))); 
+  echo json_encode(((insumosReceita($receita['ID'])))); 
   
   ;?>
   
@@ -93,24 +93,24 @@ if ($cargo != 'Professor(a)') {
           <input class="form-control" id="unidMed" type="text" disabled="true" value=""style="width: 100px;"></div>
           <label><input type="button" class="btn btn-primary"name="ok" value="Ok" onclick="grid()"/></label>
         </form>
---->
+        --->
         <div class="table-responsive">
           <div class="tbl_receita_data" id="tbl_receita_data"></div>
-<table class="table table-hover">
-<thead>
-<tr>
-<th>ID</th>
-<th>Insumo</th>
-<th>Unidade de Medida</th>
-<th>Valor Unitário</th>
-<th>Quantidade</th>
-<th>Custo</th>
-</tr>
-</thead>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Insumo</th>
+                <th>Unidade de Medida</th>
+                <th>Valor Unitário</th>
+                <th>Quantidade</th>
+                <th>Custo</th>
+              </tr>
+            </thead>
 
-<tbody class="bodyReceita">
-</tbody>
-</table>
+            <tbody class="bodyReceita">
+            </tbody>
+          </table>
 
 
         </div> 
@@ -121,7 +121,7 @@ if ($cargo != 'Professor(a)') {
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
           </div>
-          <input class="form-control" id="custoTR" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+          <input class="form-control" class=" formatted-number-input"  id="custoTR" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
         </h1>
         <button type="button" onclick="" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -149,59 +149,59 @@ if ($cargo != 'Professor(a)') {
           <div class="form-group">
             <input class="form-control" name="of_id" id="of_id" type=number disabled="true">
             <input class="form-control" name="indAula" id="indAula" type=number disabled="true">
-            <select class="form-control" name="e_id" id="e_id" onchange="och(this)"data-allow-clear="1">
+            <select class="form-control" name="e_id" id="e_id" onchange="och(this)"data-allow-clear="1" required="true">
               <option disabled selected>ID</option>
-             <?php foreach ($insumos as $insumo): ?>
-              <option class="form-control" id= "<?php echo $insumo['NOME'];?>" value="<?php echo $insumo['ID'];?>" ><?php echo $insumo['ID'];?> </option>
-            <?php endforeach;?>   
-          </select>
-        </div>
-        <div class="form-group">
-          <select class="form-control" id="e_nome" placeholder="Choose one thing" onchange="ochNome(this)" data-allow-clear="1">
+              <?php foreach ($insumos as $insumo): ?>
+                <option class="form-control" id= "<?php echo $insumo['NOME'];?>" value="<?php echo $insumo['ID'];?>" ><?php echo $insumo['ID'];?> </option>
+              <?php endforeach;?>   
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control" id="e_nome" placeholder="Choose one thing" onchange="ochNome(this)" data-allow-clear="1">
               <option disabled selected> Escolha um insumo...</option>
-            <?php foreach ($insumos as $insumo): ?>
-              <option class="form-control" id= "e_n_opt" value="<?php echo $insumo['NOME'];?>" ><?php echo $insumo['NOME'];?> </option>
-            <?php endforeach;?>      
-          </select>
+              <?php foreach ($insumos as $insumo): ?>
+                <option class="form-control" id= "e_n_opt" value="<?php echo $insumo['NOME'];?>" ><?php echo $insumo['NOME'];?> </option>
+              <?php endforeach;?>      
+            </select>
+          </div>
+
+          <div class="input-group ">
+            <input class="form-control" class="formatted-number-input" id="precoUnit" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+          </div> 
+
+          <label><input id="qtde"  required="true"class="form-control" type="number" onchange="och()" onkeyup="och()" value="1" style=  "width:70px ;"></label>
+
+          <div class="input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+            </div>
+            <input class="form-control" id="custo"  class="formatted-number-input"  step="0.01" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+          </div>
+
+          <div class="input-group ">
+            <input class="form-control" id="unidMed" type="text" disabled="true" value=""style="width: 100px;"></div>
+            <label><input type="button" class="btn btn-primary"name="ok" value="Ok" onclick="grid()"/></label>
+          </form>
+
+          <div class="table-responsive">
+            <div class="tbl_user_data"></div>
+
+          </div> 
         </div>
 
-        <div class="input-group ">
-          <input class="form-control" class="formatted-number-input" id="precoUnit" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
-        </div> 
-
-        <label><input id="qtde" class="form-control" type="number" onchange="och()" onkeyup="och()" value="1" style=  "width:70px ;"></label>
-
-        <div class="input-group ">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-          </div>
-          <input class="form-control" id="custo"  class="formatted-number-input"  step="0.01" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+        <div class="modal-footer">
+          <h1>Custo total <div class="input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+            </div>
+            <input class="form-control" id="custoT" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
+          </h1>
+          <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
-
-        <div class="input-group ">
-          <input class="form-control" id="unidMed" type="text" disabled="true" value=""style="width: 100px;"></div>
-          <label><input type="button" class="btn btn-primary"name="ok" value="Ok" onclick="grid()"/></label>
-        </form>
-
-        <div class="table-responsive">
-          <div class="tbl_user_data"></div>
-
-        </div> 
-      </div>
-
-      <div class="modal-footer">
-        <h1>Custo total <div class="input-group ">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-          </div>
-          <input class="form-control" id="custoT" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
-        </h1>
-        <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
-</div>
 </div>
 
 
