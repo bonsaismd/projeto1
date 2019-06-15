@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 12-Jun-2019 às 02:54
--- Versão do servidor: 5.7.21
--- PHP Version: 5.6.35
+-- Generation Time: 15-Jun-2019 às 21:40
+-- Versão do servidor: 5.7.24
+-- versão do PHP: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,24 +35,24 @@ CREATE TABLE IF NOT EXISTS `aula` (
   `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `oferta_ID` int(10) UNSIGNED NOT NULL,
   `TITULO` varchar(100) NOT NULL,
-  `OBSERVACAO` varchar(300) DEFAULT NULL,
   `CUSTO` float NOT NULL,
   `DIA_ENTREGA` date NOT NULL,
   `INDEX_AULA` tinyint(3) UNSIGNED NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `oferta_ID` (`oferta_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `aula`
 --
 
-INSERT INTO `aula` (`ID`, `oferta_ID`, `TITULO`, `OBSERVACAO`, `CUSTO`, `DIA_ENTREGA`, `INDEX_AULA`) VALUES
-(1, 1, 'Doces', 'Produção de alguns dos doces típicos brasileiro.', 300, '2019-06-18', 0),
-(2, 1, 'Culinária Regional', 'Pratos típicos de diferentes Estados do Brasil.', 278, '2019-06-20', 0),
-(3, 1, 'Temperados', 'Comidas com foco em temperos brasileiro.', 234.5, '2019-06-25', 0),
-(4, 1, 'Saladas', 'Saladas usando vegetais da região.', 280.8, '2019-06-27', 0),
-(5, 2, 'Sopas', 'As mais clássicas sopas.', 205.67, '2019-06-19', 0);
+INSERT INTO `aula` (`ID`, `oferta_ID`, `TITULO`, `CUSTO`, `DIA_ENTREGA`, `INDEX_AULA`) VALUES
+(2, 1, 'Culinária Regional', 278, '2019-06-20', 0),
+(6, 1, 'aula drinks', 689.18, '2019-06-16', 0),
+(1, 1, 'Doces', 300, '2019-06-18', 0),
+(3, 1, 'Temperados', 234.5, '2019-06-25', 0),
+(4, 1, 'Saladas', 280.8, '2019-06-27', 0),
+(5, 2, 'Sopas', 205.67, '2019-06-19', 0);
 
 -- --------------------------------------------------------
 
@@ -64,12 +64,18 @@ DROP TABLE IF EXISTS `aula_receita`;
 CREATE TABLE IF NOT EXISTS `aula_receita` (
   `aula_ID` int(10) UNSIGNED NOT NULL,
   `receita_ID` int(10) UNSIGNED NOT NULL,
-  `QUANTIDADE` float NOT NULL DEFAULT '1',
   `ALTERACAO` tinyint(1) NOT NULL,
   PRIMARY KEY (`aula_ID`,`receita_ID`),
   KEY `aula_ID` (`aula_ID`),
   KEY `receita_ID` (`receita_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `aula_receita`
+--
+
+INSERT INTO `aula_receita` (`aula_ID`, `receita_ID`, `ALTERACAO`) VALUES
+(6, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -97,7 +103,9 @@ INSERT INTO `autenticacao` (`ID`, `SENHA`, `PERMISSAO`) VALUES
 (1011, '$2y$10$xpT5Tf0jmXBOSDzH9bGEq.SmbERP6Py66rAa0zBCFM8Qm3NKNLx4e', 3),
 (1997, '$2y$10$kVlr9vmpGqvAi4ovH/AKpOB2Jfk/ujIIrPlMNO1aOksCgo0J8kVEu', 1),
 (111111, '$2y$10$PVMf6k4LYwLjiYGSaITUCOrcRVApg8R/D5XwnAHWVzc02gkmfRR1S', 1),
-(1, '$2y$10$An88GF7pfJrGTgDuo8w2/uTNT0WBAdEGZHgqMl7IRNNwD3iGyriCC', 1);
+(1, '$2y$10$An88GF7pfJrGTgDuo8w2/uTNT0WBAdEGZHgqMl7IRNNwD3iGyriCC', 1),
+(3425, '$2y$10$SMOgXaxk5oPB0RgFqphFUOyN8cG5MCxdD5jgBfG5atdqqYpzpLvOK', 1),
+(3, '$2y$10$rtS23P3ZQ.4sYfdd8Q7qzuI0S.WreB5n2o/ys19kO6SgfmNWB2Y1y', 3);
 
 -- --------------------------------------------------------
 
@@ -701,8 +709,8 @@ CREATE TABLE IF NOT EXISTS `oferta` (
 --
 
 INSERT INTO `oferta` (`ID`, `disciplina_ID`, `COR`, `ANO`, `SEMESTRE`, `QTDE_ALUNOS`, `QTDE_AULAS`, `SALDO`, `ENVIADO`) VALUES
-(1, 'ICA1216', 0, 2019, 1, 30, 4, 0, 1),
-(2, 'ICA1222', 0, 2019, 1, 22, 6, 0, 1);
+(1, 'ICA1258', 1, 2019, 1, 4, 4, 300, 0),
+(2, 'ICA1223', 1, 2019, 1, 33, 2, 300, 0);
 
 -- --------------------------------------------------------
 
@@ -723,6 +731,10 @@ CREATE TABLE IF NOT EXISTS `oferta_professor` (
 --
 
 INSERT INTO `oferta_professor` (`oferta_ID`, `professor_autenticacao_ID`) VALUES
+(1, 111111),
+(1, 123456),
+(2, 3425),
+(2, 1997),
 (1, 1997),
 (2, 123456),
 (2, 111111);
@@ -750,8 +762,9 @@ INSERT INTO `professor` (`autenticacao_ID`, `NOME`, `PERMISSAO`) VALUES
 (2637, 'Carlos Matheus Sousa', 1),
 (123456, 'Ana Maria Braga', 1),
 (1997, 'Dek Professor', 0),
-(111111, 'Ana Claudia', 0),
-(1, '1', 0);
+(111111, 'nacp', 0),
+(1, '1', 0),
+(3425, 'ana almerinda', 0);
 
 -- --------------------------------------------------------
 
@@ -766,9 +779,21 @@ CREATE TABLE IF NOT EXISTS `receita` (
   `TITULO` varchar(100) NOT NULL,
   `OBSERVACAO` varchar(300) DEFAULT NULL,
   `CUSTO` float NOT NULL,
+  `PUBLICA` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `professor_autenticacao_ID` (`professor_autenticacao_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `receita`
+--
+
+INSERT INTO `receita` (`ID`, `professor_autenticacao_ID`, `TITULO`, `OBSERVACAO`, `CUSTO`, `PUBLICA`) VALUES
+(1, 111111, 'caipirosca', 'obsobsobs', 40.54, 0),
+(2, 3425, 'Salada de Cenoura com Tomates', 'obsobsobs', 86.6, 0),
+(3, 3425, 'Peixada', 'obsobsobs', 26.5, 0),
+(4, 111111, 'Peixada', 'obsobsobs', 26.5, 0),
+(7, 111111, 'caipirosca', 'obsobsobs', 689.18, 0);
 
 -- --------------------------------------------------------
 
@@ -811,11 +836,37 @@ CREATE TABLE IF NOT EXISTS `receita_insumo` (
   `receita_ID` int(10) UNSIGNED NOT NULL,
   `insumo_ID` int(10) UNSIGNED NOT NULL,
   `QUANTIDADE` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
-  `OBSERVACAO` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`receita_ID`,`insumo_ID`),
   KEY `receita_ID` (`receita_ID`),
   KEY `insumo_ID` (`insumo_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `receita_insumo`
+--
+
+INSERT INTO `receita_insumo` (`receita_ID`, `insumo_ID`, `QUANTIDADE`) VALUES
+(1, 454, 1),
+(1, 351, 2),
+(1, 186, 1),
+(2, 419, 2),
+(2, 390, 1),
+(2, 388, 10),
+(2, 213, 1),
+(2, 217, 1),
+(2, 251, 1),
+(2, 188, 1),
+(2, 189, 1),
+(2, 219, 1),
+(3, 29, 1),
+(3, 124, 1),
+(3, 251, 1),
+(4, 29, 1),
+(4, 251, 1),
+(4, 124, 1),
+(7, 454, 17),
+(7, 351, 34),
+(7, 186, 17);
 
 -- --------------------------------------------------------
 
@@ -836,7 +887,8 @@ CREATE TABLE IF NOT EXISTS `tecnico` (
 --
 
 INSERT INTO `tecnico` (`autenticacao_ID`, `NOME`) VALUES
-(1011, 'DekTec');
+(1011, 'DekTec'),
+(3, 'nactec');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

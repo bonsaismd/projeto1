@@ -23,37 +23,37 @@ if ($cargo != 'Professor(a)') {
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>home/prof/css.css">
+<script type="text/javascript" src="js.js"></script>
+
 <div class="board">
   <div class="board-content">
     <div class="p-3" id="boardCadeiras"> 
      <?php if(isset($discProf)){foreach ($discProf as $dP): ?>
-
-
-
-      <div class="pedido-coluna text-left">
+     <div class="pedido-coluna text-left">
         <div class="pedido-conteudo">
           <div class="pedido-header">
             <h2 class="nome-disciplina"><?php echo nomeOferta($dP) ; ?></h2>
             <h3 class="nome-professor"><?php echo pesquisarProfessorNome($dP['oferta_ID']); ?></h3>
           </div>
-
-
           <div class="pedido-body">
-           <?php for ($ind=0; $ind<mysqli_fetch_array(dadosOferta($dP))['QTDE_AULAS'];$ind ++){?>
+           <?php for ($ind=0; $ind<mysqli_fetch_array(dadosOferta($dP))['QTDE_AULAS'];$ind ++){
+            $aula=mysqli_fetch_array(pedidoOferta($dP['oferta_ID'],$ind));?>
+
             <div>
               <?php if(mysqli_num_rows ((pedidoOferta($dP['oferta_ID'],$ind)))>0){?>
-                <p>Aqui já tem pedido</p>
+                <a class="btn-aula" data-toggle="modal" data-target="#modalAula" data-id="<?php echo $aula['ID']?>" data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
+              <h4 class="nome-aula"><?php echo $aula['TITULO']; ?></h4>
+              <h5 class="data-aula detalhe-aula"><?php echo date_format(date_create($aula['DIA_ENTREGA']), 'd/m/Y'); ?></h5>
+              <h5 class="custo-aula detalhe-aula text-right">R$<?php echo $aula['CUSTO'] ?></h5>
+              <div style="clear:both;"></div>
+            </a>
+
                 <?php ;} else{?>
                   <button type="button" class="btn-aula btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalAula"
                   data-aula='{
                   "id":"<?php echo mysqli_fetch_array(dadosOferta($dP))['ID'];?>",
                   "ind_Aula": "<?php echo $ind ;?>"
                 }'
-
-
-
-
-
                 >
                 Aula <?php echo $ind +1;?>
               </button>
@@ -76,8 +76,6 @@ if ($cargo != 'Professor(a)') {
 
 
 
-    <script type="text/javascript" src="js.js"></script>
-
     <div class="modal fade" id="modalDisc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg"  role="document">
         <div class="modal-content">
@@ -87,8 +85,6 @@ if ($cargo != 'Professor(a)') {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
-
           <div class="modal-body" >
             <form action="action.php" method="post">
               <select class="form-control" required="" name="d_nome" id="d_nome" data-allow-clear="1">
@@ -134,16 +130,12 @@ if ($cargo != 'Professor(a)') {
           <div class="modal-header">
             <input class="form-control" name="tituloAula" id="tituloAula" type=text placeholder="Título da Aula">
             
-            <input type="text" class="form-control" id="dataPedido" placeholder="Data da Aula" onfocus="(this.type='date')">
+            <input type="text" class="form-control" id="dataPedidoA" placeholder="Data da Aula" onfocus="(this.type='date')">
             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body" >
-
-
-
-
             <form  class="form-inline" id= "forms">
               <div class="form-group">
                 <input class="form-control" name="of_id" id="of_id" type=number disabled="true">
@@ -154,7 +146,8 @@ if ($cargo != 'Professor(a)') {
                     "nomeReceita":"<?php echo $receita['TITULO'];?>",
                     "insumosRS":<?php 
                     echo json_encode(insumosReceita($receita['ID'])); ;?>,
-                    "custo":<?php echo $receita['CUSTO']?>
+                    "custo":<?php echo $receita['CUSTO']?>,
+                    "coment":"<?php echo $receita['OBSERVACAO'];?>"
                   }'
                   ><?php echo $receita['TITULO'];?> </option>
                 <?php endforeach;?>   
@@ -177,7 +170,7 @@ if ($cargo != 'Professor(a)') {
               </div>
               <input class="form-control formatted-number-input" id="custoTA" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
             </h1>
-            <button type="button" onclick="mandar()" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
+            <button type="button" onclick="salvarAula()" data-dismiss="modal" class="btn btn-primary">Salvar aula</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           </div>
         </div>

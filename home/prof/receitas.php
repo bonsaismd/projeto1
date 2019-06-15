@@ -28,16 +28,12 @@ if ($cargo != 'Professor(a)') {
 
 <?php foreach ($receitasProf as $receita): ?>
 
-  <button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalReceitaExist" data-receita='{
+  <button type="button" class="btn btn-primary btn-block" class="botaoPedido" data-toggle="modal" data-target="#modalReceitaExist" data-receita=
+  '{
   "titulo":"<?php echo ($receita)['TITULO'];?>",
   "idR":"<?php echo $receita['ID'];?>",
-  "insumosR":<?php 
-  echo json_encode(((insumosReceita($receita['ID'])))); 
-  
-  ;?>
-  
-}'
-><?php echo $receita['TITULO'];?>
+  "insumosR":<?php echo json_encode(((insumosReceita($receita['ID']))));;?>
+}'><?php echo $receita['TITULO'];?>
 </button>
 <?php endforeach;?>
 

@@ -1,5 +1,6 @@
 var tbl = '';
 var ajax_data=[]; //array de fazer a receita
+var ajax_aula=[]; //array de fazer aula
 var k=0; // funcao de append APP(v)
 var total=0; //funcao GRID e guardar receitas em geral
 var indR=0; //funcao GRIDAULA
@@ -28,7 +29,25 @@ $(document).on('show.bs.modal','#modalAula', function (event) {
 	$('#indAula').val(indA);
 	
 });
+$(document).on('hidden.bs.modal', '#modalReceita', function () {
+	$("#custoT").val(0);
+	ajax_data=[];
+	tbl ='<table class="table table-hover">'
+		tbl +='<thead>';
+		tbl +='<tr>';
+		tbl +='<th>ID</th>';
+		tbl +='<th>Insumo</th>';
+		tbl +='<th>Unidade de Medida</th>';
+		tbl +='<th>Valor Unitário</th>';
+		tbl +='<th>Quantidade</th>';
+		tbl +='<th>Custo</th>';
+		tbl +='<th>Opções</th>';
+		tbl +='</tr>';
+		tbl +='</thead>';
+		tbl +='<tbody>';
+	$(document).find('.tbl_user_data').html(tbl);
 
+	});
 $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 	var button = $(event.relatedTarget);
 	var titulo = button.data('receita').titulo;
@@ -83,6 +102,7 @@ $(".formatted-number-input").each(function() {
 });
 
 function chng(){
+	console.log($('#dataPedidoA').val());
 	var cInd=$('#r_id').find(":selected").data('srec').custo;
 	var qtdP=$('#quantRP').val();
 	$('#precoRecA').val(cInd*qtdP);
@@ -91,10 +111,10 @@ function chng(){
 function gridAula(){
 	var gDiv=$(document).find('#corpoModal').html();
 	var qtRA=$(document).find('#quantRP').val();
-
+	var coment=$('#r_id').find(":selected").data('srec').coment;
 	cTot+=$('#r_id').find(":selected").data('srec').custo*qtRA;
 
-	$(document).find('#custoTA').val(cTot);
+	$(document).find('#custoTA').val(cTot.toFixed(2));
 	var insumosRS= $('#r_id').find(":selected").data('srec').insumosRS;
 	
 	gDiv+='<div class="card-header">';
@@ -123,8 +143,13 @@ function gridAula(){
 	gDiv+='<th class="col-1">Total</th>';
 	gDiv+='</tr></thead>';
 	gDiv+='<tbody id="tblInsumos'+indR+'">';
-
+insR=[];
 	insumosRS.forEach(function(item,index){
+
+	
+	
+	var ajax_insumoR = {id:insumosRS[index][0],qtde:insumosRS[index][4]*qtRA};
+	insR.push(ajax_insumoR);
 		gDiv+='<tr class="row text-center">';
 		gDiv+='<td class="col-1">'+insumosRS[index][0]+'</td>';
 		gDiv+='<td class="col-3">'+insumosRS[index][1]+'</td>';
@@ -136,13 +161,35 @@ function gridAula(){
 
 
 	});
+	gDiv+='<thead class="thead-dark">';
+	gDiv+='<th class="col-12 text-center"> Modo de Preparo</th>';
+	gDiv+='</thead><tr>';
+	gDiv+='<td class="col-12">'+coment+'</td></tr>';
+										
+	var ajax_receita={receitaNome:$('#r_id').find(":selected").data('srec').nomeReceita,custoTotalR:cTot.toFixed(2),comentReceita:coment, insumos:insR};
+	ajax_aula.push(ajax_receita);
+	console.log(ajax_aula);
 	gDiv+='</tbody></table></div>'
 	indR+=1;
 	var tit=$('#r_id').find(":selected").data('srec').nomeReceita;
 	$(document).find('#corpoModal').html(gDiv);
-	
+	console.log($(document).find('.col-3'));
 }
-
+function salvarAula(){
+var idOferta=$('#of_id').val();
+var indAula=$('#indAula').val();
+var tituloAula=$('#tituloAula').val();
+var custoAula=$('#custoTA').val();
+var dataAula=$('#dataPedidoA').val();
+$.ajax({
+			url:"salvarAula.php",
+			method:"POST",
+			data:{ajax_aula:ajax_aula,idOferta:idOferta,indAula:indAula,tituloAula:tituloAula,custoAula:custoAula,dataAula},
+			success:function(data){
+console.log(data);
+			} 
+		});
+}
 function app(v){
 	var row_id = k;
 	tbl=$(document).find('.tbl_user_data').html();
