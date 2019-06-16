@@ -29,6 +29,15 @@ $(document).on('show.bs.modal','#modalAula', function (event) {
 	$('#indAula').val(indA);
 	
 });
+$(document).on('show.bs.modal','#modalSaldo', function (event) {
+	var div = $('#dadoSaldo');
+	console.log(div);
+	var saldo = div.attr("d");
+	console.log(saldo);
+	$('#saldoTotal').html('R$ <span id="saldo" >'+splitNumero(saldo)[0]+',</span>'+splitNumero(saldo)[1]+'')
+	
+	
+});
 $(document).on('hidden.bs.modal', '#modalReceita', function () {
 	$("#custoT").val(0);
 	ajax_data=[];
@@ -233,6 +242,16 @@ function app(v){
 		document.getElementById('custo').innerHTML= (document.getElementById('e_id')['PRECO'])*(document.getElementById('qtde').value);
 
 	}
+
+function splitNumero(num){
+	var num=num;
+
+	var str=num.toString();
+	var numarray=str.split('.');
+	var a=new Array();
+	a=numarray;
+	return a;
+}
 	function och(v=$('#e_id')){
 		var id=$(v).val();
 		

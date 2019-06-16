@@ -10,7 +10,9 @@
 	height: 60vh;
 	overflow: scroll;
 }
-
+#formDisc{
+    padding: 7px;
+}
 .etiquetas{
 	display: flex;
 	 flex-direction: row;
@@ -19,13 +21,75 @@
   justify-content: space-around;
 }
 
+.conf{
+    color:#8A8A8A;
+}
+.disc-header{
+    display: flex;
+    position: relative;
+    padding: 10px 8px 8px;
+    border-radius: 8px;
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+    max-width: 300px;
+    min-height: 20px;
+    box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+
+  justify-content: space-between;
+  margin-right: 5px;
+}
+.disc-desc{
+    display: block;
+}
+
+.modal-title{
+    color:#6A6A6A;
+    text-align: center;
+}
+.fantasma{
+cursor: pointer;
+}
+.nome-disciplina-fant {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color:#6A6A6A;
+}
+.btn-aula-fant {
+    border-style:dashed;
+    border-width: 0.5px;
+    border-radius: 4px;
+    color: #172b4d;;
+    
+    display: block;
+    margin-bottom: 8px;
+    max-width: 300px;
+    min-height: 20px;
+    position: relative;
+    text-decoration: none;
+    z-index: 0;
+    padding: 8px;
+}
+.pedido-conteudo-fant{
+    border-style:dashed;
+    border-width: 0.5px;
+    
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    position: relative;
+    white-space: normal;
+}
 /*customizacao dos botões radio para ficar mais bonitinho:*/
     input[type='radio']:after {
-        width: 90px;
-        height: 31px;
+        width: 70px;
+        height: 21px;
         top:0px;
         left:-20px;
-        border-radius: 15px;
+        border-radius: 31px;
         position: relative;
         background-color: rgba(00,00,00,00);
         content: '';
@@ -34,17 +98,20 @@
         
     }
 
-    #azul:after{
-    	background-color: #00FFFF;}
+    #roxo:after{
+    	background-color:rgba(86, 60, 193, 1);}
     #amarelo:after{
-    		background-color: #FFFF00;
+    		background-color:rgba(193, 140, 60, 1);
     	}
-    #magenta:after{
-    	background-color:#FF00FF;
+    #verde:after{
+    	background-color:rgba(60, 193, 100, 1);
+    }
+    #azul:after{
+        background-color:rgba(60, 193, 179, 1);
     }
     input[type='radio']:checked:after {
-        width: 70px;
-        height: 21px;
+        width: 73px;
+        height: 24px;
         top:0px;
         left:-20px;
         position: relative;
@@ -54,32 +121,63 @@
         visibility: visible;
         
     }
+.btn-receita {
+    background-color: #fafafa;
+    border-radius: 6px;
+    box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+    color: #172b4d;;
+    cursor: pointer;
+    margin-bottom: 8px;
+    max-width: 300px;
+    min-height: 20px;
+    text-decoration: none;
+    z-index: 0;
+    padding: 8px;
+    margin-left:14px;
+    margin-right:14px;
+}
+.flexReceitas{
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+margin-left: 8px;
 
 
+}
+body{
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2vw;
+    height: 100vh;
 
 
+}
+.menuT{
+color:#6A6A6A;
+font-size: 35px;
+}
+.float-right{
+float:right;
+    }
+.modal-header{
 
- #corpo{
+}
+
+#saldo{
+    font-size: 40px;
+}
+
+ #board-content{
 display:flex;
 flex-direction: row;
 justify-content: flex-start;
- 	position: relative;
  	align-items: flex-start;
+    overflow: scroll;
  }
 
- .disc{
- 	display: flex;
- 	flex-direction: column;
- 	justify-content: flex-start;
- 	width:20%;
- 	padding:10px;
- 	margin-right:10px;
- 	margin-left:10px;
- 	position: relative;
- 	background-color: rgb(33,107,130);
- 	color: white;
- 	border-radius:10px;
- }
+
  .botaoPedido{
  	margin:5px;
  }

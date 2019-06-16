@@ -30,58 +30,76 @@ $cargo = $_SESSION['cargo'];
 		<div class="col-2 p-0">
 
 			<?php if ($cargo == 'Professor(a)') : ?>
-			<a class="btn btn-primary" href="receitas.php">Receitas</a>
+				<a data-toggle="modal" data-target="#modalSaldo" class="btn-menu" id="btn-1">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i  class="fas fa-hand-holding-usd fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Visualizar Saldo</p>
+						</div>
+					</div>
+				</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Técnico(a)') : ?>
-			<a href="index.php" class="btn-menu" id="btn-1">
-				<div class="row d-inline-flex flex-nowrap align-items-center">
-					<div class="col p-0">
-						<i class="fas fa-clipboard-check fa-3x"></i>
+				<a href="index.php" class="btn-menu" id="btn-1">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-clipboard-check fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Pedidos Recebidos</p>
+						</div>
 					</div>
-					<div class="col p-0">
-						<p class="m-0"> Pedidos Recebidos</p>
-					</div>
-				</div>
-			</a>
+				</a>
 			<?php endif; ?>
 		</div>
 
 		<div class="col-2 p-0 border-left border-right" id="btn-2">
 			<?php if ($cargo == 'Professor(a)') : ?>
-			<a class="btn btn-primary" href="index.php">Index</a>
+				<a href="matriz.php" class="btn-menu" id="btn-3">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-box-open fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Matriz Licitada</p>
+						</div>
+					</div>
+				</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Coordenador(a)') : ?>
-			<a class="btn btn-primary" href="<?php echo BASEURL; ?>cadastro">Cadastrar Usuários</a>
+				<a class="btn btn-primary" href="<?php echo BASEURL; ?>cadastro">Cadastrar Usuários</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Técnico(a)') : ?>
-			<a href="#" class="btn-menu">
-				<div class="row d-inline-flex flex-nowrap align-items-center">
-					<div class="col p-0">
-						<i class="fas fa-clipboard-list fa-3x"></i>
+				<a href="#" class="btn-menu">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-clipboard-list fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Listas Geradas</p>
+						</div>
 					</div>
-					<div class="col p-0">
-						<p class="m-0"> Listas Geradas</p>
-					</div>
-				</div>
-			</a>
+				</a>
 			<?php endif; ?>
 		</div>
 
 		<div class="col-2 p-0">
 			<?php if ($cargo == 'Técnico(a)') : ?>
-			<a href="matriz.php" class="btn-menu" id="btn-3">
-				<div class="row d-inline-flex flex-nowrap align-items-center">
-					<div class="col p-0">
-						<i class="fas fa-box-open fa-3x"></i>
+				<a href="matriz.php" class="btn-menu" id="btn-3">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-box-open fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Matriz Licitada</p>
+						</div>
 					</div>
-					<div class="col p-0">
-						<p class="m-0"> Matriz Licitada</p>
-					</div>
-				</div>
-			</a>
+				</a>
 			<?php endif; ?>
 		</div>
 

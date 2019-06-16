@@ -7,7 +7,7 @@ $custoT=$_POST['custoT'];
 $titulo=$_POST['titulo'];
 $db = open_database();
 /////////////////////id, id prof, titulo, observacao, custo
-$sql = "INSERT INTO receita VALUES (0, ". $id_usuario.",'".$titulo."', 'obsobsobs'," . $_POST['custoT']. ");";
+$sql = "INSERT INTO receita VALUES (0, ". $id_usuario.",'".$titulo."', 'obsobsobs'," . $_POST['custoT']. ",1);";
 mysqli_query($db,$sql) ;
 
 $sq = "SELECT LAST_INSERT_ID()";

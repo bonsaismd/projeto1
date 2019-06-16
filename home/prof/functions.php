@@ -19,6 +19,21 @@ function carregarInsumos(){
 
 
 }
+function saldoProfessor(){
+$db = open_database();
+$query="SELECT oferta.SALDO,disciplina.NOME FROM oferta_professor, oferta,disciplina WHERE oferta.ID=oferta_professor.oferta_ID AND professor_autenticacao_ID =".$_SESSION['inputID']." AND oferta.disciplina_ID=disciplina.ID;";
+
+global $saldoProf;
+$saldoProf=mysqli_fetch_all(mysqli_query($db,$query));
+close_database($db);
+
+global $saldoProfT;
+$saldoProfT=0;
+foreach($saldoProf as $s):
+  $saldoProfT+=$s[0];
+endforeach;
+
+}
 function pesquisarProfessorNome($id = null) {
 
 	$db = open_database();
