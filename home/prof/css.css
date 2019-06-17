@@ -18,11 +18,29 @@
 	 flex-direction: row;
 	 flex-wrap: wrap;
 
-  justify-content: space-around;
+  justify-content: space-between;
+  margin:5px;
 }
 
 .conf{
     color:#8A8A8A;
+}
+.detalhe-aD {
+    color: #172B4D;
+    font-size: 16px;
+    font-weight: lighter;
+    line-height: 14px;
+}
+#bolinha{
+    font-size:25px;
+    font-weight: normal;
+    padding-top:15px;
+
+}
+
+.spaceAround{
+    display:flex;
+    justify-content: space-around;
 }
 .disc-header{
     display: flex;
@@ -123,13 +141,14 @@ cursor: pointer;
     }
 .btn-receita {
     background-color: #fafafa;
-    border-radius: 6px;
+    border-radius: 10px;
     box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
     color: #172b4d;;
     cursor: pointer;
     margin-bottom: 8px;
-    max-width: 300px;
-    min-height: 20px;
+    max-width: 400px;
+    min-width:200px;
+    min-height: 100px;
     text-decoration: none;
     z-index: 0;
     padding: 8px;

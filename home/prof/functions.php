@@ -56,6 +56,18 @@ function pesquisarProfessorNome($id = null) {
 
 	return $professor;
 }
+
+function pesquisarOutroProf($id){
+	$db= open_database();
+	$oProf=0;
+
+	$query = "SELECT professor_autenticacao_ID FROM oferta_professor WHERE oferta_ID = " . $id."	AND professor_autenticacao_ID!=".$_SESSION['inputID']."	;";
+	$res=mysqli_query($db,$query);
+	if($res!=null){
+		$oProf=$res;
+	}
+return $oProf;
+}
 function carregarReceitas(){
 	global $receitasProf;
 	$db=open_database();
@@ -91,9 +103,26 @@ function carregarDiscProf(){
 
 	close_database($db);
 }
+
+function receitasAula($id){
+	$db=open_database();
+	$query="SELECT receita.ID, receita.TITULO, receita.OBSERVACAO, receita.CUSTO FROM aula_receita JOIN receita ON aula_receita.receita_ID=receita.ID WHERE aula_ID=".$id.";";
+	
+	$res=(mysqli_query($db,$query));
+
+	close_database($db);
+	return $res;
+}
 function dadosOferta($id){
 	$db= open_database();
 	$query="SELECT * FROM oferta WHERE ID='".$id['oferta_ID']."';";
+	$result=mysqli_query($db,$query);
+	close_database($db);
+	return $result;
+}
+function dadosOfertaP($id){
+	$db= open_database();
+	$query="SELECT * FROM oferta WHERE ID='".$id."';";
 	$result=mysqli_query($db,$query);
 	close_database($db);
 	return $result;

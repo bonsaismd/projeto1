@@ -1,5 +1,6 @@
 var tbl = '';
 var ajax_data=[]; //array de fazer a receita
+var ajax_data_e=[]; //array de fazer a  EDICAO da receita
 var ajax_aula=[]; //array de fazer aula
 var k=0; // funcao de append APP(v)
 var total=0; //funcao GRID e guardar receitas em geral
@@ -20,6 +21,20 @@ function mandar(){
 	});
 
 }
+function mandarEdicao(){
+	var cT=$("#custoTR").val();
+	var titulo=$("#tituloRecE").val();
+	var id=$('#botDataEdit').data('receita').idR;
+	$.ajax({
+		url:"mandar.php",
+		method:"POST",
+		data:{ajax_data_e:ajax_data_e,custoT:cT,titulo:titulo,id:id},
+		dataType:"text",
+		success:function(msg){
+			console.log(msg);
+		}
+	});
+}
 
 $(document).on('show.bs.modal','#modalAula', function (event) {
 	var button = $(event.relatedTarget);
@@ -28,6 +43,22 @@ $(document).on('show.bs.modal','#modalAula', function (event) {
 	$('#of_id').val(id);
 	$('#indAula').val(indA);
 	
+});
+$(document).on('show.bs.modal','#modalDiscEdit', function (event) {
+	var button = $(event.relatedTarget);
+
+	var dadosS = button.attr('data-disc');
+	console.log(dadosS);
+	$(document).find("#modalDiscEditCorpo").load('updateDisc.php?id='+dadosS);
+
+});
+$(document).on('show.bs.modal','#modalAulaExist', function (event) {
+	var button = $(event.relatedTarget);
+
+	var dadosS = button.attr('idAula');
+	console.log(dadosS);
+	$(document).find("#modalAulaExistCorpo").load('vieWAula.php?id='+dadosS);
+
 });
 $(document).on('show.bs.modal','#modalSaldo', function (event) {
 	var div = $('#dadoSaldo');
@@ -64,6 +95,8 @@ $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 	var idR= button.data('receita').idR;
 	var total=parseFloat(0);
 	var arrayLength = insumosR.length;
+	$('#mD').html('<a onclick="editavel('+idR+')" data-disc='+idR+'><i class="conf fas fa-cog fa-2x"></i></a>');
+	console.log($('#mD').html());
 	$('#tituloRecE').val(titulo);
 	var tb="";
 	for(var i=0;i<arrayLength;i++){
@@ -75,7 +108,10 @@ $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 		tb +='<td ><div class="row" col_name="qtde">'+ insumosR[i][4]+'</div></td>';
 		tb +='<td ><div class="row" col_name="preco">'+ insumosR[i][4]*insumosR[i][3]+'</div></td>';
 		tb+='</tr>';
+		var result = {id:insumosR[i][0],nome:insumosR[i][1],unid:insumosR[i][2],precoU:insumosR[i][3],qtde:insumosR[i][4],preco:insumosR[i][4]*insumosR[i][3]};
+	ajax_data_e.push(result);	
 		total+=(insumosR[i][4]*insumosR[i][3]);
+		console.log(ajax_data_e);
 	}
 	$('#custoTR').val(total.toFixed(2));
 	$(document).find('.bodyReceita').html(tb);
@@ -93,7 +129,7 @@ function grid() {
 
 	var result = {id:id,nome:insumo,unid:unid,precoU:precoU,qtde:qtde,preco:custo};
 	ajax_data.push(result);
-	app(result);
+	app(result,'.tbl_user_data');
 
 	ajax_data.forEach(function(item, index){
 		total+=parseFloat(item[index,'preco']);
@@ -101,6 +137,26 @@ function grid() {
 
 	})	;
 	$("#custoT").val(total);
+	total=0;
+
+}
+function grid_e() {
+	insumo = document.getElementById("e_nome_e").value;
+	qtde = document.getElementById("qtde_e").value;
+	custo = (document.getElementById("custo_e").value);
+	id= document.getElementById("e_id_e").value;
+	unid= document.getElementById("unidMed_e").value;
+	precoU= document.getElementById("precoUnit_e").value;
+
+	var result = {id:id,nome:insumo,unid:unid,precoU:precoU,qtde:qtde,preco:custo};
+	ajax_data_e.push(result);
+	app(result,'.tbl_receita_data');
+
+	ajax_data_e.forEach(function(item, index){
+		total+=parseFloat(item[index,'preco']);
+
+	})	;
+	$("#custoTR").val(total.toFixed(2));
 	total=0;
 
 }
@@ -113,6 +169,7 @@ $(".formatted-number-input").each(function() {
 function chng(){
 	console.log($('#dataPedidoA').val());
 	var cInd=$('#r_id').find(":selected").data('srec').custo;
+	console.log(cInd);
 	var qtdP=$('#quantRP').val();
 	$('#precoRecA').val(cInd*qtdP);
 
@@ -199,12 +256,11 @@ console.log(data);
 			} 
 		});
 }
-function app(v){
+function app(v,tClass, e=""){
 	var row_id = k;
-	tbl=$(document).find('.tbl_user_data').html();
+	tbl=$(document).find(tClass).html();
 	tbl=tbl.substr(0,tbl.length-16);
 	tbl +='<tr row_id="'+row_id+'">';
-
 	tbl +='<td ><div class="row" col_name="id">'+v['id']+'</div></td>';
 	tbl +='<td ><div class="row" col_name="name">'+v['nome']+'</div></td>';
 	tbl +='<td ><div class="row" col_name="unid">'+v['unid']+'</div></td>';
@@ -218,9 +274,9 @@ function app(v){
 					tbl +='<span class="btn_edit" > <a href="#" class="btn btn-success " row_id="'+row_id+'" > Edit</a> </span>';
 
 						//only show this button if edit button is clicked
-						tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
-						tbl +='<span class="btn_delete"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Delete</a> | </span>';
-						tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
+						tbl +='<span class="btn_save '+e+'"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
+						tbl +='<span class="btn_delete '+e+'"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Delete</a> | </span>';
+						tbl +='<span class="btn_cancel '+e+'"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
 
 						tbl +='</td>';
 					//--->edit options > end
@@ -232,7 +288,7 @@ function app(v){
 
 		tbl +='</table>'
 		k+=1;
-		$(document).find('.tbl_user_data').html(tbl);
+		$(document).find(tClass).html(tbl);
 
 		$(document).find('.btn_cancel').hide(); 
 		$(document).find('.btn_save').hide();
@@ -242,7 +298,43 @@ function app(v){
 		document.getElementById('custo').innerHTML= (document.getElementById('e_id')['PRECO'])*(document.getElementById('qtde').value);
 
 	}
+function editavel(idReceita){
+$(document).find("#formEditRec").load('loadForm.php?id='+idReceita);
+	var tblEdi='';
+	tblEdi +='<table class="table table-hover">'
 
+		//--->create table header > start
+		tblEdi +='<thead>';
+		tblEdi +='<tr>';
+		tblEdi +='<th>ID</th>';
+		tblEdi +='<th>Insumo</th>';
+		tblEdi +='<th>Unidade de Medida</th>';
+		tblEdi +='<th>Valor Unitário</th>';
+		tblEdi +='<th>Quantidade</th>';
+		tblEdi +='<th>Custo</th>';
+		tblEdi +='<th>Opções</th>';
+		tblEdi +='</tr>';
+		tblEdi +='</thead>';
+		//--->create table header > end
+		//--->create table body > start
+		tblEdi +='<tbody>';
+
+
+			tblEdi +='</tbody>';
+		//--->create table body > end
+
+		tblEdi +='</table>'
+		$('.tbl_receita_data').html(tblEdi);
+ajax_data_e.forEach(function(item, index){
+		total+=parseFloat(item[index,'preco']);
+		var v= ajax_data_e[index];
+		console.log(v);
+app(v,'.tbl_receita_data',"e");
+
+
+	})	;
+
+}
 function splitNumero(num){
 	var num=num;
 
@@ -291,6 +383,46 @@ function splitNumero(num){
         }
     });
 	}
+
+	function och_e(v=$('#e_id_e')){
+		var id=$(v).val();
+		
+		$.ajax({
+			url:"fetch_state.php",
+			method:"POST",
+			data:{ID:id},
+			dataType:"text",
+			success:function(data){
+				$('#precoUnit_e').val(data);
+				$('#custo_e').val((document.getElementById("precoUnit_e").value)*(document.getElementById("qtde_e").value));
+				var k=$("#custo_e").val();
+				$("#custo_e").val(parseFloat(k).toFixed(2));
+
+			} 
+		});
+		$.ajax({
+			url:"fetch_state_2.php",
+			method:"POST",
+			data:{ID:id},
+			dataType:"text",
+			success:function(dat){
+				$('#unidMed_e').val(dat);
+			} 
+		});
+
+		var my_value=$(v).selectedIndex;
+		var indx =-1;
+		$('#e_nome_e option').each(function(){
+    	var $this = $(this); // cache this jQuery object to avoid overhead
+    	indx+=1;
+    	var selectElement = document.getElementById('e_id_e');
+    	if (indx == selectElement.selectedIndex) { // if this option's value is equal to our value
+        	$this.prop('selected', true); // select this option
+     		// select this option
+        	return false; // break the loop, no need to look further
+        }
+    });
+	}
 	function ochNome(v){
 		var my_value=$(v).selectedIndex;
 		var indx =-1;
@@ -305,6 +437,21 @@ function splitNumero(num){
         }
     });
 		och();
+	}
+	function ochNome_e(v){
+		var my_value=$(v).selectedIndex;
+		var indx =-1;
+		$('#e_id_e option').each(function(){
+    	var $this = $(this); // cache this jQuery object to avoid overhead
+    	indx+=1;
+    	var selectElement = document.getElementById('e_nome_e');
+    	if (indx == selectElement.selectedIndex) { // if this option's value is equal to our value
+        	$this.prop('selected', true); // select this option
+     		// select this option
+        	return false; // break the loop, no need to look further
+        }
+    });
+		och_e();
 	}
 
 
@@ -560,6 +707,113 @@ $(document).ready(function($)
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
 
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(ajax_data, null, 2) +'</pre>')
+
+
+	});
+	//--->save whole row entery > end
+
+
+	//////////////parte duplicada pro ajax_data_e
+	$(document).on('click', '.btn_delete e', function(event) 
+	{
+
+		var tbl_row = $(this).closest('tr');
+
+		var row_id = tbl_row.attr('row_id');
+		var ndx = $(this).parent().index() + 1;
+
+    // Find all TD elements with the same index
+    tbl_row.remove();
+    var arr = {}; 
+    ajax_data_e.splice(row_id,1);
+		//--->get row data > end
+
+//////////////erro do
+
+		//use the "arr"	object for your ajax call
+		$.extend(arr, {row_id:row_id});
+		ajax_data_e.forEach(function(item, index){
+			total+=parseFloat(item[index,'preco']);
+
+
+		})	;
+		$("#custoTR").val(total);
+		total=0;
+		//out put to show
+		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
+
+		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(ajax_data_e, null, 2) +'</pre>')
+
+
+		tbl_row.find('.btn_save').hide();
+		tbl_row.find('.btn_cancel').hide();
+
+		//show edit button
+		tbl_row.find('.btn_edit').show();
+
+
+	});
+	
+	//--->save whole row entery > start	
+	$(document).on('click', '.btn_save e', function(event) 
+	{
+		event.preventDefault();
+		var tbl_row = $(this).closest('tr');
+
+		var row_id = tbl_row.attr('row_id');
+
+		
+		//hide save and cacel buttons
+		tbl_row.find('.btn_save').hide();
+		tbl_row.find('.btn_cancel').hide();
+
+		//show edit button
+		tbl_row.find('.btn_edit').show();
+
+
+		//make the whole row editable
+		tbl_row.find('#row_edit')
+		.attr('edit_type', 'click')
+		.attr('contenteditable','false')
+		.removeClass('bg-warning')
+		.css('padding','') 
+
+		//--->get row data > start
+		var arr = {}; 
+
+		tbl_row.find('.row').each(function(index, val) 
+		{   
+			var col_name = $(this).attr('col_name');
+			
+			var col_val  =  $(this).html();
+			
+			if(col_name=='preco'){
+				col_val=arr['qtde']*arr['precoU'];
+				arr[col_name]=col_val;
+
+				ajax_data_e[row_id]=arr;
+				$(this).html(arr[col_name]);
+			}else{
+				arr[col_name] = col_val;}
+
+			});
+		//--->get row data > end
+
+//////////////erro do
+
+		//use the "arr"	object for your ajax call
+		$.extend(arr, {row_id:row_id});
+		ajax_data_e.forEach(function(item, index){
+			total+=parseFloat(item[index,'preco']);
+
+
+		})	;
+		$("#custoTR").val(total);
+		total=0;
+		//out put to show
+		$('.post_msg').html( '<p>ajax_data_e</p><pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
+
+		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(ajax_data_e, null, 2) +'</pre>')
 
 
 	});

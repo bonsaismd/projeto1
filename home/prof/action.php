@@ -10,7 +10,7 @@ $oProf+=($_POST['outro_prof']);
 date_default_timezone_set('America/Fortaleza');
 $db=open_database();
 /////////////// id, id da disciplina, cor, ano, semestre, qde alunos, qd praticas, saldo, enviado
-$query="INSERT INTO oferta VALUES(0,'".$_POST['d_nome']."',".(int)($_POST['etiquetas']).",". date("Y").",".$semestre.",". (int)($_POST['qtdeAlunos']).",". (int)($_POST['qtdePraticas']).	",".$saldoDisc.",0);";
+$query="INSERT INTO oferta VALUES(0,'".$_POST['d_nome_e']."',".(int)($_POST['etiquetas']).",". date("Y").",".$semestre.",". (int)($_POST['qtdeAlunos']).",". (int)($_POST['qtdePraticas']).	",".$saldoDisc.",0);";
 mysqli_query($db,$query);
 
 $sq = "SELECT LAST_INSERT_ID()";

@@ -26,35 +26,43 @@ if ($cargo != 'Professor(a)') {
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo BASEURL; ?>home/prof/css.css">
 <script type="text/javascript" src="js.js"></script>
-<b><a class="menuT" href="index.php">Disciplinas (<?php $tot=0; foreach($discProf as $d): $tot++; endforeach; echo $tot; ?>) </a>/<a class="menuT" href="receitas.php">Receits (<?php $totR=0; foreach($receitasProf as $r):if($r['PUBLICA']==1){ $totR++;}; endforeach; echo $totR?>)</a>
+<b><a class="menuT" href="index.php">Disciplinas (<?php $tot=0; foreach($discProf as $d): $tot++; endforeach; echo $tot; ?>) </a>/<a class="menuT" href="receitas.php">Fichas técnicas (<?php $totR=0; foreach($receitasProf as $r):if($r['PUBLICA']==1){ $totR++;}; endforeach; echo $totR?>)</a>
 </b>
 <div>
 <div class="flexReceitas">
+<button type="button" class="btn btn-receita p-3" class="botaoPedido" data-toggle="modal" data-target="#modalReceita">FAZER RECEITA
+</button>
 <?php foreach ($receitasProf as $receita): ?>
 <?php if($receita['PUBLICA']==1){ ?>
-  <button type="button" class=" btn-receita p-3"  data-toggle="modal" data-target="#modalReceitaExist" data-receita=
+  <button type="button" id="botDataEdit" class="btn btn-receita p-3"  data-toggle="modal" data-target="#modalReceitaExist" data-receita=
   '{
   "titulo":"<?php echo ($receita)['TITULO'];?>",
   "idR":"<?php echo $receita['ID'];?>",
   "insumosR":<?php echo json_encode(((insumosReceita($receita['ID']))));;?>
-}'><?php echo $receita['TITULO'];?>
+}'><?php echo $receita['TITULO'];?><br> R$ <?php echo $receita['CUSTO'];?>
 </button>
 <?php }endforeach;?>
 
-<button type="button" class="btn btn-primary p-3" class="botaoPedido" data-toggle="modal" data-target="#modalReceita">FAZER RECEITA
-</button>
+
 </div>
 <div class="modal fade" id="modalReceitaExist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"  role="document">
     <div class="modal-content">
       <div class="modal-header">
         <input class="form-control" name="tituloRecE" id="tituloRecE" type="text" disabled="true" >
+        <div class="input-group ">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+          </div>
+          <input class="form-control" class=" formatted-number-input"  id="custoTR" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;"></div>
+          <div id="mD">
+          </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
-
+<div id="formEditRec">
 <!---
         <form  class="form-inline" id= "forms">
           <div class="form-group">
@@ -94,8 +102,9 @@ if ($cargo != 'Professor(a)') {
           <label><input type="button" class="btn btn-primary"name="ok" value="Ok" onclick="grid()"/></label>
         </form>
         --->
+      </div>
         <div class="table-responsive">
-          <div class="tbl_receita_data" id="tbl_receita_data"></div>
+          <div class="tbl_receita_data" id="tbl_receita_data">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -113,17 +122,11 @@ if ($cargo != 'Professor(a)') {
           </table>
 
 
-        </div> 
+        </div></div> 
       </div>
 
       <div class="modal-footer">
-        <h1>Custo total <div class="input-group ">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-          </div>
-          <input class="form-control" class=" formatted-number-input"  id="custoTR" type="number" placeholder="R$00,00"  disabled="true" style="width: 100px;">
-        </h1>
-        <button type="button" onclick="" data-dismiss="modal" class="btn btn-primary">Salvar lista</button>
+        <button type="button" onclick="" data-dismiss="modal" class="btn btn-primary">Salvar edições</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
       </div>
     </div>
