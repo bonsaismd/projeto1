@@ -12,13 +12,16 @@ $id=$_POST['id'];
 $obs="obsobs";
 $db = open_database();
 /////////////////////id, id prof, titulo, observacao, custo
-$sql="UPDATE receita SET TITULO=".$titulo.", OBSERVACAO=".$obs.",CUSTO=".$custoT." WHERE ID=".$id.";";
-mysqli_query($db,$sql) ;
+
+$sql="UPDATE receita SET TITULO='".$titulo."', OBSERVACAO='".$obs."',CUSTO=".$custoT." WHERE ID=".$id.";";
+var_dump($sql);
+var_dump(mysqli_query($db,$sql) );
 
 $sq="DELETE FROM receita_insumo WHERE receita_ID=".$id.";";
 
+var_dump(mysqli_query($db,$sq) );
 foreach ($_POST['ajax_data_e'] as $insumo):
-$sq = "INSERT INTO receita_insumo VALUES (".$id.", " . $insumo['id'] ."," . $insumo['qtde'] . ",'');";
+$sq = "INSERT INTO receita_insumo VALUES (".$id.", " . $insumo['id'] ."," . $insumo['qtde'] . ");";
 $res = mysqli_query($db, $sq);
 var_dump($res);
 var_dump($sq);
@@ -28,4 +31,5 @@ endforeach;
 
 close_database($db);
 
+header('location:'. BASEURL . 'home/prof/index.php');
 ?>

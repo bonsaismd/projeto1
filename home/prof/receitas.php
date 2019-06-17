@@ -34,7 +34,7 @@ if ($cargo != 'Professor(a)') {
 </button>
 <?php foreach ($receitasProf as $receita): ?>
 <?php if($receita['PUBLICA']==1){ ?>
-  <button type="button" id="botDataEdit" class="btn btn-receita p-3"  data-toggle="modal" data-target="#modalReceitaExist" data-receita=
+  <button type="button"  class="btn btn-receita p-3"  data-toggle="modal" data-target="#modalReceitaExist" data-receita=
   '{
   "titulo":"<?php echo ($receita)['TITULO'];?>",
   "idR":"<?php echo $receita['ID'];?>",
@@ -126,8 +126,8 @@ if ($cargo != 'Professor(a)') {
       </div>
 
       <div class="modal-footer">
-        <button type="button" onclick="" data-dismiss="modal" class="btn btn-primary">Salvar edições</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" id="botDataEdit" onclick="mandarEdicao()" data-dismiss="modal" class="btn btn-primary">Salvar edições</button>
+        
       </div>
     </div>
   </div>

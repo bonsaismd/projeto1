@@ -5,6 +5,7 @@ var ajax_aula=[]; //array de fazer aula
 var k=0; // funcao de append APP(v)
 var total=0; //funcao GRID e guardar receitas em geral
 var indR=0; //funcao GRIDAULA
+var total_e=0;
 var cTot=0; //funcao GRIDAULA
 
 function mandar(){
@@ -17,21 +18,28 @@ function mandar(){
 		dataType:"text",
 		success:function(msg){
 			console.log(msg);
+		window.location.reload();
 		}
 	});
 
 }
-function mandarEdicao(){
+function mandarEdicao(v){
 	var cT=$("#custoTR").val();
+	console.log(cT);
 	var titulo=$("#tituloRecE").val();
-	var id=$('#botDataEdit').data('receita').idR;
+	
+	console.log(titulo);
+	var id=v;
+
+	console.log(id);
 	$.ajax({
-		url:"mandar.php",
+		url:"mandarEdicaoAula.php",
 		method:"POST",
 		data:{ajax_data_e:ajax_data_e,custoT:cT,titulo:titulo,id:id},
 		dataType:"text",
 		success:function(msg){
 			console.log(msg);
+			window.location.reload();
 		}
 	});
 }
@@ -88,11 +96,18 @@ $(document).on('hidden.bs.modal', '#modalReceita', function () {
 	$(document).find('.tbl_user_data').html(tbl);
 
 	});
+
+$(document).on('hidden.bs.modal', '#modalReceitaExist', function () {
+deseditavel();
+	ajax_data_e=[];
+});
 $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 	var button = $(event.relatedTarget);
 	var titulo = button.data('receita').titulo;
 	var insumosR = button.data('receita').insumosR;
 	var idR= button.data('receita').idR;
+	var vBot='<button type="button" id="botDataEdit" onclick="mandarEdicao('+idR+')" data-dismiss="modal" class="btn btn-primary">Salvar edições</button>';
+	$('#botDataEdit').html(vBot);
 	var total=parseFloat(0);
 	var arrayLength = insumosR.length;
 	$('#mD').html('<a onclick="editavel('+idR+')" data-disc='+idR+'><i class="conf fas fa-cog fa-2x"></i></a>');
@@ -108,12 +123,12 @@ $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 		tb +='<td ><div class="row" col_name="qtde">'+ insumosR[i][4]+'</div></td>';
 		tb +='<td ><div class="row" col_name="preco">'+ insumosR[i][4]*insumosR[i][3]+'</div></td>';
 		tb+='</tr>';
-		var result = {id:insumosR[i][0],nome:insumosR[i][1],unid:insumosR[i][2],precoU:insumosR[i][3],qtde:insumosR[i][4],preco:insumosR[i][4]*insumosR[i][3]};
+		var result = {id:insumosR[i][0],nome:insumosR[i][1],unid:insumosR[i][2],precoU:insumosR[i][3],qtde:insumosR[i][4],preco:insumosR[i][4]*insumosR[i][3], row_id:i};
 	ajax_data_e.push(result);	
 		total+=(insumosR[i][4]*insumosR[i][3]);
 		console.log(ajax_data_e);
 	}
-	$('#custoTR').val(total.toFixed(2));
+	$('#custoTR').val(total_e.toFixed(2));
 	$(document).find('.bodyReceita').html(tb);
 	
 });
@@ -147,17 +162,19 @@ function grid_e() {
 	id= document.getElementById("e_id_e").value;
 	unid= document.getElementById("unidMed_e").value;
 	precoU= document.getElementById("precoUnit_e").value;
-
+total_e=0;
 	var result = {id:id,nome:insumo,unid:unid,precoU:precoU,qtde:qtde,preco:custo};
 	ajax_data_e.push(result);
-	app(result,'.tbl_receita_data');
+	app(result,'.tbl_receita_data',ajax_data_e.length-1);
 
 	ajax_data_e.forEach(function(item, index){
-		total+=parseFloat(item[index,'preco']);
+		total_e+=parseFloat(item[index,'preco']);
+		console.log(item[index,'preco']);
+		console.log(total_e);
 
 	})	;
-	$("#custoTR").val(total.toFixed(2));
-	total=0;
+	$("#custoTR").val(total_e.toFixed(2));
+	total_e=0;
 
 }
 $(".formatted-number-input").each(function() {
@@ -256,8 +273,12 @@ console.log(data);
 			} 
 		});
 }
-function app(v,tClass, e=""){
-	var row_id = k;
+function app(v,tClass, row_id=k){
+	
+	var id=	"create";
+	if(tClass==".tbl_receita_data"){
+			id="edit";
+	}
 	tbl=$(document).find(tClass).html();
 	tbl=tbl.substr(0,tbl.length-16);
 	tbl +='<tr row_id="'+row_id+'">';
@@ -271,12 +292,12 @@ function app(v,tClass, e=""){
 					//--->edit options > start
 					tbl +='<td>';
 
-					tbl +='<span class="btn_edit" > <a href="#" class="btn btn-success " row_id="'+row_id+'" > Edit</a> </span>';
+					tbl +='<span class="btn_edit '+id+'" > <a href="#" class="btn btn-success " row_id="'+row_id+'" > Edit</a> </span>';
 
 						//only show this button if edit button is clicked
-						tbl +='<span class="btn_save '+e+'"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
-						tbl +='<span class="btn_delete '+e+'"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Delete</a> | </span>';
-						tbl +='<span class="btn_cancel '+e+'"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
+						tbl +='<span class="btn_save btn_save'+id+' "> <a href="#" class="btn btn-link '+id+'"  row_id="'+row_id+'"> Save</a> | </span>';
+						tbl +='<span class="btn_delete btn_delete'+id+' "> <a href="#" class="btn btn-link '+id+'"  row_id="'+row_id+'"> Delete</a> | </span>';
+						tbl +='<span class="btn_cancel btn_cancel'+id+' "> <a href="#" class="btn btn-link '+id+'" row_id="'+row_id+'"> Cancel</a> | </span>';
 
 						tbl +='</td>';
 					//--->edit options > end
@@ -291,6 +312,7 @@ function app(v,tClass, e=""){
 		$(document).find(tClass).html(tbl);
 
 		$(document).find('.btn_cancel').hide(); 
+		$(document).find('.btn_delete').hide(); 
 		$(document).find('.btn_save').hide();
 	}
 	function mudar(){
@@ -326,15 +348,39 @@ $(document).find("#formEditRec").load('loadForm.php?id='+idReceita);
 		tblEdi +='</table>'
 		$('.tbl_receita_data').html(tblEdi);
 ajax_data_e.forEach(function(item, index){
-		total+=parseFloat(item[index,'preco']);
+		total_e+=parseFloat(item[index,'preco']);
+		console.log(total_e);
 		var v= ajax_data_e[index];
 		console.log(v);
-app(v,'.tbl_receita_data',"e");
+app(v,'.tbl_receita_data');
 
 
 	})	;
 
 }
+function deseditavel(){
+	var tbll='';
+	
+tbll+='<table class="table table-hover">';
+ tbll+='       <thead>';
+  tbll+='      <tr> ';
+    tbll+='           <th>ID</th>';
+    tbll+=' <th>Insumo</th>';
+    tbll+=' <th>Unidade de Medida</th>'; 
+    tbll+='    <th>Valor Unitário</th> ';
+    tbll+='       <th>Quantidade</th>';
+    tbll+='          <th>Custo</th>  ';
+  tbll+='           </tr>';
+tbll+='            </thead>';
+tbll+='      <tbody class="bodyReceita">';
+tbll+='         </tbody>';
+tbll+='          </table>';
+	$('.tbl_receita_data').html(tbll);
+	$('#formEditRec').html('');
+
+
+}
+
 function splitNumero(num){
 	var num=num;
 
@@ -607,7 +653,7 @@ $(document).ready(function($)
 
 
 	
-	$(document).on('click', '.btn_delete', function(event) 
+	$(document).on('click', '.btn_deletecreate', function(event) 
 	{
 
 		var tbl_row = $(this).closest('tr');
@@ -638,8 +684,8 @@ $(document).ready(function($)
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(ajax_data, null, 2) +'</pre>')
 
 
-		tbl_row.find('.btn_save').hide();
-		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.btn_savecreate').hide();
+		tbl_row.find('.btn_cancelcreate').hide();
 
 		//show edit button
 		tbl_row.find('.btn_edit').show();
@@ -648,7 +694,7 @@ $(document).ready(function($)
 	});
 	
 	//--->save whole row entery > start	
-	$(document).on('click', '.btn_save', function(event) 
+	$(document).on('click', '.btn_savecreate', function(event) 
 	{
 		event.preventDefault();
 		var tbl_row = $(this).closest('tr');
@@ -657,8 +703,9 @@ $(document).ready(function($)
 
 		
 		//hide save and cacel buttons
-		tbl_row.find('.btn_save').hide();
-		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.btn_savecreate').hide();
+		tbl_row.find('.btn_deletecreate').hide();
+		tbl_row.find('.btn_cancelcreate').hide();
 
 		//show edit button
 		tbl_row.find('.btn_edit').show();
@@ -713,12 +760,12 @@ $(document).ready(function($)
 	//--->save whole row entery > end
 
 
-	//////////////parte duplicada pro ajax_data_e
-	$(document).on('click', '.btn_delete e', function(event) 
+//PARTE DUPLICADA	//////   /////  parte duplicada pro ajax_data_e
+	$(document).on('click', '.btn_deleteedit', function(event) 
 	{
 
 		var tbl_row = $(this).closest('tr');
-
+total_e=0;
 		var row_id = tbl_row.attr('row_id');
 		var ndx = $(this).parent().index() + 1;
 
@@ -733,29 +780,33 @@ $(document).ready(function($)
 		//use the "arr"	object for your ajax call
 		$.extend(arr, {row_id:row_id});
 		ajax_data_e.forEach(function(item, index){
-			total+=parseFloat(item[index,'preco']);
-
+			total_e+=parseFloat(item[index,'preco']);
+console.log(total_e);
 
 		})	;
-		$("#custoTR").val(total);
-		total=0;
+		ajax_data_e.forEach(function(item,index){
+				item['row_id']=index;
+		});
+		$("#custoTR").val(total_e);
+		total_e=0;
 		//out put to show
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
 
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(ajax_data_e, null, 2) +'</pre>')
 
 
-		tbl_row.find('.btn_save').hide();
-		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.btn_saveedit').hide();
+		tbl_row.find('.btn_canceledit').hide();
+		tbl_row.find('.btn_deleteedit').hide();
 
 		//show edit button
-		tbl_row.find('.btn_edit').show();
+		tbl_row.find('.btn_edit edit').show();
 
 
 	});
 	
 	//--->save whole row entery > start	
-	$(document).on('click', '.btn_save e', function(event) 
+	$(document).on('click', '.btn_saveedit', function(event) 
 	{
 		event.preventDefault();
 		var tbl_row = $(this).closest('tr');
@@ -764,8 +815,9 @@ $(document).ready(function($)
 
 		
 		//hide save and cacel buttons
-		tbl_row.find('.btn_save').hide();
-		tbl_row.find('.btn_cancel').hide();
+		tbl_row.find('.btn_saveedit').hide();
+		tbl_row.find('.btn_canceledit').hide();
+		tbl_row.find('.btn_deleteedit').hide();
 
 		//show edit button
 		tbl_row.find('.btn_edit').show();
@@ -804,12 +856,12 @@ $(document).ready(function($)
 		//use the "arr"	object for your ajax call
 		$.extend(arr, {row_id:row_id});
 		ajax_data_e.forEach(function(item, index){
-			total+=parseFloat(item[index,'preco']);
-
+			total_e+=parseFloat(item[index,'preco']);
+console.log(total_e);
 
 		})	;
-		$("#custoTR").val(total);
-		total=0;
+		$("#custoTR").val(total_e);
+		total_e=0;
 		//out put to show
 		$('.post_msg').html( '<p>ajax_data_e</p><pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
 

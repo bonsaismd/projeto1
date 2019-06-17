@@ -16,7 +16,7 @@ $encontrado = mysqli_fetch_array($resultado);
 
 
 foreach ($_POST['ajax_data'] as $insumo):
-$sq = "INSERT INTO receita_insumo VALUES (".$encontrado[0].", " . $insumo['id'] ."," . $insumo['qtde'] . ",'');";
+$sq = "INSERT INTO receita_insumo VALUES (".$encontrado[0].", " . $insumo['id'] ."," . $insumo['qtde'] . ");";
 $res = mysqli_query($db, $sq);
 var_dump($res);
 var_dump($sq);
@@ -26,4 +26,5 @@ endforeach;
 
 close_database($db);
 
+header('location:'. BASEURL . 'home/prof/index.php');
 ?>
