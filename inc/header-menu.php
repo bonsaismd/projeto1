@@ -6,7 +6,7 @@ $nome_usuario = $_SESSION['nome'];
 $cargo = $_SESSION['cargo'];
 
 ?>
-<header id="header" class="mb-5">
+<header id="header" class="mb-3">
 	<div class="row d-flex align-items-center text-center" id="header-container">
 
 		<div class="col-2 p-0 text-left" id="logo">
@@ -20,17 +20,22 @@ $cargo = $_SESSION['cargo'];
 				<div class="col">
 					<i class="fas fa-user fa-3x"></i>
 				</div>
-				<div class="col text-left">
+				<div class="col text-left p-0">
 					<p class="mb-0"><strong><?php echo $cargo ?></strong></p>
-					<p class="mb-0"><?php echo $nome_usuario; ?></p>
+					<p class="mb-0 user-name"><?php echo $nome_usuario; ?></p>
 				</div>
 			</div>
 		</div>		
 
+		<!-- BOTÃO UM -->
 		<div class="col-2 p-0">
 
 			<?php if ($cargo == 'Professor(a)') : ?>
-				<a data-toggle="modal" data-target="#modalSaldo" class="btn-menu" id="btn-1">
+				
+			<?php endif; ?>
+
+			<?php if ($cargo == 'Coordenador(a)') : ?>
+				<a href="#" data-toggle="modal" data-target="#modalSaldo" class="btn-menu" id="btn-1">
 					<div class="row d-inline-flex flex-nowrap align-items-center">
 						<div class="col p-0">
 							<i  class="fas fa-hand-holding-usd fa-3x"></i>
@@ -56,26 +61,37 @@ $cargo = $_SESSION['cargo'];
 			<?php endif; ?>
 		</div>
 
-		<div class="col-2 p-0 border-left border-right" id="btn-2">
+
+		<!-- BOTÃO DOIS -->
+		<div class="col-2 p-0 border-left border-right">
 			<?php if ($cargo == 'Professor(a)') : ?>
-				<a href="matriz.php" class="btn-menu" id="btn-3">
+				<a href="#" data-toggle="modal" data-target="#modalSaldo" class="btn-menu" id="btn-2">
 					<div class="row d-inline-flex flex-nowrap align-items-center">
 						<div class="col p-0">
-							<i class="fas fa-box-open fa-3x"></i>
+							<i  class="fas fa-hand-holding-usd fa-3x"></i>
 						</div>
 						<div class="col p-0">
-							<p class="m-0"> Matriz Licitada</p>
+							<p class="m-0"> Visualizar Saldo</p>
 						</div>
 					</div>
 				</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Coordenador(a)') : ?>
-				<a class="btn btn-primary" href="<?php echo BASEURL; ?>cadastro">Cadastrar Usuários</a>
+				<a href="indexCadastro.php" class="btn-menu" id="btn-2">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col pr-2">
+							<i class="fas fa-user-plus fa-3x"></i>
+						</div>
+						<div class="col pl-2">
+							<p class="m-0"> Gerenciar</p>
+						</div>
+					</div>
+				</a>
 			<?php endif; ?>
 
 			<?php if ($cargo == 'Técnico(a)') : ?>
-				<a href="#" class="btn-menu">
+				<a href="listasGeradas.php" class="btn-menu" id="btn-2">
 					<div class="row d-inline-flex flex-nowrap align-items-center">
 						<div class="col p-0">
 							<i class="fas fa-clipboard-list fa-3x"></i>
@@ -88,7 +104,36 @@ $cargo = $_SESSION['cargo'];
 			<?php endif; ?>
 		</div>
 
+
+
+		<!-- BOTÃO TRES -->
 		<div class="col-2 p-0">
+			<?php if ($cargo == 'Professor(a)') : ?>
+				<a href="#" data-toggle="modal" data-target="#modalMatriz" class="btn-menu" id="btn-3">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-box-open fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Matriz Licitada</p>
+						</div>
+					</div>
+				</a>
+			<?php endif; ?>
+
+			<?php if ($cargo == 'Coordenador(a)') : ?>
+				<a href="matriz.php" class="btn-menu" id="btn-3">
+					<div class="row d-inline-flex flex-nowrap align-items-center">
+						<div class="col p-0">
+							<i class="fas fa-box-open fa-3x"></i>
+						</div>
+						<div class="col p-0">
+							<p class="m-0"> Matriz Licitada</p>
+						</div>
+					</div>
+				</a>
+			<?php endif; ?>
+
 			<?php if ($cargo == 'Técnico(a)') : ?>
 				<a href="matriz.php" class="btn-menu" id="btn-3">
 					<div class="row d-inline-flex flex-nowrap align-items-center">

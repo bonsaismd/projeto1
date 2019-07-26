@@ -52,35 +52,32 @@ function pesquisar($tabela = null, $id = null) {
 				$encontrado = mysqli_fetch_array($resultado);
 			}
 
-		} else { /* Se não foi passado um ID no paramentro, pesquisar os dados da tabela*/
+		} else {
 
-      $sql = "SELECT * FROM " . $tabela; /* Codigo SQL para a pesquisa*/
-      $resultado = mysqli_query($db, $sql); /* Executa o codigo no banco de dados e armazena o resultado */
+      $sql = "SELECT * FROM " . $tabela;
+      $resultado = mysqli_query($db, $sql);
 
-      if ($resultado->num_rows > 0) { /* Se for encontrado alguma coisa */
-        $encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC); /* Cria um vetor que associa a coluna com o dado */
+      if ($resultado->num_rows > 0) {
+        $encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
       }
 
     }
 
-	} catch (Exception $e) { /* Se der algum erro */
-    $_SESSION['mensagem'] = $e->getMessage(); /* Armazena erro na sessão do usuario logado */
-    $_SESSION['tipo'] = 'danger'; /* Tipo do erro (so pra deixar na cor vermelha kk) */
-
+	} catch (Exception $e) {
+    $_SESSION['mensagem'] = $e->getMessage();
+    $_SESSION['tipo'] = 'danger';
   }
 
-  close_database($db); /* Fecha o banco */
-  return $encontrado; /* Retorna o resultado */
+  close_database($db);
+  return $encontrado;
 }
 
 
-/* Função genérica pra pesquisar todos os dados de uma tabela*/
 function pesquisar_todos( $tabela ) {
   return pesquisar( $tabela );
 }
 
 
-/* Função inserir um registro no BD */
 function salvar( $tabela = null, $dados = null) {
 
 	$db = open_database();
@@ -102,13 +99,21 @@ function salvar( $tabela = null, $dados = null) {
 
 		mysqli_query($db, $sql);
 
-		$_SESSION['mensagem'] = 'Insumo adicionado com sucesso!';
+		$sql = 'SELECT LAST_INSERT_ID();';
+		$resultado = mysqli_query($db, $sql) or die(mysql_error());
+		$listaID = mysqli_fetch_array($resultado);
+		
+		$_SESSION['mensagem'] = 'Adicionado com sucesso!';
 		$_SESSION['tipo'] = 'success';
+
+		return $listaID[0];
 
 	} catch (Exception $e) {
 
-		$_SESSION['mensagem'] = 'Falha ao adicionar insumo!';
+		$_SESSION['mensagem'] = 'Falha ao adicionar!';
 		$_SESSION['tipo'] = 'danger';
+
+		return null;
 
 	}
 
@@ -127,7 +132,7 @@ function remove( $tabela = null, $id = null ) {
 
 			mysqli_query($db, $sql);
 
-			$_SESSION['mensagem'] = 'Insumo Removido com Sucesso!';
+			$_SESSION['mensagem'] = 'Removido com Sucesso!';
 			$_SESSION['tipo'] = 'success';
 
 		}

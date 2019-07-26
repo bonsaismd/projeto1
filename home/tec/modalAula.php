@@ -1,10 +1,10 @@
-<div class="modal fade" id="modalAula" tabindex="-1" role="dialog">
+<div class="modal fade" id="modalAulaT" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" id="renderPDF">
 
 			<div class="modal-header">
 				<div class="modal-header-content text-center align-self-center">
-					<h5 class="modal-title nome-disciplina" id="aulaDisciplina"><?php echo $disciplina['NOME']; ?></h5>
+					<h5 class="modal-title nome-disciplina" id="aulaDisciplina">Disciplina</h5>
 					<h6 class="modal-subtitle nome-professor" id="aulaProfessor">Professor</h6>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
@@ -15,7 +15,7 @@
 			<div class="modal-body">
 
 				<div class="aulaInfo clearfix mb-5">
-					<p class="labelAulaModal">Aula: <span id="aulaTitulo"><?php echo $aula['TITULO']; ?></span></p>
+					<p class="labelAulaModal">Aula: <span id="aulaTitulo">Nome da Aula</span></p>
 					<p class="labelAulaModal detalhe-aula">Data: <span id="aulaData">dd/mm/YYYY</span></p>
 					<p class="labelAulaModal detalhe-aula text-right">Custo Total: <span id="aulaCustoTotal">R$999,99</span></p>
 				</div>
@@ -94,12 +94,12 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
 
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="createPDF();">Gerar PDF</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 			</div>
 

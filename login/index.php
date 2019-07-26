@@ -70,7 +70,7 @@ include(HEADER_TEMPLATE);
   }, false);
   })();
 
-  $('#password').password('toggle');
+  $('#inputSenha').password('toggle');
 </script>
 
 

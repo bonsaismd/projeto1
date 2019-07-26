@@ -37,7 +37,7 @@ if ($id_db == $id) {
       $redirecionar = '../home/prof';
     
     }elseif ($permissao == 2) {
-      $query_select_user = "SELECT * FROM tecnico WHERE autenticacao_ID = '$id'";
+      $query_select_user = "SELECT * FROM professor WHERE autenticacao_ID = '$id'";
       $select_user = mysqli_query($db, $query_select_user);
       $array_user = mysqli_fetch_array($select_user);
       $_SESSION['nome'] = $array_user['NOME'];

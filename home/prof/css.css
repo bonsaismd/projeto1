@@ -1,23 +1,73 @@
 #precoUnit{
 	display:none;}
+    #precoUnit_e{
+    display:none;}
 #of_id{
     display: none;
 }
 #indAula{
     display: none;
 }
+
+.addanick{
+    display: none;
+}
 .table-responsive {
 	height: 60vh;
 	overflow: scroll;
+}
+#e_id{
+    display:none;
+}
+#e_id_e{
+    display:none;
+}
+.flexA{
+
+    display: flex;
+    flex-wrap: nowrap;
+flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.btns-header {
+    background-color: #DDD;
+    box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+    color: black; 
+}
+
+.btns-header:hover,
+.btns-header:focus,
+.btns-header:active {
+    background-color: #EEE;
+    color: black;
+    outline: none;
+    text-decoration: none;
+}
+
+
+.btn-aAA {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+    color: #172b4d;
+    cursor: pointer;
+
+    position: relative;
+    
+    margin-bottom: 8px;
+    max-width: 300px;
+    min-height: 20px;
+   
+    text-decoration: none;
+    z-index: 0;
+    padding: 8px;
 }
 #formDisc{
     padding: 7px;
 }
 .etiquetas{
-	display: flex;
-	 flex-direction: row;
-	 flex-wrap: wrap;
-
   justify-content: space-between;
   margin:5px;
 }
@@ -38,10 +88,6 @@
 
 }
 
-.spaceAround{
-    display:flex;
-    justify-content: space-around;
-}
 .disc-header{
     display: flex;
     position: relative;
@@ -193,7 +239,7 @@ display:flex;
 flex-direction: row;
 justify-content: flex-start;
  	align-items: flex-start;
-    overflow: scroll;
+    overflow: auto;
  }
 
 

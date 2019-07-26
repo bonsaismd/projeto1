@@ -33,6 +33,7 @@ a:focus {
 	text-decoration: none;
 }
 
+button:focus {outline:0;}
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {
@@ -73,6 +74,11 @@ input[type=number]::-webkit-outer-spin-button {
 	margin: auto;
 }
 
+#btn-user {
+	white-space: nowrap;
+	font-size: 1rem;
+}
+
 .btn-menu {
 	font-size: 1vw;
 	color: #c3c3c3;
@@ -97,6 +103,21 @@ input[type=number]::-webkit-outer-spin-button {
 	width: 100vw;
 	height: 100vh;
 	background-color: var(--isabelline);
+}
+
+
+/*--------- Cadastro ---------*/
+#bodyCadastro {
+	position: relative;
+}
+
+#formCadastro {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border: 2px solid #DFE1E6;
+	border-radius: 8px;
 }
 
 
@@ -150,10 +171,6 @@ input[type=number]::-webkit-outer-spin-button {
 	padding: 0;
 }
 
-#MatrizAnual {
-	width: 94vw;
-	margin: auto;
-}
 
 #MatrizAnual .table-responsive {
 	height: 46vh;
@@ -234,13 +251,13 @@ input #procurar  {
 .nome-disciplina {
 	font-size: 20px;
 	line-height: 20px;
-	font-weight: 600;
+	font-weight: bold;
 	margin: 0 0 4px;
 }
 
 .nome-professor {
 	font-size: 16px;
-	font-weight: lighter;
+	font-weight: normal;
 	line-height: 16px;
 	margin: 0 0 8px;
 }
@@ -258,12 +275,14 @@ input #procurar  {
 .pedido-body > a:last-child {
 	margin-bottom: 8px;
 }
-
+.blockk{
+	display: block;
+}
 .btn-aula {
 	background-color: #fff;
 	border-radius: 4px;
 	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
-	color: #172b4d;;
+	color: #172b4d;
 	cursor: pointer;
 	display: block;
 	margin-bottom: 8px;
@@ -305,7 +324,7 @@ input #procurar  {
 	width: 50%;
 	float: left;
 	font-size: 16px;
-	font-weight: lighter;
+	font-weight: normal;
 	line-height: 16px;
 }
 
@@ -321,26 +340,26 @@ input #procurar  {
 
 /*--------- Modal Aula ---------*/
 
-.modal-header-content {
+#modalAulaT .modal-header-content {
 	margin: auto;
 }
 
-.modal-header .close {
+#modalAulaT .modal-header .close {
     padding: 0;
     margin: 0;
 }
 
-.modal-body {
+#modalAulaT .modal-body {
 	height: 64vh;
 	overflow-y: scroll;
 }
 
-.modal-title {
+#modalAulaT .modal-title {
 	font-size: 24px;
 	line-height: 24px;
 }
 
-.modal-subtitle {
+#modalAulaT .modal-subtitle {
 	font-size: 20px;
 	line-height: 20px;
 }
@@ -372,4 +391,279 @@ input #procurar  {
 
 .fa-caret-down {
 	color: black;
+}
+
+
+/*--------- Listas Geradas ---------*/
+
+#boardListas {
+	position: relative;
+	height: 68vh;
+	overflow-y: auto; 
+}
+
+/*--- Botão Fantasma ---*/
+.fantasma-box {
+	width: 16vw;
+	height: 14vw;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	white-space: nowrap;
+	z-index: -1;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+
+
+.fantasma-conteudo {
+	height: 100%;
+	width: 100%;
+	border: 2px dashed #DFE1E6;
+	border-radius: 8px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	white-space: normal;
+}
+
+.fantasma-header {
+	display: block;
+	position: relative;
+	border-radius: 8px;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 46%;
+
+}
+
+.fantasma-icon {
+	display: block;
+	position: relative;
+	border-radius: 8px ;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 34%;
+}
+
+.fantasma-title {
+	display: block;
+	position: relative;
+	border-radius: 8px ;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 66%;
+}
+
+.fantasma-title > h1 {
+	position: absolute;
+	margin: 0;
+	left: 50%;
+	TOP: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: #DFE1E6;
+}
+
+
+.fantasma-body {
+	display: block;
+	position: relative;
+	border-radius: 8px;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 54%;
+	padding: 8px;
+}
+
+.btn-fantasma {
+	border-radius: 4px;
+	/*box-shadow: 0 2px 0 rgba(50, 50, 50, .25);*/
+	border: 2px dashed #DFE1E6;
+	display: block;
+	margin-bottom: 8px;
+	width: 100%;
+	height: 40%;
+	position: relative;
+	text-decoration: none;
+	z-index: 0;
+}
+
+.fantasma-body > a:last-child {
+	margin-bottom: 0;
+}
+
+.fantasma-box:hover .fantasma-conteudo,
+.fantasma-box:focus .fantasma-conteudo {
+	text-decoration: none;
+	border: none;
+	background-color: #DFE1E6;
+
+	transition: 0.5s;
+}
+
+.fantasma-box:hover h1,
+.fantasma-box:focus h1{
+	color: black;
+	transition: 0.5s;
+}
+
+.fantasma-box:hover a,
+.fantasma-box:focus a{
+	border: none;
+	background-color: #fff;
+	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+	transition: 0.5s;
+}
+
+
+/*--- Botão Lista ---*/
+.lista-box {
+	width: 16vw;
+	height: 14vw;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	white-space: nowrap;
+	z-index: -1;
+	background: none;
+	border: none;	
+}
+
+
+
+.lista-conteudo {
+	height: 100%;
+	width: 100%;
+	background-color: #DFE1E6;
+	border-radius: 8px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	white-space: normal;
+}
+
+.lista-header {
+	display: block;
+	position: relative;
+	border-radius: 8px;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 46%;
+
+}
+
+.lista-icon {
+	display: block;
+	position: relative;
+	border-radius: 8px ;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 34%;
+}
+
+.lista-title {
+	display: block;
+	position: relative;
+	border-radius: 8px ;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 66%;
+}
+
+.lista-title > h1 {
+	position: absolute;
+	margin: 0;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	font-size: 1rem;
+	font-weight: 600;
+	color: black;
+}
+
+
+.lista-body {
+	display: block;
+	position: relative;
+	border-radius: 8px;
+	flex: 0 0 auto;
+	width: 100%;
+	height: 54%;
+	padding: 8px;
+}
+
+.lista-icon a {
+	border-radius: 64px;
+	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+	color: black;
+	background-color: white;
+}
+
+.btn-lista {
+	border-radius: 4px;
+	background-color: white;
+	box-shadow: 0 2px 0 rgba(50, 50, 50, .25);
+	display: block;
+	margin-bottom: 8px;
+	width: 100%;
+	height: 40%;
+	position: relative;
+	text-decoration: none;
+	z-index: 0;
+	color: #555;
+}
+
+.btn-lista > span {
+	position: absolute;
+	margin: 0;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	text-align: center;
+}
+
+.btn-lista:hover,
+.btn-lista:focus,
+.btn-lista:active {
+	background-color: #F4F5F7;
+	color: black;
+}
+
+
+/*--------- Modal Nova Lista ---------*/
+
+#modalNovaLista .modal-footer button {
+	width: 24%;
+}
+
+
+
+/*--------- Modal Lista Segmentada ---------*/
+
+.ls-body {
+	margin-top: 4vh;
+	height: 66vh;
+	overflow-y: scroll;
+}
+
+.ls-body > .aula {
+	border-radius: 8px;
+	background-color: #EEE;
+}
+
+
+/*--------- Modal Lista UNIFICADA ---------*/
+
+.lu-body {
+	margin-top: 4vh;
+	height: 66vh;
+	overflow-y: scroll;
 }

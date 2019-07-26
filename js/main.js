@@ -10,6 +10,16 @@ $('#confirmExclusao').on('show.bs.modal', function (event) {
 	modal.find('#confirm').attr('href', 'delete.php?id=' + id);
 })
 
+/* Excluir Lista */
+$('#excluirLista').on('show.bs.modal', function (event) {
+
+    var button = $(event.relatedTarget);
+    var id = button.data('lista');
+
+    var modal = $(this);
+    modal.find('#confirm').attr('href', 'deleteLista.php?id=' + id);
+})
+
 /* Editar Insumo */
 
 $('#editInsumo').on('show.bs.modal', function (event) {
@@ -37,78 +47,60 @@ $('#editInsumo').on('show.bs.modal', function (event) {
 
 
 
-/* Visualizar Pedido */
-$('#verPedido').on('show.bs.modal', function (event) {
+/* Visualizar Aula */
+$('#modalAulaT').on('show.bs.modal', function (event) {
 
 	var button = $(event.relatedTarget);
-	var id = button.data('disciplina').id;
-	var data = button.data('disciplina').dataShow;
-	var oferta = button.data('disciplina').oferta;
-	var titulo = button.data('disciplina').titulo;
-	var obs = button.data('disciplina').obs;
-	var custo = button.data('disciplina').custo;
-	var prof = button.data('disciplina').prof;
-	var discip = button.data('disciplina').discip;	
+	var id = button.data('info').id;	
+	var disciplina = button.data('info').disciplina;	
+	var professor = button.data('info').professor;	
+	var aula = button.data('info').aula;	
+	var dia = button.data('info').dia;	
+	var custo = button.data('info').custo;	
 
 
 	var modal = $(this);
-	modal.find('.modal-title').text('Pedido #'+id+' | '+titulo);
-	modal.find('#labelAula').text(titulo);
-	modal.find('#labelProfessor').text(prof);
-	modal.find('#labelDisciplina').text(discip);
-	modal.find('#labelDataAula').text(data);
-	modal.find('#labelCustoTotal').text(custo);
-	modal.find('#labelObserv').text(obs);
+	modal.find('#aulaDisciplina').text(disciplina);
+	modal.find('#aulaProfessor').text(professor);
+	modal.find('#aulaTitulo').text(aula);
+	modal.find('#aulaData').text(dia);
+	modal.find('#aulaCustoTotal').text("R$ "+custo.replace(".", ","));
 
-	$.ajax({
-		type: "POST",
-		url: "gerarIns.php",
-		data: {
-			idPedido: id
-		},
-		dataType: "json",
-		success: function(data){
+	$.ajaxSetup ({
+        cache: false
+    });
 
-			if (data.insumo.length > 0) {
-				var updateTabela;
-
-				for (var i = 0; i < data.insumo.length; i++) {
-				
-
-				updateTabela += '<tr style="text-align: center;">';
-				updateTabela += '<td style="width: 5%;">'+data.insumo[i].insumo_ID+'</td>';
-				updateTabela += '<td style="width: 10%;" class="thNome">'+data.insumoInfo[i].NOME+'</td>';
-				updateTabela += '<td style="width: 10%;">'+data.insumoInfo[i].UNID_MEDIDA+'</td>';
-				updateTabela += '<td style="width: 5%;">R$'+data.insumoInfo[i].PRECO+'</td>';
-				updateTabela += '<td style="width: 5%;">'+data.insumo[i].QUANTIDADE+'</td>';
-				updateTabela += '<td style="width: 5%;">R$'+data.insumo[i].QUANTIDADE*data.insumoInfo[i].PRECO+'</td>';
-				updateTabela += '</tr>';
-
-				}
-			
-			} else {
-				var updateTabela = '<tr style="text-align: center;">';
-				updateTabela += '<td colspan="6">Nenhum insumo encontrado.</td>';
-				updateTabela += '</tr>';
-			}
-
-			$(document).find('#tabelaInsumosPedido').html(updateTabela);
-        }
-	});
-
-})
+	modal.find('#aulaFichas').load('updateModal.php?id='+id);
+	
+});
 
 
-$('.btn-aula').on('click', function(){
+/* Visualizar Lista Segmentada */
+$('.btn-ls').on('click', function () {
 
-	var button = $(this);
-	var id = button.data('id');
-	console.log(id);
-})
+    var button = $(this);
+    var id = button.data('lista');
+
+    $(document).find('.board').load('updateLS.php?id='+id);
+    
+});
 
 
+/* Visualizar Lista Unificada */
+$('#listaUnificada').on('show.bs.modal', function (event) {
 
+    var button = $(event.relatedTarget);
+    var id = button.data('lista');
 
+    var modal = $(this);
+
+    $.ajaxSetup ({
+        cache: false
+    });
+
+    modal.load('updateLU.php?id='+id);
+    
+});
 
 /* PDF */
 function createPDF() {

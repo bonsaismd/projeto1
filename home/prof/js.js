@@ -77,6 +77,7 @@ $(document).on('show.bs.modal','#modalSaldo', function (event) {
 	
 	
 });
+
 $(document).on('hidden.bs.modal', '#modalReceita', function () {
 	$("#custoT").val(0);
 	ajax_data=[];
@@ -121,14 +122,14 @@ $(document).on('show.bs.modal','#modalReceitaExist', function (event) {
 		tb +='<td ><div class="row" col_name="unid">'+ insumosR[i][2]+'</div></td>';
 		tb +='<td ><div class="row" col_name="precoU">'+ insumosR[i][3]+'</div></td>';
 		tb +='<td ><div class="row" col_name="qtde">'+ insumosR[i][4]+'</div></td>';
-		tb +='<td ><div class="row" col_name="preco">'+ insumosR[i][4]*insumosR[i][3]+'</div></td>';
+		tb +='<td ><div class="row" col_name="preco">'+ (insumosR[i][4]*insumosR[i][3]).toFixed(2)+'</div></td>';
 		tb+='</tr>';
 		var result = {id:insumosR[i][0],nome:insumosR[i][1],unid:insumosR[i][2],precoU:insumosR[i][3],qtde:insumosR[i][4],preco:insumosR[i][4]*insumosR[i][3], row_id:i};
 	ajax_data_e.push(result);	
 		total+=(insumosR[i][4]*insumosR[i][3]);
 		console.log(ajax_data_e);
 	}
-	$('#custoTR').val(total_e.toFixed(2));
+	$('#custoTR').val(total.toFixed(2));
 	$(document).find('.bodyReceita').html(tb);
 	
 });
@@ -188,7 +189,7 @@ function chng(){
 	var cInd=$('#r_id').find(":selected").data('srec').custo;
 	console.log(cInd);
 	var qtdP=$('#quantRP').val();
-	$('#precoRecA').val(cInd*qtdP);
+	$('#precoRecA').val((cInd*qtdP).toFixed(2));
 
 }
 function gridAula(){
@@ -231,7 +232,7 @@ insR=[];
 
 	
 	
-	var ajax_insumoR = {id:insumosRS[index][0],qtde:insumosRS[index][4]*qtRA};
+	var ajax_insumoR = {id:insumosRS[index][0],qtde:(insumosRS[index][4]*qtRA).toFixed(2)};
 	insR.push(ajax_insumoR);
 		gDiv+='<tr class="row text-center">';
 		gDiv+='<td class="col-1">'+insumosRS[index][0]+'</td>';
@@ -787,7 +788,7 @@ console.log(total_e);
 		ajax_data_e.forEach(function(item,index){
 				item['row_id']=index;
 		});
-		$("#custoTR").val(total_e);
+		$('#custoTR').val(total_e.toFixed(2));
 		total_e=0;
 		//out put to show
 		$('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>')
@@ -840,7 +841,7 @@ console.log(total_e);
 			var col_val  =  $(this).html();
 			
 			if(col_name=='preco'){
-				col_val=arr['qtde']*arr['precoU'];
+				col_val=(arr['qtde']*arr['precoU']).toFixed(2);
 				arr[col_name]=col_val;
 
 				ajax_data_e[row_id]=arr;

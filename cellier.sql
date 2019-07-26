@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cellier`
 --
-drop database cellier;
 CREATE DATABASE IF NOT EXISTS `cellier` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `cellier`;
 -- --------------------------------------------------------

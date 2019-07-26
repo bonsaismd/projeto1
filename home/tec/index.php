@@ -65,7 +65,18 @@ if ($cargo != 'Técnico(a)') {
 						<?php $aulas = pesquisarAulas($oferta['ID']); ?>
 						<?php foreach ($aulas as $aula) : ?>
 
-						<a class="btn-aula" data-toggle="modal" data-target="#modalAula" data-id="<?php echo $aula['ID']?>" data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
+						<a href="javascript:void(0);"
+						class="btn-aula"
+						data-toggle="modal"
+						data-target="#modalAulaT"
+						data-info='{
+						"id":"<?php echo $aula['ID']; ?>",
+						"disciplina":"<?php echo $disciplina['NOME']; ?>",
+						"professor":"<?php echo pesquisarProfessorNome($oferta['ID']); ?>",
+						"aula":"<?php echo $aula['TITULO']; ?>",
+						"dia":"<?php echo date_format(date_create($aula['DIA_ENTREGA']), 'd/m/Y'); ?>",
+						"custo":"<?php echo $aula['CUSTO'] ?>" }'
+						 data-aula="<?php echo $aula['DIA_ENTREGA']; ?>">
 							<h4 class="nome-aula"><?php echo $aula['TITULO']; ?></h4>
 							<h5 class="data-aula detalhe-aula"><?php echo date_format(date_create($aula['DIA_ENTREGA']), 'd/m/Y'); ?></h5>
 							<h5 class="custo-aula detalhe-aula text-right">R$<?php echo $aula['CUSTO'] ?></h5>

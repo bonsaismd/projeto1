@@ -5,6 +5,13 @@ require_once(DBAPI);
 $insumos = null;
 $insumo = null;
 
+$aulas = null;
+$aula = null;
+$receitas = null;
+$receita = null;
+$listas = null;
+$lista = null;
+
 $insumosPedido = array();
 $ofertas = null;
 $oferta = null;
@@ -23,6 +30,11 @@ function carregarOfertas() {
 
 }
 
+function carregarListas() {
+	global $listas;
+	$listas = pesquisar_todos('lista');
+}
+
 function pesquisarAulas($id = null) {
 	$encontrado = null;
 
@@ -37,13 +49,28 @@ function pesquisarAulas($id = null) {
 	return $encontrado;
 }
 
-function pesquisarInsumosPedido($id = null){
+function pesquisarAulaReceitas($id = null) {
+
+	$encontrado = null;
+
+	$db = open_database();
+
+	$sql = "SELECT * FROM aula_receita WHERE aula_ID = '" . $id . "';";
+	$resultado = mysqli_query($db, $sql);
+	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+	close_database($db);
+
+	return $encontrado;
+}
+
+function pesquisarInsumosReceita($id = null){
 	
 	$encontrado = null;
 
 	$db = open_database();
 
-	$sql = "SELECT * FROM lista_pedido WHERE pedido_ID = " . $id . ";";
+	$sql = "SELECT * FROM receita_insumo WHERE receita_ID = '" . $id . "';";
 	$resultado = mysqli_query($db, $sql);
 	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
@@ -105,14 +132,6 @@ function pesquisarProfessorNome($id = null) {
 	return $professor;
 }
 
-
-/* Inserir novo insumo */
-function add(){
-	$insumo = $_POST['insumo'];
-	salvar('insumo', $insumo);
-	header('location: matriz.php');
-}
-
 function excluir($id = null) {
 
 	global $customer;
@@ -144,6 +163,102 @@ function edit() {
 
 	}
 
+}
+
+function buscarEntreDatas($d1 = null, $d2 = null){
+
+	$db = open_database();
+
+	$sql = "SELECT * FROM aula WHERE DIA_ENTREGA BETWEEN '$d1' and '$d2';";
+	$resultado = mysqli_query($db, $sql);
+	$encontrado = mysqli_fetch_all($resultado);
+
+	close_database($db);
+
+	return $encontrado;
+}
+
+function salvarListaAulas($listaID = null, $aulas = null){
+
+	$db = open_database();
+
+
+	foreach ($aulas as $aula) {
+
+		$aulaID = $aula[0];
+
+		$sql = "INSERT INTO lista_aula VALUES ('$listaID', '$aulaID');";
+		$resultado = mysqli_query($db, $sql);
+
+	}	
+
+	close_database($db);
+}
+
+function salvarListaInsumos($listaID = null, $aulas = null){
+
+	$db = open_database();
+
+	foreach ($aulas as $aula) {
+		$aulaID = $aula[0];
+		$receitas = pesquisarAulaReceitas($aulaID);
+
+		foreach ($receitas as $receita) {
+			$insumos = pesquisarInsumosReceita($receita['receita_ID']);
+
+			foreach ($insumos as $insumo) {
+
+				$sql = "SELECT * FROM lista_insumo WHERE insumo_ID = '" . $insumo['insumo_ID'] ."' AND lista_ID = '". $listaID ."';";
+				$resultado = mysqli_query($db, $sql);
+				$insumoExiste = mysqli_fetch_array($resultado);
+
+				if ($insumoExiste) {
+
+					$sql = "UPDATE lista_insumo SET QUANTIDADE = ". ($insumoExiste['QUANTIDADE'] + $insumo['QUANTIDADE']) . " WHERE insumo_ID = " . $insumo['insumo_ID'] .";";
+
+				} else {
+
+					$sql = "INSERT INTO lista_insumo VALUES (". $insumo['insumo_ID'] .", ". $listaID .", ". $insumo['QUANTIDADE'] .");";
+				}
+
+				mysqli_query($db, $sql);
+			}
+		}
+
+	}	
+
+	close_database($db);
+}
+
+function buscarListaAulas($id = null){
+
+	$encontrado = null;
+
+	$db = open_database();
+
+	$sql = "SELECT * FROM lista_aula WHERE lista_ID = '$id';";
+	$resultado = mysqli_query($db, $sql);
+	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+	close_database($db);
+
+	return $encontrado;
+
+}
+
+function buscarListaInsumos($id = null){
+	
+	$encontrado = null;
+
+	$db = open_database();
+
+	$sql = "SELECT * FROM lista_insumo WHERE lista_ID = '" . $id . "';";
+	$resultado = mysqli_query($db, $sql);
+	$encontrado = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
+
+	close_database($db);
+
+	return $encontrado;
 }
 
 ?>
